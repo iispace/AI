@@ -31,7 +31,7 @@
 
 인공 신경망의 초석인 인공 뉴런(인공 신경세포)이 Perceptron으로 발전하고, Perceptron이 다시 Multi-Layer Perceptron으로 발전하며 오늘날 우리가 사용하는 복잡한 인공 신경망이 가능해졌다고 할 수 있다. 그 과정을 좀 더 자세히 보면 다음과 같다.<br>
 
-1943년, 수학자 월터 피츠(Walter Pitts)와 신경심리학자였던 워런 맥컬록(Warren Sturgis McCulloch)은 인간의 신경 세포를 단순화해서 인공적으로 모델링을 함으로써, 신경 네트워크라 부루는 기술을 첫번째로 연구한 사람들로 인식되고 있다. 피츠와 맥컬록이 모델링한 인공 신경세포를 맥컬록-피츠 모델 또는 MCP Neuron이라고 하는데, 이 모델은 AND와 OR, 그리고 NOT 연산을 수행할 수 있었기 때문에 이후 인공 신경망 연구의 초석이 된다. 이 모델이 중요한 이유는 생물학적으로 영감을 받은 알고리즘을 사용하여 논리 게이트를 생성할 수 있는 방법을 보여준 것이기 때문이다. 하지만, MCP Neuron은 너무나 단순한 나머지, 가중치를 학습하는 능력도 없었고, EX-OR도 할 수 없어서 아주 간단한 선형 분리 가능 문제만을 해결할 수 있다는 한계가 있었다. 
+1943년, 수학자 월터 피츠(Walter Pitts)와 신경심리학자였던 워런 맥컬록(Warren Sturgis McCulloch)은 인간의 신경 세포를 단순화해서 인공적으로 모델링을 함으로써, 신경 네트워크라 부루는 기술을 첫번째로 연구한 사람들로 인식되고 있다. 피츠와 맥컬록이 모델링한 인공 신경세포를 맥컬록-피츠 모델 또는 MCP Neuron이라고 하는데, 이 모델은 AND와 OR, 그리고 NOT 연산을 수행할 수 있었기 때문에 이후 인공 신경망 연구의 초석이 된다. 이 모델이 중요한 이유는 생물학적으로 영감을 받은 알고리즘을 사용하여 논리 게이트를 생성할 수 있는 방법을 보여준 것이기 때문이다. 하지만, MCP Neuron은 너무나 단순한 나머지, 가중치를 학습하는 능력도 없었고, EX-OR도 할 수 없어서 아주 간단한 선형 분리 가능 문제만을 해결할 수 있다는 한계가 있었다[3]. 
 
 <img src="https://github.com/user-attachments/assets/0b6b85dc-61b0-440c-b35c-1e00ae9222cd" height="200" style="display:inline-block;">
 
@@ -62,7 +62,7 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{
 
 <b>3. 인공 신경망의 부활</b>
 
-안된다고 가만히 손놓고 있을 인류가 아니었을까? 인공 신경망에 대한 관심히 싸늘하게 식어 있던 기간에도 묵묵히 연구를 이어가는 학자들은 있었는데, 그 중 McClelland, James L., David E. Rumelhart, and Geoffrey E. Hinton이 1986년에 “Parallel Distributed Processing”라는 책을 통해 히든 레이어를 가진 Multi-Layer Perceptrons(MLP)과 Backpropagation Algorithm을 제시하면서 perceptron이 가졌던 문제를 해결할 수 있게 되었다. 기존의 perceptron이 단순 선형 분류기라는 한계에 의해 EX-OR 문제를 해결할 수 없었다면, Multi-Layer Perceptrons(MLP)는 히든 레이어(Hidden Layer)라는 중간 레이어를 추가함으로써, 선형 분류 판별선을 여러개 그리는 효과를 얻을 수 있었고, 그 결과로 EX-OR 문제를 해결할 수 있게 한 것이었다[3].
+안된다고 가만히 손놓고 있을 인류가 아니었을까? 인공 신경망에 대한 관심히 싸늘하게 식어 있던 기간에도 묵묵히 연구를 이어가는 학자들은 있었는데, 그 중 McClelland, James L., David E. Rumelhart, and Geoffrey E. Hinton이 1986년에 “Parallel Distributed Processing”라는 책을 통해 히든 레이어를 가진 Multi-Layer Perceptrons(MLP)과 Backpropagation Algorithm을 제시하면서 perceptron이 가졌던 문제를 해결할 수 있게 되었다. 기존의 perceptron이 단순 선형 분류기라는 한계에 의해 EX-OR 문제를 해결할 수 없었다면, Multi-Layer Perceptrons(MLP)는 히든 레이어(Hidden Layer)라는 중간 레이어를 추가함으로써, 선형 분류 판별선을 여러개 그리는 효과를 얻을 수 있었고, 그 결과로 EX-OR 문제를 해결할 수 있게 한 것이었다[4].
 
 여기서 잠시 다른 이야기를 하자면, 전기학의 회로 이론에서도 AND, OR, NOT, 또는 EX-OR 연산을 위한 논리 회로를 그릴 수 있다. 그런데, 이 논리 회로에서도 Perceptron 처럼 앞의 세 가지 연산(AND, OR, NOT)은 하나의 레이어로 표현이 되지만, EX-OR 회로는 한 개의 레이어로는 구현하지 못한다. 이를 구현하기 위해서는 아래의 그림처럼 두 개의 레이어를 이어 붙여야만 구현이 가능하다. Geoffrey E. Hinton 등이 MLP를 제안할 때 회로 이론에서 영감을 얻은 것일까? 아니면, 수학적으로 불가능이 증명된 문제라 하더라도 차원을 늘리면 해결되는 경우를 종종 볼 수 있는데, 그러한 수학적 영감을 떠올렸던 것일까?라는 궁금증이 생긴다.
 
@@ -91,13 +91,13 @@ Back-propagation과  MLP로 EX-OR 문제도 해결하게 되자, 인공 신경�
   
 <b>5. 새로운 인경 신경망 구조, CNN의 탄생</b>
 
-1989년에 Yann LeCun은, 카나다와 스웨덴의 두 신경과학자였던 데이비드 허벨(David H. Hubel)과 톨스텐 위젤(Torsten Wiesel)의 고양이 시각 피질 연구에서 영감을 얻어서, 국소 영역의 정보를 거르는 일종의 작은 필터인 kernel(weight sharing)을 신경망에 도입하고 이를 통해 convolutional feature map을 생성하는 새로운 인공 신경망 구조인 CNN을 제안함으로써 이미지 분야에서도 인공지능이 본격적으로 적용되기 시작하였다[4]. 이후, Yann LeCun과 Yoshua Bengio, Leon Bottou, 그리고 Patrick Haffner는 1998년에 "Gradient-Based Learning Applied to Document Recognition"이라는 제목의 논문에서 CNN(Convolutional Neural Networks) 구조로 개발한 모델인 LeNet-5 통해, 2차원 입력 데이터(2D shaped) 상의 변화를 인식하고 분류할 수 있는 CNN 모델의 우수성을 발표하였다.
+1989년에 Yann LeCun은, 카나다와 스웨덴의 두 신경과학자였던 데이비드 허벨(David H. Hubel)과 톨스텐 위젤(Torsten Wiesel)의 고양이 시각 피질 연구에서 영감을 얻어서, 국소 영역의 정보를 거르는 일종의 작은 필터인 kernel(weight sharing)을 신경망에 도입하고 이를 통해 convolutional feature map을 생성하는 새로운 인공 신경망 구조인 CNN을 제안함으로써 이미지 분야에서도 인공지능이 본격적으로 적용되기 시작하였다[5]. 이후, Yann LeCun과 Yoshua Bengio, Leon Bottou, 그리고 Patrick Haffner는 1998년에 "Gradient-Based Learning Applied to Document Recognition"이라는 제목의 논문에서 CNN(Convolutional Neural Networks) 구조로 개발한 모델인 LeNet-5 통해, 2차원 입력 데이터(2D shaped) 상의 변화를 인식하고 분류할 수 있는 CNN 모델의 우수성을 발표하였다.
 <br><br>
 
 
 <b>6. (추가 사항) 적응적 가중치 수정 개념의 도입</b>
 
-인공 신경망에서 Back-propagation을 통해 가중치를 조정하는 역할을 하는 것을 optimizer라 한다. 이 optimizer는 신경망의 후방으로 오차값을 역전파하면서 각 레이어마다 있는 노드들의 기울기(해당 노드가 계산된 오차에 영향을 미친 정도)를 알아내고, 이를 기반으로 가중치를 업데이트하는데, 모델의 현재 상황에 관계 없이 무조건 동일한 학습률을 적용해서 업데이트하는 대신, 상황에 따라 적응적으로 가중치를 달리 업데이트하는 Adaptive optimizer(적응적 최적화기)가 제안되면서 특정 분야에서는 인공 신경망의 성능이 개선되기도 하였다. 그런데, 사실 이 "적응적"이라는 개념은 일찍이  1960에 미국 스탠포드 대학의 교수였던 Bernard Widrow와 그의 제자 Ted Hoff가 가중치를 조정할 수 있는 적응적 인공신경망인 ADALINE을 제안한 것에서부터 발전된 것이라고 할 수 있다. ADALINE은 아래의 그림과 같이 소프트웨어가 아니라 전기적으로 설계되고 구현된 기계장치였다[5].
+인공 신경망에서 Back-propagation을 통해 가중치를 조정하는 역할을 하는 것을 optimizer라 한다. 이 optimizer는 신경망의 후방으로 오차값을 역전파하면서 각 레이어마다 있는 노드들의 기울기(해당 노드가 계산된 오차에 영향을 미친 정도)를 알아내고, 이를 기반으로 가중치를 업데이트하는데, 모델의 현재 상황에 관계 없이 무조건 동일한 학습률을 적용해서 업데이트하는 대신, 상황에 따라 적응적으로 가중치를 달리 업데이트하는 Adaptive optimizer(적응적 최적화기)가 제안되면서 특정 분야에서는 인공 신경망의 성능이 개선되기도 하였다. 그런데, 사실 이 "적응적"이라는 개념은 일찍이  1960에 미국 스탠포드 대학의 교수였던 Bernard Widrow와 그의 제자 Ted Hoff가 가중치를 조정할 수 있는 적응적 인공신경망인 ADALINE을 제안한 것에서부터 발전된 것이라고 할 수 있다. ADALINE은 아래의 그림과 같이 소프트웨어가 아니라 전기적으로 설계되고 구현된 기계장치였다[6].
 
 <a href="https://en.wikipedia.org/wiki/ADALINE">
 <img src="https://github.com/user-attachments/assets/1b34fcac-4279-403e-bb79-0ded1c49ce9e" height="200" style="display:inline-block;"></a>
@@ -130,6 +130,7 @@ Andrew Ng: https://www.deeplearning.ai/courses/generative-ai-for-everyone/<br>
 참고문헌:
 - [1] [위키피디아 - 인공지능의 탄생](https://ko.wikipedia.org/wiki/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5)
 - [2] [William Grey Walter](http://www.aistudy.com/pioneer/Walter.G.htm)
-- [3] [딥러닝의 역사](http://solarisailab.com/archives/1206)
-- [4] [Handwritten digit recognition with a back-propagation network](https://proceedings.neurips.cc/paper/1989/file/53c3bce66e43be4f209556518c2fcb54-Paper.pdf)
-- [5] [ADALINE](https://en.wikipedia.org/wiki/ADALINE) 
+- [3] [MCP Neuron](https://jontysinai.github.io/jekyll/update/2017/09/24/the-mcp-neuron.html)
+- [4] [딥러닝의 역사](http://solarisailab.com/archives/1206)
+- [5] [Handwritten digit recognition with a back-propagation network](https://proceedings.neurips.cc/paper/1989/file/53c3bce66e43be4f209556518c2fcb54-Paper.pdf)
+- [6] [ADALINE](https://en.wikipedia.org/wiki/ADALINE) 
