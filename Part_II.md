@@ -31,6 +31,11 @@
 
 <img src="https://github.com/user-attachments/assets/0b6b85dc-61b0-440c-b35c-1e00ae9222cd" height="200" style="display:inline-block;">
 
+<a href="https://jontysinai.github.io/jekyll/update/2017/09/24/the-mcp-neuron.html">
+<img src="https://github.com/user-attachments/assets/9179ed3d-450a-476b-9169-64da0496c20f" height="200" style="display:inline-block;">
+</a>
+
+
 2. 
 
 <hr>
