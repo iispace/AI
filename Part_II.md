@@ -27,7 +27,7 @@
 왼쪽부터 차례대로, [Norbert Wiener], [Claude Elwood Shannon], [Alan Turing & The Turing Machine], and [W. Grey Walter with early tortoise]
 <br><br><br>
 
-2. 인공 신경망과 인공지능 연구분야의 탄생
+2. 초기 인공 신경망과 인공지능 연구분야의 탄생, 그리고 인공지능 연구의 첫번째 겨울
 
 인공 신경망의 초석인 인공 뉴런(인공 신경세포)이 Perceptron으로 발전하고, Perceptron이 다시 Multi-Layer Perceptron으로 발전하며 오늘날 우리가 사용하는 복잡한 인공 신경망이 가능해졌다고 할 수 있다. 그 과정을 좀 더 자세히 보면 다음과 같다.<br><br>
 
@@ -45,17 +45,32 @@ MCP Neuron의 탄생한 뒤로 약 13년 후인 1956년에 당시의 선구적�
 <img src="https://github.com/user-attachments/assets/e489fcc5-c205-4815-a858-98ab79ba2a89" height="200" style="display:inline-block;">
 <br><br>
 
-MCP Neuron의 한계 중 하나였던 가중치 학습 문제를 해결한 사람은 미국의 심리학자였던 프랭크 로젠블릿(Frank Resenblatt)이었다. 그는 햅의 학습이론에서 영감을 얻어 가중치(weight)를 학습하는 개념을 MCP Neuron에 추가하여 인공 뉴런의 모델을 개선하게 되었는데, 우리는 이를 Perceptron이라 부른다. Perceptron이 가중치를 학습하는 방법은 아래에 식으로 나타낸 것과 같은 단순한 규칙 기반의 가중치 업데이트 방식이었다. 즉, 오차가 0이 될 때까지 단순히 오차에 학습률을 곱해서 가중치를 업데이트하는 과정을 반복하는 것이다. 
+MCP Neuron의 한계 중 하나였던 가중치 학습 문제를 해결한 사람은 미국의 심리학자였던 프랭크 로젠블릿(Frank Rosenblatt)이었다. 그는 1957년에 햅의 학습이론에서 영감을 얻어 가중치(weight)를 학습하는 개념을 MCP Neuron에 추가하여 인공 뉴런의 모델을 개선하게 되었는데, 우리는 이를 Perceptron이라 부른다. 그 당시 뉴욕타임즈는 이 Perceptron을 소개하는 기사에서 조만간 인간과 같은 기계가 탄생할 것이라고 예견하면서 세간의 엄청난 기대를 불러 일으켰다고 합니다. 많은 사람들이 Perceptron을 통해 진짜 인간과 같은 인공지능을 곧 만들 수 있을 것이라고 생각했다고 하니, 얼마나 기대가 컸을까.... Perceptron이 가중치를 학습하는 방법은 아래에 식으로 나타낸 것과 같은 단순한 규칙 기반의 가중치 업데이트 방식이었다. 즉, 오차가 0이 될 때까지 단순히 오차에 학습률을 곱해서 가중치를 업데이트하는 과정을 반복하는 것이다. 그리고 이 Perceptron까지만 해도 활성화 함수로는 sigmoid 함수가 사용되었다고 한다.(ReLU 같은 더 정교한 활성화 함수는 이후에 제안된다)
 
 $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: \text{weight for }x_i \hspace{0.2cm}, \hspace{1cm} e = y_i - \hat{y_i}, \hspace{1cm} \alpha: \text{learning rate} $$
+<br>
 
+<a href="http://solarisailab.com/archives/1206">
+<img src="https://github.com/user-attachments/assets/abfb8eb3-b05c-43ea-b6d6-a6ea16710a63" height="200" style="display:inline-block;">
+</a><br>
+(왼쪽) Percentron 이미지 인식 센서와 Frank Rosenblatt, (오른쪽) Mark 1으로 구현된 Frank Rosenblatt의 Perceptron
 <br><br>
 
+하지만, Perceptron은 그 당시 사람들의 기대와는 달리, 단순한 선형 분류기였기 때문에 EX-OR 문제를 포함한 복잡한 비선형 문제는 해결할 수 없다는 한계가 있었는데, 이 문제에 대한 해법이 연구되기도 전에 Perceptron으로는 EX-OR 문제는 해결할 수 없다는 것을 Marvin Minsky와 Seymour Papert가 1969년에 수학적으로 증명을 해 버림으로써, 인공지능에 대한 기대와 열기가 급속히 사그라들었다고 한다[3].
+<br><br><br>
 
-2. 
+
+2. 인공 신경망의 부활
+
+안된다고 가만히 손놓고 있을 인류가 아니었을까? 인공 신경망에 대한 관심히 싸늘하게 식어 있던 기간에도 묵묵히 연구를 이어가는 학자들은 있었는데, 그 중 McClelland, James L., David E. Rumelhart, and Geoffrey E. Hinton이 1986년에 “Parallel Distributed Processing”라는 책을 통해 히든 레이어를 가진 Multi-Layer Perceptrons(MLP)과 Backpropagation Algorithm을 제시하면서 perceptron이 가졌던 문제를 해결할 수 있게 되었다. 기존의 perceptron이 단순 선형 분류기라는 한계에 의해 EX-OR 문제를 해결할 수 없었다면, Multi-Layer Perceptrons(MLP)는 히든 레이어(Hidden Layer)라는 중간 레이어를 추가함으로써, 선형 분류 판별선을 여러개 그리는 효과를 얻음으로써 EX-OR 문제를 해결할 수 있게 한 것이었다[3].
+
+
+   
+4. ㅇ
 
 <hr>
 
 참고문헌:
 - [1] [위키피디아 - 인공지능의 탄생](https://ko.wikipedia.org/wiki/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5)
 - [2] [William Grey Walter](http://www.aistudy.com/pioneer/Walter.G.htm)
+- [3] [딥러닝의 역사](http://solarisailab.com/archives/1206)
