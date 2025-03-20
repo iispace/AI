@@ -106,9 +106,24 @@ Back-propagation과  MLP로 EX-OR 문제도 해결하게 되자, 인공 신경�
 
 컴퓨터는 0과 1의 이진수로 모든 것을 처리하는 장치이고, 전기적인 논리 회로 또한 On과 Off 두 가지 상태를 가지고 입력을 처리하고 출력을 생성하는 것임을 고려해 본다면, EX-OR 문제의 해법과 적응적 가중치 개념의 도입에서 처럼, 이 둘은 서로 영감을 주고 받을 수 있는 영역이 많이 있을 것 같다.
 
-지금까지 했던 긴 이야기를 짧게 정리하자면, 생물학적인 뇌의 구조를 모방하여 논리적인 처리를 할 수 있는 수학적 모델을 설계하고 이를 컴퓨터로 구현하면서 인공지능의 분야가 열렸고, 그 과정에서 연구 침체기를 불러왔던 EX-OR 문제와 기울기 소실 문제를 히든 레이어의 추가, Back-propagation에 의한 가중치 학습 알고리즘 적용, 그리고 Sigmoid 함수에서 기울기가 사라지는 것을 방지할 수 있는 새로운 활성화 함수의 고안 등으로 극복했었다. 뿐만 아니라, 초기에 사람의 뇌 구조를 모방한 것과 같이, 또 다른 생물학적 연구(고양이의 시각 피질)에서 영감을 얻어 인공 신경망을 새로운 구조로 모델링한 CNN 도 등장하면서 현재는 인공지능이 인간의 언어도 자연스럽게 처리하는 등 상당한 수준에 이르게 되었다.
+지금까지 했던 긴 이야기를 짧게 정리하자면, 생물학적인 뇌의 구조를 모방하여 논리적인 처리를 할 수 있는 수학적 모델을 설계하고 이를 컴퓨터로 구현하면서 인공지능의 분야가 열렸으며, 그 과정에서 연구 침체기를 불러왔던 EX-OR 문제와 기울기 소실 문제는 히든 레이어의 추가, Back-propagation에 의한 가중치 학습 알고리즘 적용, 그리고 Sigmoid 함수에서 기울기가 사라지는 것을 방지할 수 있는 새로운 활성화 함수의 고안 등에 의해 극복되었다. 뿐만 아니라, 초기에 사람의 뇌 구조를 모방한 것과 같이, 또 다른 생물학적 연구(고양이의 시각 피질)에서 영감을 얻어 인공 신경망을 새로운 구조로 모델링한 CNN 도 등장하였고, 이후 LSTM, RNN, GAN, KAN, Transformer 등으로 거침없는 발전을 거듭하며 현재는 인공지능이 인간의 언어도 자연스럽게 처리하고, 자율 주행 자동차도 실현되는 등 상당한 수준에 이르게 되었다.
 
-물론, CNN 뿐만 아니라, LSTM, RNN, GAN, KAN, Transformer 등 지금에 와서는 수없이 많은 종류의 인공 신경망이 있지만, 이러한 모델들은 앞서 보았던 인공지능의 역사를 통해 누적된 깊고 방대한 연구들의 결과에 힘입은 연구 성과들이라 할 수 있을 것이다. 
+이상으로 AI는 지금까지 어떻게 만들어져 왔는지를 살펴보았다. Part III에서는 AI가 그래서 인류가 직면한 수많은 문제에 어떤 도움을 줄 수 있는지, 실생활에서는 어떻게 활용할 수 있는지에 대해서 알아보려고 한다.
+
+마지막으로, 1세대 인공지능의 연구를 이끌었던 선대 연구자들과 2세대의 대표적인 연구자들의 사진을 소개하며 Part II를 마친다.
+
+<a href="https://spectrum.ieee.org/dartmouth-ai-workshop">
+<img src="https://github.com/user-attachments/assets/74cb5c4a-b3b6-4913-a304-5d7814b80407" height="200" style="display:inline-block;"></a>
+<img src="https://github.com/user-attachments/assets/4736d8ac-5235-4007-8acf-1212016135a3" height="200" style="display:inline-block;"></a>
+<br>(Left) Dartmouth Conference in 1956 (Right 1st row) Geoffrey Hinton, Yann LeCun, (Right 2nd row)Yoshua Bengio, Andrew Ng
+
+<br>
+[사진출처]
+Geffrey Hinton: https://cifar.ca/cifarnews/2024/10/08/long-time-cifar-fellow-geoffrey-hinton-awarded-2024-nobel-prize-in-physics/<br>
+Yann LeCun: https://www.bbc.com/news/technology-65886125<br>
+Yoshua Bengio: https://nouvelles.umontreal.ca/en/article/2020/04/29/yoshua-bengio-named-to-royal-society/<br>
+Andrew Ng: https://www.deeplearning.ai/courses/generative-ai-for-everyone/<br>
+<br>
 
 <hr>
 
