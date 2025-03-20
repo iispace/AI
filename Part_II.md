@@ -74,13 +74,15 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{
 
 
 4. 인공지능 분야의 두 번째 겨울, 기울기 소실 문제
+   
 Back-propagation과  MLP로 EX-OR 문제도 해결하게 되자, 인공 신경망은 거침 없이 발전할 것만 같았다. 그러나, 안타깝게도, 이번에는 신경망의 깊이, 그러니까 레이어의 갯수가 늘어날 수록 오차가 역전파 되는 과정에서 기울기가 0으로 수렴하는 현상, 즉 Gradient Vanishing 문제가 발행한다는 것이 밝혀지면서 또 한 번의 연구 침체기가 찾아온다.
 
 <img src="https://github.com/user-attachments/assets/5f1f2f29-82d7-42a1-a2e8-5514238262d0" width="500" style="display:inline-block;">
 <img src="https://github.com/user-attachments/assets/0c4065a9-f94b-4786-ba85-9fb27af17db8" height="200" style="display:inline-block;">
 <br>&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Gradient Vanishing Problem in Deep Neural Networks,   &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Sigmoid 함수값과 미분값(기울기) 곡선<br>
+<br>
 
-위의 오른쪽에 있는 그림은 그 당시 사용되던 활성화 함수인 sigmoid 함수의 함수값(빨간색)과, 함수값을 미분하여 구한 순간 변화량 즉, 기울기(파랑색)를 보여주는 그래프이다. 그래프의 왼쪽과 오른쪽 끝으로 갈수록 기울기가 0으로 수렴하는 것이 보일 것이다. 이것이 바로 기울기가 없어지게 되는 문제의 핵심이었으며, 이후 ReLU(Rectified Linear Unit) 함수와 같이 기울기가 0으로 수렴하지 않는 활성화 함수들이 제안되면서 이 문제를 극복하게 된다.
+위의 오른쪽에 있는 그림은 그 당시 사용되던 활성화 함수인 sigmoid 함수의 함수값(빨간색)과, 함수값을 미분하여 구한 순간 변화량 즉, 기울기(파랑색)를 보여주는 그래프이다. 그래프의 왼쪽과 오른쪽 끝으로 갈수록 기울기가 0으로 수렴하는 것이 보일 것이다. 이것이 바로 기울기가 없어지게 되는 문제의 핵심이었으며, 이후 ReLU(Rectified Linear Unit) 함수와 같이 기울기가 0으로 수렴하지 않는 활성화 함수들이 제안되면서 이 문제 또한 극복하게 된다.
 
 <img src="https://github.com/user-attachments/assets/6232b55c-ddad-4df3-8beb-b11f80343766" height="200" style="display:inline-block;">
 <br>&nbsp; &nbsp;&nbsp;&nbsp;ReLU 함수값과 기울기 곡선
