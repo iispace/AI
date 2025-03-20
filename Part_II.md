@@ -70,7 +70,7 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: \text{w
    
 4. 새로운 인경 신경망 구조 탄생
 
-1989년에 Yann LeCun은 고양이의 시각 피질 연구에서 영감을 얻어 kernel을 적용하여 convolutional feature map을 생성하는 새로운 인공 신경망 구조를 제안함으로써 이미지 분야에 인공지능을 적용되기 시작하였다[4].
+1989년에 Yann LeCun은 허벨과 위젤의 고양이 시각피질 미세전극 실험을 통한 고양이의 시각 피질 연구에서 영감을 얻어서, 일종의 작은 필터인 kernel을 신경망에 도입하고 이를 통해 convolutional feature map을 생성하는 새로운 인공 신경망 구조를 제안함으로써 이미지 분야에서도 인공지능이 본격적으로 적용되기 시작하였다[4].
 
 <hr>
 
