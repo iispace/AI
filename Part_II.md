@@ -45,7 +45,7 @@ MCP Neuron의 등장 후 약 13년이 지난 1956년에 당시의 선구적인 �
 <img src="https://github.com/user-attachments/assets/e489fcc5-c205-4815-a858-98ab79ba2a89" height="200" style="display:inline-block;">
 <br><br>
 
-MCP Neuron의 한계 중 하나였던 가중치 학습 문제를 해결한 사람은 미국의 심리학자였던 프랭크 로젠블릿(Frank Rosenblatt)이었다. 그는 1957년에 햅의 학습이론에서 영감을 얻어 가중치(weight)를 학습하는 개념을 MCP Neuron에 추가하여 인공 뉴런의 모델을 개선하게 되었는데, 우리는 이를 Perceptron이라 부른다. 그 당시 뉴욕타임즈는 이 Perceptron을 소개하는 기사에서 조만간 인간과 같은 기계가 탄생할 것이라고 예견하면서 세간의 엄청난 기대를 불러 일으켰다고 한다. 많은 사람들이 Perceptron을 통해 진짜 인간과 같은 인공지능을 곧 만들 수 있을 것이라고 생각했다고 하니, 얼마나 기대가 컸을까.... Perceptron이 가중치를 학습하는 방법은 아래에 식으로 나타낸 것과 같은 단순한 규칙 기반의 가중치 업데이트 방식이었다. 즉, 오차가 0이 될 때까지 단순히 오차에 학습률을 곱해서 가중치를 업데이트하는 과정을 반복하는 것이다. 그리고 이 Perceptron은 계단 함수(step function)를 활성화 함수로 사용했다고 한다.(ReLU 같은 더 정교한 활성화 함수는 이후에 제안된다)
+MCP Neuron의 한계 중 하나였던 가중치 학습 문제를 해결한 사람은 미국의 심리학자였던 프랭크 로젠블릿(Frank Rosenblatt)이었다. 그는 1957년에 햅의 학습이론에서 영감을 얻어 가중치(weight)를 학습하는 개념을 MCP Neuron에 추가하여 인공 뉴런의 모델을 개선하게 되었는데, 우리는 이를 Perceptron이라 부른다. 그 당시 뉴욕타임즈는 기사에서 조만간 인간과 같은 기계가 탄생할 것이라고 예견하면서 세간의 엄청난 기대를 불러 일으켰다고 한다. 많은 사람들이 Perceptron을 통해 진짜 인간과 같은 인공지능을 곧 만들 수 있을 것이라고 생각했다고 하니, 얼마나 기대가 컸을까.... Perceptron이 가중치를 학습하는 방법은 아래에 식으로 나타낸 것과 같은 단순한 규칙 기반의 가중치 업데이트 방식이었다. 즉, 오차가 0이 될 때까지 단순히 오차에 학습률을 곱해서 가중치를 업데이트하는 과정을 반복하는 것이다. 그리고 이 Perceptron은 계단 함수(step function)를 활성화 함수로 사용했다고 한다.(ReLU 같은 더 정교한 활성화 함수는 이후에 제안된다)
 
 $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{weight for }x_i \hspace{0.2cm}, \hspace{1cm} e = y_i - \hat{y_i}, \hspace{1cm} \alpha: \text{learning rate}) $$
 <br>
