@@ -118,7 +118,7 @@ Back-propagation과  MLP로 EX-OR 문제도 해결하게 되자, 인공 신경�
 <br>(Left) Dartmouth Conference in 1956 (Right 1st row) Geoffrey Hinton, Yann LeCun, (Right 2nd row)Yoshua Bengio, Andrew Ng
 
 <br><br>
-[사진출처]
+[사진출처]<br>
 Geffrey Hinton: https://cifar.ca/cifarnews/2024/10/08/long-time-cifar-fellow-geoffrey-hinton-awarded-2024-nobel-prize-in-physics/<br>
 Yann LeCun: https://www.bbc.com/news/technology-65886125<br>
 Yoshua Bengio: https://nouvelles.umontreal.ca/en/article/2020/04/29/yoshua-bengio-named-to-royal-society/<br>
