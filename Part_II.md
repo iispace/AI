@@ -76,6 +76,22 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{
 4. 새로운 인경 신경망 구조, CNN의 탄생
 
 1989년에 Yann LeCun은, 카나다와 스웨덴의 두 신경과학자였던 데이비드 허벨(David H. Hubel)과 톨스텐 위젤(Torsten Wiesel)의 고양이 시각 피질 연구에서 영감을 얻어서, 국소 영역의 정보를 거르는 일종의 작은 필터인 kernel(weight sharing)을 신경망에 도입하고 이를 통해 convolutional feature map을 생성하는 새로운 인공 신경망 구조인 CNN을 제안함으로써 이미지 분야에서도 인공지능이 본격적으로 적용되기 시작하였다[4]. 이후, Yann LeCun과 Yoshua Bengio, Leon Bottou, 그리고 Patrick Haffner는 1998년에 "Gradient-Based Learning Applied to Document Recognition"이라는 제목의 논문에서 CNN(Convolutional Neural Networks) 구조로 개발한 모델인 LeNet-5 통해, 2차원 입력 데이터(2D shaped) 상의 변화를 인식하고 분류할 수 있는 CNN 모델의 우수성을 발표하였다.
+<br><br>
+
+5. 인공지능 분야의 두 번째 겨울, 기울기 소실 문제
+
+<br><br>
+
+6. 적응적 가중치 수정 개념의 도입
+
+인공 신경망에서 Back-propagation을 통해 가중치를 조정하는 역할을 하는 것을 optimizer라 한다. 이 optimizer는 신경망의 후방으로 오차값을 역전파하면서 각 레이어마다 있는 노드들의 기울기(해당 노드가 계산된 오차에 영향을 미친 정도)를 알아내고, 이를 기반으로 가중치를 업데이트하는데, 모델의 현재 상황에 관계 없이 무조건 동일한 학습률을 적용해서 업데이트하는 대신, 상황에 따라 적응적으로 가중치를 달리 업데이트하는 Adaptive optimizer(적응적 최적화기)가 제안되면서 특정 분야에서는 인공 신경망의 성능이 개선되기도 하였다. 그런데, 사실 이 "적응적"이라는 개념은 일찍이  1960에 미국 스탠포드 대학의 교수였던 Bernard Widrow와 그의 제자 Ted Hoff가 가중치를 조정할 수 있는 적응적 인공신경망인 ADALINE을 제안한 것에서부터 발전된 것이라고 할 수 있다. ADALINE은 아래의 그림과 같이 소프트웨어가 아니라 전기적으로 설계되고 구현된 기계장치였다.
+
+<a href="https://en.wikipedia.org/wiki/ADALINE">
+<img src="https://github.com/user-attachments/assets/1b34fcac-4279-403e-bb79-0ded1c49ce9e" height="200" style="display:inline-block;"></a>
+<br>[ADALINE]
+<br><br>
+
+
 
 <hr>
 
