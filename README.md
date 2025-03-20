@@ -16,11 +16,17 @@
 
 우리가 잘 알고 있듯이, 아직 인류는 "생명"이 무엇인지에 대한 정의를 명확하게 내리지 못하고 있는데, 이는 "생명"이라 불리우는 개체들의 속성이 너무나 다양하고, 경계가 불분명하며, 각 학문 분야에서 바라보는 시각에 따라 중요하게 여기는 기준도 다르고, 이들이 보여주는 행동 특성 또한 다양하기 때문일 수 있다. 
 
-우리가 대충 "생명"이라 부르는 다양한 객체들은 유기물들의 조합으로 이루어져 있으며, 유기물들은 무기물에서 자연적으로 형성된 것으로 보고있는 현재까지의 과학적 연구[2,3]에 따라 생각해보자면, 애초에 무기물이 없다면 "생명"도 있을 것 같지 않은데, 이렇게 본다면 무기물도 "생명"이라 해야 할까? 적어도 아직까지는 어디서부터가 생명이고 어디까지가 생명이 아닌지를 명확히 구분하지 못하고 있는데, 이는 AI(인공지능)도 마찬가지인 것 같다.
+우리가 대충 "생명"이라 부르는 다양한 객체들은 유기물들의 조합으로 이루어져 있으며, 유기물들은 무기물에서 자연적으로 형성된 것으로 보고있는 현재까지의 과학적 연구[2,3,4]에 따라 생각해보자면, 애초에 무기물이 없다면 "생명"도 있을 것 같지 않은데, 이렇게 본다면 무기물도 "생명"이라 해야 할까? 적어도 아직까지는 어디서부터가 생명이고 어디까지가 생명이 아닌지를 명확히 구분하지 못하고 있는데, 이는 AI(인공지능)도 마찬가지인 것 같다.
 
-인공지능이 무엇인지를 정의하려면, 우선 '지능'에 대한 정의가 선행되어야 할 것이나, '지능'이 무엇인지에 대한 정의도 너무나 다양하다 하니, 인공지능이 무엇인라고 단언하기도 어렵다. 
+<div style="text-align: center;">
+  <img src="https://github.com/user-attachments/assets/1728d940-1567-4269-8d0e-6af4b1b5daa1"><br>
+  그림출처: Prebiotic Soup--Revisiting the Miller Experiment[3]<br>  
+</div>
+<br><br>
 
-일반적으로 "지능"이란 문제 해결 능력, 학습 능력, 추론 능력, 창의성, 환경 적응력 등의 요소를 포함하는 개념으로 설명할 수 있겠으나, 이것만이 유일한 정의는 아니고 학문적 관점과 철학적 관점에 따라 다르게 정의하기도 하지만, 여기서는 이 일반적인 정의를 기준으로 "인공지능"을 이해해 보려고 한다.
+인공지능이 무엇인지를 정의하려면, 우선 '지능'에 대한 정의가 선행되어야 할 것이다. 그러나, 아직은 학문적 관점과 철학적 관점에 따라 '지능'을 여러가지로 정의하고 있는 형편이다 보니, 여기서는 위키피디아의 정의와 같이, 인공지능이란 인간의 학습능력, 추론능력, 지각능력을 인공적으로 구현하려는 컴퓨터 과학의 세부분야 중 하나[5]로 보고자 한다.
+
+
 
 <hr>
 참고문헌:
@@ -28,3 +34,6 @@
 - [1] [MIT Deep Learning Book (beautiful and flawless PDF version)](https://github.com/janishar/mit-deep-learning-book-pdf/blob/master/complete-book-bookmarked-pdf/deeplearningbook.pdf)
 - [2] [A Production of Amino Acids Under Possible Primitive Earth Conditions](https://www.science.org/doi/10.1126/science.117.3046.528)
 - [3] [Prebiotic Soup--Revisiting the Miller Experiment](https://www.science.org/doi/10.1126/science.1085145)
+- [4] [On the origins of cells: a hypothesis for the evolutionary transitions from abiotic geochemistry to chemoautotrophic prokaryotes, and from prokaryotes to nucleated cells](https://pubmed.ncbi.nlm.nih.gov/12594918/)
+- [5] [위키피디아 - 인공지능](https://ko.wikipedia.org/wiki/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5)
+  
