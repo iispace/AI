@@ -43,7 +43,7 @@ MCP Neuron의 탄생한 뒤로 약 13년 후인 1956년에 당시의 선구적�
 
 MCP Neuron의 한계 중 하나였던 가중치 학습 문제를 해결한 사람은 미국의 심리학자였던 프랭크 로젠블릿(Frank Resenblatt)이었다. 그는 햅의 학습이론에서 영감을 얻어 가중치(weight)를 학습하는 개념을 MCP Neuron에 추가하여 인공 뉴런의 모델을 개선하게 되었는데, 우리는 이를 Perceptron이라 부른다. Perceptron이 가중치를 학습하는 방법은 단순한 규칙 기반의 가중치 업데이트 방식이다. 
 
-$$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: weight for x_i \hspace{1cm} e = y_i - \hat{y}, \hspace{1cm} \alpha: \text{learning rate} $$
+$$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: \text{weight for x_i}, \hspace{1cm} e = y_i - \hat{y}, \hspace{1cm} \alpha: \text{learning rate} $$
 
 <br><br>
 
