@@ -64,9 +64,13 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: \text{w
 
 안된다고 가만히 손놓고 있을 인류가 아니었을까? 인공 신경망에 대한 관심히 싸늘하게 식어 있던 기간에도 묵묵히 연구를 이어가는 학자들은 있었는데, 그 중 McClelland, James L., David E. Rumelhart, and Geoffrey E. Hinton이 1986년에 “Parallel Distributed Processing”라는 책을 통해 히든 레이어를 가진 Multi-Layer Perceptrons(MLP)과 Backpropagation Algorithm을 제시하면서 perceptron이 가졌던 문제를 해결할 수 있게 되었다. 기존의 perceptron이 단순 선형 분류기라는 한계에 의해 EX-OR 문제를 해결할 수 없었다면, Multi-Layer Perceptrons(MLP)는 히든 레이어(Hidden Layer)라는 중간 레이어를 추가함으로써, 선형 분류 판별선을 여러개 그리는 효과를 얻음으로써 EX-OR 문제를 해결할 수 있게 한 것이었다[3].
 
+비록 EX-OR 문제를 풀 수 있다고는 해도, MLP만으로는 파라미터의 개수가 많아지면서 적절한 weight를 학습하는 것이 매우 어려워진다는 문제가 있었는데, "Parallel Distributed processing"의 저자들은 Back-Propagation Algorithm을 함께 제안해서 이 문제도 해결한 것이었다. Back-Propagation Algorithm은 정방 연산(FeedForward)을 통해 결과 값을 예측한 후, 예측값과 실제값 사이의 오차를 후방(Backward)으로 다시 보내는데, 이 때 미분을 통해 각 레이어의 노드들이 오차값에 미친 영향도를 파악해서 weight를 업데이트할 수 있게 한 것이다. 이러한 MLP는 이후 현재까지도 인공 신경망에서 사용되고 있다. 
+<br><br><br>
 
    
-4. ㅇ
+4. 새로운 인경 신경망 구조 탄생
+
+1989년에 Yann LeCun은 고양이의 시각 피질 연구에서 영감을 얻어 kernel을 적용하여 convolutional feature map을 생성하는 새로운 인공 신경망 구조를 제안함으로써 이미지 분야에 인공지능을 적용되기 시작하였다[4].
 
 <hr>
 
@@ -74,3 +78,4 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: \text{w
 - [1] [위키피디아 - 인공지능의 탄생](https://ko.wikipedia.org/wiki/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5)
 - [2] [William Grey Walter](http://www.aistudy.com/pioneer/Walter.G.htm)
 - [3] [딥러닝의 역사](http://solarisailab.com/archives/1206)
+- [4] [Handwritten digit recognition with a back-propagation network](https://proceedings.neurips.cc/paper/1989/file/53c3bce66e43be4f209556518c2fcb54-Paper.pdf)
