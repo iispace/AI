@@ -56,7 +56,7 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{
 (왼쪽) Percentron 이미지 인식 센서와 Frank Rosenblatt, (오른쪽) Mark 1으로 구현된 Frank Rosenblatt의 Perceptron
 <br><br>
 
-하지만, Perceptron은 그 당시 사람들의 기대와는 달리, 단순한 선형 분류기였기 때문에 EX-OR 문제를 포함한 복잡한 비선형 문제는 해결할 수 없다는 한계가 있었는데, 이 문제에 대한 해법이 연구되기도 전에 Perceptron으로는 EX-OR 문제는 해결할 수 없다는 것을 Marvin Minsky와 Seymour Papert가 1969년에 수학적으로 증명을 해 버림으로써, 인공지능에 대한 기대와 열기가 급속히 사그라들었다고 한다[3].
+하지만, Perceptron은 그 당시 사람들의 기대와는 달리, 단순한 선형 분류기였기 때문에 EX-OR 문제를 포함한 복잡한 비선형 문제는 해결할 수 없다는 한계가 있었는데, 이 문제에 대한 해법이 연구되기도 전에 Perceptron으로는 EX-OR 문제는 해결할 수 없다는 것을 Marvin Minsky와 Seymour Papert가 1969년에 수학적으로 증명을 해 버림으로써, 인공지능에 대한 기대와 열기가 급속히 사그라들었다고 한다[3]. 사실 이 두 사람은 single layer perceptron으로는 EX-OR 문제를 해결할 수 없지만 multi layer perceptron에서는 가능하다는 것을 알고 있었다고 한다. 
 <br><br><br>
 
 
