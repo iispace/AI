@@ -82,10 +82,10 @@ Back-propagation과  MLP로 EX-OR 문제도 해결하게 되자, 인공 신경�
 <br>&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Gradient Vanishing Problem in Deep Neural Networks,   &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Sigmoid 함수값과 미분값(기울기) 곡선<br>
 <br>
 
-위의 오른쪽에 있는 그림은 그 당시 사용되던 활성화 함수인 sigmoid 함수의 함수값(빨간색)과, 함수값을 미분하여 구한 순간 변화량 즉, 기울기(파랑색)를 보여주는 그래프이다. 그래프의 왼쪽과 오른쪽 끝으로 갈수록 기울기가 0으로 수렴하는 것이 보일 것이다. 이것이 바로 기울기가 없어지게 되는 문제의 핵심이었으며, 이후 ReLU(Rectified Linear Unit) 함수와 같이 기울기가 0으로 수렴하지 않는 활성화 함수들이 제안되면서 이 문제 또한 극복하게 된다.
+위의 오른쪽에 있는 그림은 그 당시 사용되던 활성화 함수인 sigmoid 함수의 함수값(빨간색)과, 함수값을 미분하여 구한 순간 변화량 즉, 기울기(파랑색)를 보여주는 그래프이다. 그래프의 왼쪽과 오른쪽 끝으로 갈수록 기울기가 0으로 수렴하는 것이 보일 것이다. 이것이 바로 기울기가 없어지게 되는 문제의 핵심이었으며, 이후 ReLU(Rectified Linear Unit), Leaky ReLU 함수와 같이 기울기가 0으로 수렴하지 않는 활성화 함수들이 제안되면서 이 문제 또한 극복하게 된다.
 
 <img src="https://github.com/user-attachments/assets/6232b55c-ddad-4df3-8beb-b11f80343766" height="200" style="display:inline-block;">
-<br>&nbsp; &nbsp;&nbsp;&nbsp;ReLU 함수값과 기울기 곡선
+<br>&nbsp; &nbsp;&nbsp;&nbsp;Leaky ReLU 함수값과 기울기 곡선
 <br><br>
 
   
