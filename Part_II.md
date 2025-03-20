@@ -72,15 +72,26 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{
 다시 하던 이야기로 돌아오면, 비록 EX-OR 문제를 풀 수 있다고는 해도, MLP만으로는 파라미터의 개수가 많아지면서 적절한 weight를 학습하는 것이 매우 어려워진다는 문제가 있었는데, "Parallel Distributed processing"의 저자들은 Back-Propagation Algorithm을 함께 제안해서 이 문제도 해결한 것이었다. Back-Propagation Algorithm은 정방 연산(FeedForward)을 통해 결과 값을 예측한 후, 예측값과 실제값 사이의 오차를 후방(Backward)으로 다시 보내는데, 이 때 미분을 통해 각 레이어의 노드들이 오차값에 미친 영향도를 파악해서 weight를 업데이트할 수 있게 한 것이다. 이러한 MLP는 이후 현재까지도 인공 신경망에서 사용되고 있다. 
 <br><br><br>
 
-   
-4. 새로운 인경 신경망 구조, CNN의 탄생
+
+4. 인공지능 분야의 두 번째 겨울, 기울기 소실 문제
+Back-propagation과  MLP로 EX-OR 문제도 해결하게 되자, 인공 신경망은 거침 없이 발전할 것만 같았다. 그러나, 안타깝게도, 이번에는 신경망의 깊이, 그러니까 레이어의 갯수가 늘어날 수록 오차가 역전파 되는 과정에서 기울기가 0으로 수렴하는 현상, 즉 Gradient Vanishing 문제가 발행한다는 것이 밝혀지면서 또 한 번의 연구 침체기가 찾아온다.
+
+<img src="https://github.com/user-attachments/assets/5f1f2f29-82d7-42a1-a2e8-5514238262d0" width="500" style="display:inline-block;">
+<img src="https://github.com/user-attachments/assets/0c4065a9-f94b-4786-ba85-9fb27af17db8" height="200" style="display:inline-block;">
+<br>&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Gradient Vanishing Problem in Deep Neural Networks,   &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Sigmoid 함수값과 미분값(기울기) 곡선<br>
+
+위의 오른쪽에 있는 그림은 그 당시 사용되던 활성화 함수인 sigmoid 함수의 함수값(빨간색)과, 함수값을 미분하여 구한 순간 변화량 즉, 기울기(파랑색)를 보여주는 그래프이다. 그래프의 왼쪽과 오른쪽 끝으로 갈수록 기울기가 0으로 수렴하는 것이 보일 것이다. 이것이 바로 기울기가 없어지게 되는 문제의 핵심이었으며, 이후 ReLU(Rectified Linear Unit) 함수와 같이 기울기가 0으로 수렴하지 않는 활성화 함수들이 제안되면서 이 문제를 극복하게 된다.
+
+<img src="https://github.com/user-attachments/assets/6232b55c-ddad-4df3-8beb-b11f80343766" height="200" style="display:inline-block;">
+<br>&nbsp; &nbsp;&nbsp;&nbsp;ReLU 함수값과 기울기 곡선
+<br><br>
+
+  
+5. 새로운 인경 신경망 구조, CNN의 탄생
 
 1989년에 Yann LeCun은, 카나다와 스웨덴의 두 신경과학자였던 데이비드 허벨(David H. Hubel)과 톨스텐 위젤(Torsten Wiesel)의 고양이 시각 피질 연구에서 영감을 얻어서, 국소 영역의 정보를 거르는 일종의 작은 필터인 kernel(weight sharing)을 신경망에 도입하고 이를 통해 convolutional feature map을 생성하는 새로운 인공 신경망 구조인 CNN을 제안함으로써 이미지 분야에서도 인공지능이 본격적으로 적용되기 시작하였다[4]. 이후, Yann LeCun과 Yoshua Bengio, Leon Bottou, 그리고 Patrick Haffner는 1998년에 "Gradient-Based Learning Applied to Document Recognition"이라는 제목의 논문에서 CNN(Convolutional Neural Networks) 구조로 개발한 모델인 LeNet-5 통해, 2차원 입력 데이터(2D shaped) 상의 변화를 인식하고 분류할 수 있는 CNN 모델의 우수성을 발표하였다.
 <br><br>
 
-5. 인공지능 분야의 두 번째 겨울, 기울기 소실 문제
-
-<br><br>
 
 6. 적응적 가중치 수정 개념의 도입
 
