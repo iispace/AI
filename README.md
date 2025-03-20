@@ -1,4 +1,4 @@
-# AI란?
+# Part I. AI란?
 
 인공지능(AI, Artificial Intelligence)이란 무엇이고, 어떻게 만들어졌으며, 무슨 일들을 할 수 있는 지, 그리고 무엇보다도 사람들은 인공지능에 왜 그토록 열광하는 지 등을 이해하기 위한 첫 걸음으로, 일단  Ian Goodfellow, Yoshua Bengio 그리고 Aaron Courville님께서 저술하신 교재[1]에 나와있는 아래의 그림을 한 번 보기로 한다. 
 
