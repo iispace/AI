@@ -1,6 +1,6 @@
 # Part II. AI는 어떻게 만들어졌을까?
 
-1. 인공두뇌학과 초기 신경 네트워크
+1. 인공두뇌학
 
 1930년대 ~ 1950대 신경학의 최신 연구는 실제 뇌가 "뉴런"이라는 작은 단위의 신경세포들로 이루어진 전기적인 네트워크라고 보았는데, 이러한 생각을 모방하여 미국의 컴퓨터 과학자이자 수학자였던 노버트 위너(Norbert Wiener)는 전기적 네트워크의 제어를 통해 인공두뇌를 묘사하였다(일명 사이버네틱스). 그리고, 섀넌은 정보 이론을 기반으로 디지털 신호로 묘사했으며, 튜링은 계산 이론을 통해 어떤 형태의 계산도 디지털로 나타낼 수 있음을 보였기 때문에, 인공두뇌의 전자적 구축이 시도될 수 있었다고 한다[1]. 
 
@@ -25,7 +25,11 @@
 <br>
 
 왼쪽부터 차례대로, [Norbert Wiener], [Claude Elwood Shannon], [Alan Turing & The Turing Machine], and [W. Grey Walter with early tortoise]
-<br>
+<br><br><br>
+
+2. 인공 신경망의 탄생
+
+인공 신경망의 초석인 인공 뉴런(인공 신경세포)이 Perceptron으로 발전하고, Perceptron이 다시 Multi-Layer Perceptron으로 발전하며 오늘날 우리가 사용하는 복잡한 인공 신경망이 가능해졌다고 할 수 있다. 그 과정을 좀 더 자세히 보면 다음과 같다.<br><br>
 
 한편 1943년, 수학자 월터 피츠(Walter Pitts)와 신경심리학자였던 워런 맥컬록(Warren Sturgis McCulloch)은 인간의 신경 세포를 단순화해서 인공적으로 모델링을 함으로써, 신경 네트워크라 부루는 기술을 첫번째로 연구한 사람들로 인식되고 있다. 피츠와 맥컬록이 모델링한 인공 신경세포를 맥컬록-피츠 모델 또는 MCP Neuron이라고 하는데, 이 모델은 AND와 OR, 그리고 NOT 연산을 수행할 수 있었기 때문에 이후 인공 신경망 연구의 초석이 된다. 이 모델이 중요한 이유는 생물학적으로 영감을 받은 알고리즘을 사용하여 논리 게이트를 생성할 수 있는 방법을 보여준 것이기 때문이다. 하지만, MCP Neuron은 너무나 단순한 나머지, 가중치를 학습하는 능력도 없었고, EX-OR도 할 수 없어서 아주 간단한 선형 분리 가능 문제만을 해결할 수 있다는 한계가 있었다. 
 
@@ -41,7 +45,7 @@ MCP Neuron의 탄생한 뒤로 약 13년 후인 1956년에 당시의 선구적�
 <img src="https://github.com/user-attachments/assets/e489fcc5-c205-4815-a858-98ab79ba2a89" height="200" style="display:inline-block;">
 <br><br>
 
-MCP Neuron의 한계 중 하나였던 가중치 학습 문제를 해결한 사람은 미국의 심리학자였던 프랭크 로젠블릿(Frank Resenblatt)이었다. 그는 햅의 학습이론에서 영감을 얻어 가중치(weight)를 학습하는 개념을 MCP Neuron에 추가하여 인공 뉴런의 모델을 개선하게 되었는데, 우리는 이를 Perceptron이라 부른다. Perceptron이 가중치를 학습하는 방법은 단순한 규칙 기반의 가중치 업데이트 방식이다. 
+MCP Neuron의 한계 중 하나였던 가중치 학습 문제를 해결한 사람은 미국의 심리학자였던 프랭크 로젠블릿(Frank Resenblatt)이었다. 그는 햅의 학습이론에서 영감을 얻어 가중치(weight)를 학습하는 개념을 MCP Neuron에 추가하여 인공 뉴런의 모델을 개선하게 되었는데, 우리는 이를 Perceptron이라 부른다. Perceptron이 가중치를 학습하는 방법은 아래에 식으로 나타낸 것과 같은 단순한 규칙 기반의 가중치 업데이트 방식이었다. 즉, 오차가 0이 될 때까지 단순히 오차에 학습률을 곱해서 가중치를 업데이트하는 과정을 반복하는 것이다. 
 
 $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: \text{weight for }x_i \hspace{0.2cm}, \hspace{1cm} e = y_i - \hat{y_i}, \hspace{1cm} \alpha: \text{learning rate} $$
 
