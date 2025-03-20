@@ -27,7 +27,7 @@
 왼쪽부터 차례대로, [Norbert Wiener], [Claude Elwood Shannon], [Alan Turing & The Turing Machine], and [W. Grey Walter with early tortoise]
 <br><br><br>
 
-2. 인공 신경망의 탄생
+2. 인공 신경망과 인공지능 연구분야의 탄생
 
 인공 신경망의 초석인 인공 뉴런(인공 신경세포)이 Perceptron으로 발전하고, Perceptron이 다시 Multi-Layer Perceptron으로 발전하며 오늘날 우리가 사용하는 복잡한 인공 신경망이 가능해졌다고 할 수 있다. 그 과정을 좀 더 자세히 보면 다음과 같다.<br><br>
 
