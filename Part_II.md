@@ -68,9 +68,9 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: \text{w
 <br><br><br>
 
    
-4. 새로운 인경 신경망 구조 탄생
+4. 새로운 인경 신경망 구조, CNN의 탄생
 
-1989년에 Yann LeCun은 허벨과 위젤의 고양이 시각피질 미세전극 실험을 통한 고양이의 시각 피질 연구에서 영감을 얻어서, 일종의 작은 필터인 kernel을 신경망에 도입하고 이를 통해 convolutional feature map을 생성하는 새로운 인공 신경망 구조를 제안함으로써 이미지 분야에서도 인공지능이 본격적으로 적용되기 시작하였다[4].
+1989년에 Yann LeCun은, 카나다와 스웨덴의 두 신경과학자였던 데이비드 허벨(David H. Hubel)과 톨스텐 위젤(Torsten Wiesel)의 고양이 시각 피질 연구에서 영감을 얻어서, 국소 영역의 정보를 거르는 일종의 작은 필터인 kernel(weight sharing)을 신경망에 도입하고 이를 통해 convolutional feature map을 생성하는 새로운 인공 신경망 구조인 CNN을 제안함으로써 이미지 분야에서도 인공지능이 본격적으로 적용되기 시작하였다[4]. 이후, Yann LeCun과 Yoshua Bengio, Leon Bottou, 그리고 Patrick Haffner는 1998년에 "Gradient-Based Learning Applied to Document Recognition"이라는 제목의 논문에서 CNN(Convolutional Neural Networks) 구조로 개발한 모델인 LeNet-5 통해, 2차원 입력 데이터(2D shaped) 상의 변화를 인식하고 분류할 수 있는 CNN 모델의 우수성을 발표하였다.
 
 <hr>
 
@@ -79,3 +79,4 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}w_i: \text{w
 - [2] [William Grey Walter](http://www.aistudy.com/pioneer/Walter.G.htm)
 - [3] [딥러닝의 역사](http://solarisailab.com/archives/1206)
 - [4] [Handwritten digit recognition with a back-propagation network](https://proceedings.neurips.cc/paper/1989/file/53c3bce66e43be4f209556518c2fcb54-Paper.pdf)
+ 
