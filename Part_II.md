@@ -110,7 +110,7 @@ Back-propagation과  MLP로 EX-OR 문제도 해결하게 되자, 인공 신경�
 
 이상으로 AI는 지금까지 어떻게 만들어져 왔는지를 살펴보았다. Part III에서는 AI가 그래서 인류가 직면한 수많은 문제에 어떤 도움을 줄 수 있는지, 실생활에서는 어떻게 활용할 수 있는지에 대해서 알아보려고 한다.
 
-마지막으로, 1세대 인공지능의 연구를 이끌었던 선대 연구자들과 2세대의 대표적인 연구자들의 사진을 소개하며 Part II를 마친다.
+마지막으로, 1세대 인공지능의 연구를 이끌었던 선대 연구자들과 2세대 대표 연구자들의 사진을 소개하며 Part II를 마친다.
 
 <a href="https://spectrum.ieee.org/dartmouth-ai-workshop">
 <img src="https://github.com/user-attachments/assets/74cb5c4a-b3b6-4913-a304-5d7814b80407" height="200" style="display:inline-block;"></a>
