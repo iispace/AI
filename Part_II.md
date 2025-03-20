@@ -64,10 +64,10 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{
 
 안된다고 가만히 손놓고 있을 인류가 아니었을까? 인공 신경망에 대한 관심히 싸늘하게 식어 있던 기간에도 묵묵히 연구를 이어가는 학자들은 있었는데, 그 중 McClelland, James L., David E. Rumelhart, and Geoffrey E. Hinton이 1986년에 “Parallel Distributed Processing”라는 책을 통해 히든 레이어를 가진 Multi-Layer Perceptrons(MLP)과 Backpropagation Algorithm을 제시하면서 perceptron이 가졌던 문제를 해결할 수 있게 되었다. 기존의 perceptron이 단순 선형 분류기라는 한계에 의해 EX-OR 문제를 해결할 수 없었다면, Multi-Layer Perceptrons(MLP)는 히든 레이어(Hidden Layer)라는 중간 레이어를 추가함으로써, 선형 분류 판별선을 여러개 그리는 효과를 얻을 수 있었고, 그 결과로 EX-OR 문제를 해결할 수 있게 한 것이었다[3].
 
-여기서 잠시 다른 이야기를 하자면, 전기학의 회로 이론에서도 AND, OR, NOT, 또는 EX-OR 연산을 위한 논리 회로를 그릴 수 있다. 그런데, 이 논리 회로에서도 Perceptron 처럼 앞의 세 가지 연산(AND, OR, NOT)은 하나의 레이어로 표현이 되지만, EX-OR 회로는 한 개의 레이어로는 구현하지 못한다. 이를 구현하기 위해서는 두 개의 레이어를 이어 붙여야만 구현이 가능하다. Geoffrey E. Hinton 등이 MLP를 제안할 때 회로 이론에서 영감을 얻은 것일까? 아니면, 수학적으로 불가능이 증명된 문제라 하더라도 차원을 늘리면 해결되는 문제를 종종 볼 수 있는데, 그러한 수학적 영감을 떠올렸던 것일까?라는 궁금증이 생긴다.
+여기서 잠시 다른 이야기를 하자면, 전기학의 회로 이론에서도 AND, OR, NOT, 또는 EX-OR 연산을 위한 논리 회로를 그릴 수 있다. 그런데, 이 논리 회로에서도 Perceptron 처럼 앞의 세 가지 연산(AND, OR, NOT)은 하나의 레이어로 표현이 되지만, EX-OR 회로는 한 개의 레이어로는 구현하지 못한다. 이를 구현하기 위해서는 아래의 그림처럼 두 개의 레이어를 이어 붙여야만 구현이 가능하다. Geoffrey E. Hinton 등이 MLP를 제안할 때 회로 이론에서 영감을 얻은 것일까? 아니면, 수학적으로 불가능이 증명된 문제라 하더라도 차원을 늘리면 해결되는 경우를 종종 볼 수 있는데, 그러한 수학적 영감을 떠올렸던 것일까?라는 궁금증이 생긴다.
 
 <img src="https://github.com/user-attachments/assets/c09e9090-4701-454e-8606-c149d949ccc8" height="200" style="display:inline-block;">
-<br><br>
+<br>[AND, OR, NOT, EX-OR의 논리 회로도]<br><br>
 
 다시 하던 이야기로 돌아오면, 비록 EX-OR 문제를 풀 수 있다고는 해도, MLP만으로는 파라미터의 개수가 많아지면서 적절한 weight를 학습하는 것이 매우 어려워진다는 문제가 있었는데, "Parallel Distributed processing"의 저자들은 Back-Propagation Algorithm을 함께 제안해서 이 문제도 해결한 것이었다. Back-Propagation Algorithm은 정방 연산(FeedForward)을 통해 결과 값을 예측한 후, 예측값과 실제값 사이의 오차를 후방(Backward)으로 다시 보내는데, 이 때 미분을 통해 각 레이어의 노드들이 오차값에 미친 영향도를 파악해서 weight를 업데이트할 수 있게 한 것이다. 이러한 MLP는 이후 현재까지도 인공 신경망에서 사용되고 있다. 
 <br><br><br>
