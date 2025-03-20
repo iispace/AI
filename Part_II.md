@@ -29,69 +29,9 @@
 
 2. 초기 인공 신경망과 인공지능 연구분야의 탄생, 그리고 인공지능 연구의 첫번째 겨울
 
-인공 신경망의 초석인 인공 뉴런(인공 신경세포)이 Perceptron으로 발전하고, Perceptron이 다시 Multi-Layer Perceptron으로 발전하며 오늘날 우리가 사용하는 복잡한 인공 신경망이 가능해졌다고 할 수 있다. 그 과정을 좀 더 자세히 보면 다음과 같다.<br><br>
+인공 신경망의 초석인 인공 뉴런(인공 신경세포)이 Perceptron으로 발전하고, Perceptron이 다시 Multi-Layer Perceptron으로 발전하며 오늘날 우리가 사용하는 복잡한 인공 신경망이 가능해졌다고 할 수 있다. 그 과정을 좀 더 자세히 보면 다음과 같다.<br>
 
-한편 1943년, 수학자 월터 피츠(Walter Pitts)와 신경심리학자였던 워런 맥컬록(Warren Sturgis McCulloch)은 인간의 신경 세포를 단순화해서 인공적으로 모델링을 함으로써, 신경 네트워크라 부루는 기술을 첫번째로 연구한 사람들로 인식되고 있다. 피츠와 맥컬록이 모델링한 인공 신경세포를 맥컬록-피츠 모델 또는 MCP Neuron이라고 하는데, 이 모델은 AND와 OR, 그리고 NOT 연산을 수행할 수 있었기 때문에 이후 인공 신경망 연구의 초석이 된다. 이 모델이 중요한 이유는 생물학적으로 영감을 받은 알고리즘을 사용하여 논리 게이트를 생성할 수 있는 방법을 보여준 것이기 때문이다. 하지만, MCP Neuron은 너무나 단순한 나머지, 가중치를 학습하는 능력도 없었고, EX-OR도 할 수 없어서 아주 간단한 선형 분리 가능 문제만을 해결할 수 있다는 한계가 있었다. 
-
-<img src="https://github.com/user-attachments/assets/0b6b85dc-61b0-440c-b35c-1e00ae9222cd" height="200" style="display:inline-block;">
-
-<a href="https://jontysinai.github.io/jekyll/update/2017/09/24/the-mcp-neuron.html">
-<img src="https://github.com/user-attachments/assets/9179ed3d-450a-476b-9169-64da0496c20f" height="200" style="display:inline-block;">
-</a>
-<br><br>
-
-MCP Neuron의 탄생한 뒤로 약 13년 후인 1956년에 당시의 선구적인 연구자들이 다트머스 학회에 참석하였는데, 거기서 컴퓨터 과학자이자 인지 과학자였던 John McCarthy가 "인공지능"이라는 용어를 처음 사용하며 여름 연구 프로젝트를 제안하게 되는데, 이 제안이 계기가 되어 인공지능은 마침내 하나의 연구 분야로 공식적으로 자리매김하게 된다. 물리학에 솔베이 회의가 있었다면, 컴퓨터 과학에는 다트머스 회의가 있다고 하고 싶다.
-
-<img src="https://github.com/user-attachments/assets/e489fcc5-c205-4815-a858-98ab79ba2a89" height="200" style="display:inline-block;">
-<br><br>
-
-MCP Neuron의 한계 중 하나였던 가중치 학습 문제를 해결한 사람은 미국의 심리학자였던 프랭크 로젠블릿(Frank Rosenblatt)이었다. 그는 1957년에 햅의 학습이론에서 영감을 얻어 가중치(weight)를 학습하는 개념을 MCP Neuron에 추가하여 인공 뉴런의 모델을 개선하게 되었는데, 우리는 이를 Perceptron이라 부른다. 그 당시 뉴욕타임즈는 이 Perceptron을 소개하는 기사에서 조만간 인간과 같은 기계가 탄생할 것이라고 예견하면서 세간의 엄청난 기대를 불러 일으켰다고 합니다. 많은 사람들이 Perceptron을 통해 진짜 인간과 같은 인공지능을 곧 만들 수 있을 것이라고 생각했다고 하니, 얼마나 기대가 컸을까.... Perceptron이 가중치를 학습하는 방법은 아래에 식으로 나타낸 것과 같은 단순한 규칙 기반의 가중치 업데이트 방식이었다. 즉, 오차가 0이 될 때까지 단순히 오차에 학습률을 곱해서 가중치를 업데이트하는 과정을 반복하는 것이다. 그리고 이 Perceptron까지만 해도 활성화 함수로는 sigmoid 함수가 사용되었다고 한다.(ReLU 같은 더 정교한 활성화 함수는 이후에 제안된다)
-
-$$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{weight for }x_i \hspace{0.2cm}, \hspace{1cm} e = y_i - \hat{y_i}, \hspace{1cm} \alpha: \text{learning rate}) $$
-<br>
-
-<a href="http://solarisailab.com/archives/1206">
-<img src="https://github.com/user-attachments/assets/abfb8eb3-b05c-43ea-b6d6-a6ea16710a63" height="200" style="display:inline-block;">
-</a><br>
-(왼쪽) Percentron 이미지 인식 센서와 Frank Rosenblatt, (오른쪽) Mark 1으로 구현된 Frank Rosenblatt의 Perceptron
-<br><br>
-
-하지만, Perceptron은 그 당시 사람들의 기대와는 달리, 단순한 선형 분류기였기 때문에 EX-OR 문제를 포함한 복잡한 비선형 문제는 해결할 수 없다는 한계가 있었는데, 이 문제에 대한 해법이 연구되기도 전에 Perceptron으로는 EX-OR 문제는 해결할 수 없다는 것을 Marvin Minsky와 Seymour Papert가 1969년에 수학적으로 증명을 해 버림으로써, 인공지능에 대한 기대와 열기가 급속히 사그라들었다고 한다[3].
-<br><br><br>
-
-
-2. 인공 신경망의 부활
-
-안된다고 가만히 손놓고 있을 인류가 아니었을까? 인공 신경망에 대한 관심히 싸늘하게 식어 있던 기간에도 묵묵히 연구를 이어가는 학자들은 있었는데, 그 중 McClelland, James L., David E. Rumelhart, and Geoffrey E. Hinton이 1986년에 “Parallel Distributed Processing”라는 책을 통해 히든 레이어를 가진 Multi-Layer Perceptrons(MLP)과 Backpropagation Algorithm을 제시하면서 perceptron이 가졌던 문제를 해결할 수 있게 되었다. 기존의 perceptron이 단순 선형 분류기라는 한계에 의해 EX-OR 문제를 해결할 수 없었다면, Multi-Layer Perceptrons(MLP)는 히든 레이어(Hidden Layer)라는 중간 레이어를 추가함으로써, 선형 분류 판별선을 여러개 그리는 효과를 얻음으로써 EX-OR 문제를 해결할 수 있게 한 것이었다[3].
-
-전기학에서도이후 미국의 신경생리학자이자 EEG(electroencephalograms, 뇌파도)를 연구한 윌리엄 그레이 월터(William Grey Walter)는 적은 수의 뇌세포들을 연결하는 것 만으로도 매우 복잡한 행동들이 발생할 수 있다는 것을 증명하고자 인공두뇌의 아이디어를 기반으로 1948~1949년 컴퓨터를 사용하지 않고 아날로그 회로만을 이용한 최초의 전기 자율로봇을 연구했는데, 이는 전기가 어떻게 엃혀서 두뇌가 작동하게 되는지에 대한 근본적인 비밀을 관찰하는 연구라는 점에서 큰 의미가 있는 것 같다. 이 최초의 전기 자율로봇은 그 모양과 느린 움직임 때문에 거북(tortoises)이라고 불리기도 했다고 한다. 이 로봇은 3개의 바퀴가 있고 빛을 따라가며 (phototaxis) 배터리가 충전될 필요가 있으면 충전소를 찾아갈 수 있었다고. 월터는 그의 동시대 인물인 앨런 튜링과 폰 노이만이 모두 디지털 계산의 견지에서 인공두뇌를 묘사할 때, 순수하게 아날로그 전기를 사용하여 두뇌과정을 모방하는 것의 중요성을 강조했다고 한다[2]. 
-
-
-<a href="https://images-prod.dazeddigital.com/758/azure/dazed-prod/1060/8/1068945.JPG">
-<img src="https://github.com/user-attachments/assets/2b98ebbb-bcb5-4189-9ebf-fd89f291adee" height="200" style="display:inline-block;">
-</a>
-
-<a href="https://ko.wikipedia.org/wiki/%ED%81%B4%EB%A1%9C%EB%93%9C_%EC%84%80%EB%84%8C">
-<img src="https://github.com/user-attachments/assets/b7817611-cbf3-4c2f-9c35-19e30c4acd5a" height="200" style="display:inline-block;">
-</a>
-
-<a href="https://pivotal.digital/insights/1936-alan-turing-the-turing-machine">
-<img src="https://github.com/user-attachments/assets/8c2be005-c81a-4f1b-bc1d-7fb1975f2078" height="200" style="display:inline-block;">
-</a>
-
-<a href="https://www.researchgate.net/profile/Marcio-Rocha-3/publication/283567826/figure/fig6/AS:669949991346177@1536739933167/Top-left-Grey-Walter-photograph-by-Hans-Moravec-top-right-Walters-machina.jpg">
-<img src="https://github.com/user-attachments/assets/74b030e1-a139-4692-9187-42a68ffe238d" height="200" style="display:inline-block;">
-</a>
-<br>
-
-왼쪽부터 차례대로, [Norbert Wiener], [Claude Elwood Shannon], [Alan Turing & The Turing Machine], and [W. Grey Walter with early tortoise]
-<br><br><br>
-
-2. 초기 인공 신경망과 인공지능 연구분야의 탄생, 그리고 인공지능 연구의 첫번째 겨울
-
-인공 신경망의 초석인 인공 뉴런(인공 신경세포)이 Perceptron으로 발전하고, Perceptron이 다시 Multi-Layer Perceptron으로 발전하며 오늘날 우리가 사용하는 복잡한 인공 신경망이 가능해졌다고 할 수 있다. 그 과정을 좀 더 자세히 보면 다음과 같다.<br><br>
-
-한편 1943년, 수학자 월터 피츠(Walter Pitts)와 신경심리학자였던 워런 맥컬록(Warren Sturgis McCulloch)은 인간의 신경 세포를 단순화해서 인공적으로 모델링을 함으로써, 신경 네트워크라 부루는 기술을 첫번째로 연구한 사람들로 인식되고 있다. 피츠와 맥컬록이 모델링한 인공 신경세포를 맥컬록-피츠 모델 또는 MCP Neuron이라고 하는데, 이 모델은 AND와 OR, 그리고 NOT 연산을 수행할 수 있었기 때문에 이후 인공 신경망 연구의 초석이 된다. 이 모델이 중요한 이유는 생물학적으로 영감을 받은 알고리즘을 사용하여 논리 게이트를 생성할 수 있는 방법을 보여준 것이기 때문이다. 하지만, MCP Neuron은 너무나 단순한 나머지, 가중치를 학습하는 능력도 없었고, EX-OR도 할 수 없어서 아주 간단한 선형 분리 가능 문제만을 해결할 수 있다는 한계가 있었다. 
+1943년, 수학자 월터 피츠(Walter Pitts)와 신경심리학자였던 워런 맥컬록(Warren Sturgis McCulloch)은 인간의 신경 세포를 단순화해서 인공적으로 모델링을 함으로써, 신경 네트워크라 부루는 기술을 첫번째로 연구한 사람들로 인식되고 있다. 피츠와 맥컬록이 모델링한 인공 신경세포를 맥컬록-피츠 모델 또는 MCP Neuron이라고 하는데, 이 모델은 AND와 OR, 그리고 NOT 연산을 수행할 수 있었기 때문에 이후 인공 신경망 연구의 초석이 된다. 이 모델이 중요한 이유는 생물학적으로 영감을 받은 알고리즘을 사용하여 논리 게이트를 생성할 수 있는 방법을 보여준 것이기 때문이다. 하지만, MCP Neuron은 너무나 단순한 나머지, 가중치를 학습하는 능력도 없었고, EX-OR도 할 수 없어서 아주 간단한 선형 분리 가능 문제만을 해결할 수 있다는 한계가 있었다. 
 
 <img src="https://github.com/user-attachments/assets/0b6b85dc-61b0-440c-b35c-1e00ae9222cd" height="200" style="display:inline-block;">
 
@@ -120,11 +60,14 @@ $$ w_i = w_i + \alpha \cdot e \cdot x_i \hspace{0.2cm}, \hspace{1cm}(w_i: \text{
 <br><br><br>
 
 
-2. 인공 신경망의 부활
+3. 인공 신경망의 부활
 
-안된다고 가만히 손놓고 있을 인류가 아니었을까? 인공 신경망에 대한 관심히 싸늘하게 식어 있던 기간에도 묵묵히 연구를 이어가는 학자들은 있었는데, 그 중 McClelland, James L., David E. Rumelhart, and Geoffrey E. Hinton이 1986년에 “Parallel Distributed Processing”라는 책을 통해 히든 레이어를 가진 Multi-Layer Perceptrons(MLP)과 Backpropagation Algorithm을 제시하면서 perceptron이 가졌던 문제를 해결할 수 있게 되었다. 기존의 perceptron이 단순 선형 분류기라는 한계에 의해 EX-OR 문제를 해결할 수 없었다면, Multi-Layer Perceptrons(MLP)는 히든 레이어(Hidden Layer)라는 중간 레이어를 추가함으로써, 선형 분류 판별선을 여러개 그리는 효과를 얻음으로써 EX-OR 문제를 해결할 수 있게 한 것이었다[3].
+안된다고 가만히 손놓고 있을 인류가 아니었을까? 인공 신경망에 대한 관심히 싸늘하게 식어 있던 기간에도 묵묵히 연구를 이어가는 학자들은 있었는데, 그 중 McClelland, James L., David E. Rumelhart, and Geoffrey E. Hinton이 1986년에 “Parallel Distributed Processing”라는 책을 통해 히든 레이어를 가진 Multi-Layer Perceptrons(MLP)과 Backpropagation Algorithm을 제시하면서 perceptron이 가졌던 문제를 해결할 수 있게 되었다. 기존의 perceptron이 단순 선형 분류기라는 한계에 의해 EX-OR 문제를 해결할 수 없었다면, Multi-Layer Perceptrons(MLP)는 히든 레이어(Hidden Layer)라는 중간 레이어를 추가함으로써, 선형 분류 판별선을 여러개 그리는 효과를 얻을 수 있었고, 그 결과로 EX-OR 문제를 해결할 수 있게 한 것이었다[3].
 
 여기서 잠시 다른 이야기를 하자면, 전기학의 회로 이론에서도 AND, OR, NOT, 또는 EX-OR 연산을 위한 논리 회로를 그릴 수 있다. 그런데, 이 논리 회로에서도 Perceptron 처럼 앞의 세 가지 연산(AND, OR, NOT)은 하나의 레이어로 표현이 되지만, EX-OR 회로는 한 개의 레이어로는 구현하지 못한다. 이를 구현하기 위해서는 두 개의 레이어를 이어 붙여야만 구현이 가능하다. 그리고, 수학적으로 불가능이 증명된 문제라 하더라도, 차원을 늘리면 해결되는 문제를 종종 볼 수 있는데, (역사에 만약은 없다지만) Geoffrey E. Hinton 등이 MLP를 제안할 때 회로 이론에서 영감을 얻은 것일까? 하는 생각을 잠시 해 본다.
+
+<img src="https://github.com/user-attachments/assets/c09e9090-4701-454e-8606-c149d949ccc8" height="200" style="display:inline-block;">
+<br><br>
 
 다시 하던 이야기로 돌아오면, 비록 EX-OR 문제를 풀 수 있다고는 해도, MLP만으로는 파라미터의 개수가 많아지면서 적절한 weight를 학습하는 것이 매우 어려워진다는 문제가 있었는데, "Parallel Distributed processing"의 저자들은 Back-Propagation Algorithm을 함께 제안해서 이 문제도 해결한 것이었다. Back-Propagation Algorithm은 정방 연산(FeedForward)을 통해 결과 값을 예측한 후, 예측값과 실제값 사이의 오차를 후방(Backward)으로 다시 보내는데, 이 때 미분을 통해 각 레이어의 노드들이 오차값에 미친 영향도를 파악해서 weight를 업데이트할 수 있게 한 것이다. 이러한 MLP는 이후 현재까지도 인공 신경망에서 사용되고 있다. 
 <br><br><br>
