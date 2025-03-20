@@ -97,7 +97,7 @@ Back-propagation과  MLP로 EX-OR 문제도 해결하게 되자, 인공 신경�
 
 <b>6. (추가 사항) 적응적 가중치 수정 개념의 도입</b>
 
-인공 신경망에서 Back-propagation을 통해 가중치를 조정하는 역할을 하는 것을 optimizer라 한다. 이 optimizer는 신경망의 후방으로 오차값을 역전파하면서 각 레이어마다 있는 노드들의 기울기(해당 노드가 계산된 오차에 영향을 미친 정도)를 알아내고, 이를 기반으로 가중치를 업데이트하는데, 모델의 현재 상황에 관계 없이 무조건 동일한 학습률을 적용해서 업데이트하는 대신, 상황에 따라 적응적으로 가중치를 달리 업데이트하는 Adaptive optimizer(적응적 최적화기)가 제안되면서 특정 분야에서는 인공 신경망의 성능이 개선되기도 하였다. 그런데, 사실 이 "적응적"이라는 개념은 일찍이  1960에 미국 스탠포드 대학의 교수였던 Bernard Widrow와 그의 제자 Ted Hoff가 가중치를 조정할 수 있는 적응적 인공신경망인 ADALINE을 제안한 것에서부터 발전된 것이라고 할 수 있다. ADALINE은 아래의 그림과 같이 소프트웨어가 아니라 전기적으로 설계되고 구현된 기계장치였다.
+인공 신경망에서 Back-propagation을 통해 가중치를 조정하는 역할을 하는 것을 optimizer라 한다. 이 optimizer는 신경망의 후방으로 오차값을 역전파하면서 각 레이어마다 있는 노드들의 기울기(해당 노드가 계산된 오차에 영향을 미친 정도)를 알아내고, 이를 기반으로 가중치를 업데이트하는데, 모델의 현재 상황에 관계 없이 무조건 동일한 학습률을 적용해서 업데이트하는 대신, 상황에 따라 적응적으로 가중치를 달리 업데이트하는 Adaptive optimizer(적응적 최적화기)가 제안되면서 특정 분야에서는 인공 신경망의 성능이 개선되기도 하였다. 그런데, 사실 이 "적응적"이라는 개념은 일찍이  1960에 미국 스탠포드 대학의 교수였던 Bernard Widrow와 그의 제자 Ted Hoff가 가중치를 조정할 수 있는 적응적 인공신경망인 ADALINE을 제안한 것에서부터 발전된 것이라고 할 수 있다. ADALINE은 아래의 그림과 같이 소프트웨어가 아니라 전기적으로 설계되고 구현된 기계장치였다[5].
 
 <a href="https://en.wikipedia.org/wiki/ADALINE">
 <img src="https://github.com/user-attachments/assets/1b34fcac-4279-403e-bb79-0ded1c49ce9e" height="200" style="display:inline-block;"></a>
@@ -132,4 +132,4 @@ Andrew Ng: https://www.deeplearning.ai/courses/generative-ai-for-everyone/<br>
 - [2] [William Grey Walter](http://www.aistudy.com/pioneer/Walter.G.htm)
 - [3] [딥러닝의 역사](http://solarisailab.com/archives/1206)
 - [4] [Handwritten digit recognition with a back-propagation network](https://proceedings.neurips.cc/paper/1989/file/53c3bce66e43be4f209556518c2fcb54-Paper.pdf)
- 
+- [5] [ADALINE](https://en.wikipedia.org/wiki/ADALINE) 
