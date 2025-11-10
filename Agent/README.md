@@ -1,4 +1,7 @@
-# 용어 정리
+# AI Agent란?
+
+
+## 용어 정리
 
 |용어|설명|
 |:-|:-|
@@ -11,7 +14,7 @@
 
 <br>
 
-# 자율 시스템의 필수 구성 요소 [[1]](#ref_1)
+## AI Agent(자율 시스템)의 필수 구성 요소 [[1]](#ref_1)
 
   <img width="995" height="500" alt="image" src="https://github.com/user-attachments/assets/4e9ff736-b885-4443-9142-a74d92a26c5f" />
 
