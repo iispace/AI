@@ -40,3 +40,4 @@
 # 추가 자료
 [Agent Development Kit](https://google.github.io/adk-docs/agents/)
 [Sequential Agents in ADK](https://google.github.io/adk-docs/agents/workflow-agents/sequential-agents/)
+[Parallel Agents in ADK](https://google.github.io/adk-docs/agents/workflow-agents/parallel-agents/)
