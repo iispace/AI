@@ -1,0 +1,781 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Anomaly Detection using PatchCore(1차시)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2326dcb2-b0a8-8080-9b47-e08c6a0ac7f4" class="page sans"><header><h1 class="page-title">Anomaly Detection using PatchCore(1차시)</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-date"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>날짜</th><td><time>@2025년 7월 30일</time></td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>상태</th><td><span class="status-value select-value-color-green"><div class="status-dot status-dot-color-green"></div>완료</span></td></tr></tbody></table></header><div class="page-body"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="2326dcb2-b0a8-805e-a6c2-c68091b4e41f"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><p id="2326dcb2-b0a8-80bb-9447-f602224f36b1" class=""><strong>Computer Vision 분야</strong></p><ul id="2326dcb2-b0a8-8045-9a39-ce24a5dd4106" class="toggle"><li><details open=""><summary>Object Detection(객체 탐지) </summary><ul id="2326dcb2-b0a8-80d7-bd20-ceac9dd3aa23" class="bulleted-list"><li style="list-style-type:disc">자동차, 사람, 개, 고양이 등 이미지에 포함된 명확한 형체를 찾는 경우</li></ul><ul id="2326dcb2-b0a8-801a-a99d-c71985c5775f" class="bulleted-list"><li style="list-style-type:disc">YOLO, …</li></ul></details></li></ul><ul id="2326dcb2-b0a8-8043-a989-c548b532025a" class="toggle"><li><details open=""><summary>Image Classification(이미지 분류)</summary><ul id="2326dcb2-b0a8-80b5-b3b6-f36888218793" class="bulleted-list"><li style="list-style-type:disc">“정상 vs 비정상”,  “Pass vs Fail” 과 같이 이미지 전체에 대해 두 가지 중 하나로 판단하고자 하는 경우 </li></ul><ul id="2326dcb2-b0a8-80e1-bc0e-c9d318af1e6c" class="bulleted-list"><li style="list-style-type:disc">“이 사진 속 식물에 벌레가 있는가?”와 같은 이진 분류 문제</li></ul><ul id="2326dcb2-b0a8-8021-a358-f44baa166510" class="bulleted-list"><li style="list-style-type:disc">사진 속 위치 정보는 필요 없고, 단지 “있다/없다” 만 알고 싶을 때.</li></ul><ul id="2326dcb2-b0a8-8015-8aff-e5f79587a76b" class="bulleted-list"><li style="list-style-type:disc">ResNet, EfficientNet, MobileNet, …</li></ul></details></li></ul><ul id="2326dcb2-b0a8-809c-b4f1-da19c747cd64" class="toggle"><li><details open=""><summary>Image Segmentation(이미지 분할)</summary><ul id="2326dcb2-b0a8-80de-b94b-e4670188b064" class="bulleted-list"><li style="list-style-type:disc">찾고자 하는 대상 물체의 정확한 윤곽이나 픽셀 단위의 위치를 알고자 할 때</li></ul><ul id="2326dcb2-b0a8-801b-89be-e89307287e68" class="toggle"><li><details open=""><summary>대표적 모델</summary><ul id="2326dcb2-b0a8-8015-baf5-e5fef20b0cef" class="bulleted-list"><li style="list-style-type:disc">U-Net</li></ul><ul id="2326dcb2-b0a8-80e4-80a1-f0809d3a3578" class="bulleted-list"><li style="list-style-type:disc">DeepLabV3+ </li></ul><ul id="2326dcb2-b0a8-802a-98dd-f9718681ab51" class="bulleted-list"><li style="list-style-type:disc">Mask R-CNN</li></ul></details></li></ul></details></li></ul><ul id="23e6dcb2-b0a8-8046-87e3-e6cf08dfe1b5" class="toggle"><li><details open=""><summary>Much more … (참고: <a href="https://huggingface.co/tasks">https://huggingface.co/tasks</a>)</summary><figure id="23e6dcb2-b0a8-802d-ad6e-f649e1d4246e" class="image"><a href="image.png"><img style="width:768px" src="image.png"/></a></figure></details></li></ul><p id="2326dcb2-b0a8-8012-827b-eba75b2cb96e" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="23e6dcb2-b0a8-8025-b534-eb66ed487b61"><div style="font-size:1.5em"><span class="icon">🛠</span></div><div style="width:100%"><p id="23e6dcb2-b0a8-8071-afa5-e26211e685e1" class=""><strong>실습 주제</strong></p><ul id="2326dcb2-b0a8-80a2-aadf-c77bdf626b56" class="toggle"><li><details open=""><summary><mark class="highlight-blue"><strong>Anomaly Detection(이상 탐지)</strong></mark></summary><ul id="2326dcb2-b0a8-80fe-a365-e0b8a19b3375" class="bulleted-list"><li style="list-style-type:disc">탐지하고자 하는 대상의 종류가 다양하거나, 비정형적인 형상을 탐지하고자 할 때 </li></ul><ul id="2326dcb2-b0a8-8074-b460-e47af01e709a" class="bulleted-list"><li style="list-style-type:disc">예: 식물 중에서 병충해에 의해 손상된 식물을 탐지하는 것.<ul id="23e6dcb2-b0a8-80dc-843d-d3a5cc50a1a9" class="bulleted-list"><li style="list-style-type:circle">정상 식물의 이미지만으로 학습</li></ul><ul id="23e6dcb2-b0a8-8055-974d-ec7f4f865ad7" class="bulleted-list"><li style="list-style-type:circle">학습 결과로 만들어낸 정상 이미지 특성과 비교해서, 많이 다른 특성을 가진 이미지는 “비정상(anomaly)”로 판단 </li></ul><ul id="23e6dcb2-b0a8-80e7-acf5-f5f5f138320b" class="bulleted-list"><li style="list-style-type:circle">즉,  비정상 상태의 경우가 매우 다양하여 찾아내야 하는 형태를 미리 정의할 수 없는 경우</li></ul></li></ul><ul id="2326dcb2-b0a8-8013-b6e2-e291f40de79f" class="toggle"><li><details open=""><summary><mark class="highlight-red">Anomaly Detection Task 접근 방식</mark></summary><ul id="23e6dcb2-b0a8-8064-b276-e9ae980b9758" class="toggle"><li><details open=""><summary>1. 재구성 (Reconstruction-based) 방식</summary><ul id="23e6dcb2-b0a8-808a-89b9-d1fa62b9942e" class="bulleted-list"><li style="list-style-type:disc">Encoder-Decoder 기반 모델로 정상 이미지 학습 →  복원 오류가 큰 데이터를 이상(anomaly)으로 판단<figure id="23e6dcb2-b0a8-80ae-b4a3-fb90dcdf0f0b" class="image"><a href="image%201.png"><img style="width:528px" src="image%201.png"/></a><figcaption>Encoder - Decoder 구조<br/>(그림 출처: <a href="https://medium.com/@birla.deepak26/autoencoders-76bb49ae6a8f">https://medium.com/@birla.deepak26/autoencoders-76bb49ae6a8f</a>)</figcaption></figure></li></ul><ul id="23e6dcb2-b0a8-80a1-93b5-fec215a5c957" class="bulleted-list"><li style="list-style-type:disc">Autoencoder, VAE 등으로 정상 데이터만 학습하여 Decoder의 복원(재구성) 능력을 키움</li></ul><ul id="23e6dcb2-b0a8-807c-803c-e1de8705ec8f" class="bulleted-list"><li style="list-style-type:disc">검사할 입력 이미지와 학습된 Decoder에 의해 복원된 이미지 간의 차이를 기반으로 이상 여부 판단</li></ul><ul id="23e6dcb2-b0a8-8043-b602-c5a8f3a199a0" class="bulleted-list"><li style="list-style-type:disc">재구성 방식의 문제점<figure id="23e6dcb2-b0a8-8007-a483-dc2c6ad3b2ff" class="image"><a href="image%202.png"><img style="width:528px" src="image%202.png"/></a><figcaption>Reconstruction 방식에서 의도한 시나리오와 실제 상황과의 차이 비교<br/>(그림 출처: <a href="https://ffighting.net/deep-learning-paper-review/anomaly-detection/draem/">https://ffighting.net/deep-learning-paper-review/anomaly-detection/draem/</a>)</figcaption></figure></li></ul></details></li></ul><ul id="2326dcb2-b0a8-805f-954e-c80183947bae" class="toggle"><li><details open=""><summary>2. <mark class="highlight-blue">임베딩 (Embedding) 방식</mark></summary><ul id="23e6dcb2-b0a8-8087-acca-d4c2871c4404" class="bulleted-list"><li style="list-style-type:disc">특성 공간(feature/embedding space)를 학습한 후, 테스트 데이터가 이 공간에서 벗어나는 정도(거리)를 기반으로 이상 탐지</li></ul><ul id="23e6dcb2-b0a8-80e3-b907-fc2cfe4e5bea" class="bulleted-list"><li style="list-style-type:disc">특성 공간 추출을 위해 Pretrained network(ResNet 등)의 feature extraction block을 주로 사용 </li></ul><ul id="23e6dcb2-b0a8-805e-9522-d7d292106d21" class="bulleted-list"><li style="list-style-type:disc">정상 이미지의 feature 분포와 비교하여 거리가 일정 수준 이상인 것을 이상으로 탐ㅈㅣ<ul id="23e6dcb2-b0a8-800f-acb2-e6ae40dd5b37" class="bulleted-list"><li style="list-style-type:circle">KNN, Mahalonobis 거리, cosine similarity 등</li></ul></li></ul><ul id="23e6dcb2-b0a8-8023-92ac-e878442e7cf6" class="bulleted-list"><li style="list-style-type:disc">특성 공간을 학습하므로 복잡한 이상에도 효과적</li></ul><ul id="23e6dcb2-b0a8-8034-bafd-df217f1b0b9a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Pretrained model을 사용하므로, 학습 과정이 간단하거나 아예 필요 없는 경우도 있음</strong></mark>.</li></ul></details></li></ul><ul id="23e6dcb2-b0a8-8000-b84d-da2130cc7625" class="toggle"><li><details open=""><summary>3. 합성(Synthesis) 방식</summary><ul id="23e6dcb2-b0a8-80e3-9394-d449158a88fe" class="bulleted-list"><li style="list-style-type:disc">인위적으로 정상 이미지에 이상(anomaly) 영역을 합성하여 이상 이미지 합성</li></ul><ul id="23e6dcb2-b0a8-80d2-9f6d-ecfaca5b6dd7" class="bulleted-list"><li style="list-style-type:disc">비정상 sample이 몇 개 없더라도, 의도적으로 이상 sample을 생성하므로 지도학습을 적용하여 정확도 향상 가능</li></ul><ul id="23e6dcb2-b0a8-809d-b870-c99bbf1e09d8" class="bulleted-list"><li style="list-style-type:disc">합성을 통해 이상 이미지를 생성하므로, 모델의 일반화 성능 향상 가능</li></ul><ul id="23e6dcb2-b0a8-801e-82c4-f81c24f227b9" class="bulleted-list"><li style="list-style-type:disc">실제 이상 이미지가 전혀 없을 경우, 일반화가 잘 안될 수 있음.</li></ul><ul id="23e6dcb2-b0a8-8034-beec-ffbfd913567f" class="bulleted-list"><li style="list-style-type:disc">AnoGAN, f-AnoGAN, CutPaste,  DREAM, GLASS(2024 SOTA)….</li></ul></details></li></ul><p id="2326dcb2-b0a8-8072-a5ad-e1f1f8cb50a0" class=""><div class="indented"><p id="2326dcb2-b0a8-80b9-ad0e-ec48fe39dbdc" class="">
+</p></div></p></details></li></ul></details></li></ul></div></figure></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23e6dcb2-b0a8-807c-98a6-f76965ceda8e"><div style="font-size:1.5em"><span class="icon">💻</span></div><div style="width:100%"><ul id="23e6dcb2-b0a8-80f0-93be-d32e18b35802" class="toggle"><li><details open=""><summary>Embedding 방식의 Anomaly Detection 기법 선택 </summary><ul id="23e6dcb2-b0a8-8051-b4f0-d2a8d881e1e3" class="bulleted-list"><li style="list-style-type:disc">최근 SOTA 검토<figure id="23e6dcb2-b0a8-801d-9787-c29c1210a37e" class="image"><a href="image%203.png"><img style="width:816px" src="image%203.png"/></a><figcaption>그림 출처: paperswithcode (지금은 사이트 문 닫았음 .TT)</figcaption></figure></li></ul><ul id="23e6dcb2-b0a8-80f9-b9c4-f1807fd7bd09" class="toggle"><li><details open=""><summary>PatchCore</summary><ul id="23e6dcb2-b0a8-8024-b09c-e36071e4d663" class="bulleted-list"><li style="list-style-type:disc">paper: <a href="https://arxiv.org/abs/2106.08265">Towards Total Recall in Industrial Anomaly Detection</a>, <a href="https://openaccess.thecvf.com/CVPR2022">CVPR 2022</a><figure id="23e6dcb2-b0a8-80f5-bd2d-df9cef1b78a9" class="image"><a href="image%204.png"><img style="width:720px" src="image%204.png"/></a></figure></li></ul><ul id="23e6dcb2-b0a8-8092-b985-ef00b5ebd427" class="bulleted-list"><li style="list-style-type:disc">논문 리뷰(한글): <a href="https://ffighting.net/deep-learning-paper-review/anomaly-detection/patchcore/">https://ffighting.net/deep-learning-paper-review/anomaly-detection/patchcore/</a></li></ul><ul id="23e6dcb2-b0a8-8084-ae1a-c27c3d31811a" class="bulleted-list"><li style="list-style-type:disc">공식 구현: </li></ul><figure id="23e6dcb2-b0a8-8047-8e04-e7c7573a5b4a"><div class="source">https://github.com/amazon-science/patchcore-inspection</div></figure></details></li></ul></details></li></ul></div></figure><p id="23e6dcb2-b0a8-800e-8bfc-d4e7782c92dc" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23e6dcb2-b0a8-8004-ac2e-c168cc1bfeb9"><div style="font-size:1.5em"><span class="icon">📢</span></div><div style="width:100%"><ul id="23e6dcb2-b0a8-8003-92d4-ccc75100c02e" class="toggle"><li><details open=""><summary>진행 순서</summary><ol type="1" id="23e6dcb2-b0a8-80c9-a3cb-f542aea8fea7" class="numbered-list" start="1"><li>ResNet architecture 이해</li></ol><ol type="1" id="23e6dcb2-b0a8-804f-af57-c8d1893bc546" class="numbered-list" start="2"><li>PatchCore 기반 이상 탐지의 End-to-End Overview</li></ol><ol type="1" id="23e6dcb2-b0a8-8025-97fe-c3130017d526" class="numbered-list" start="3"><li>Overview 내용에 대한 단계별 코드 작성</li></ol></details></li></ul><p id="23e6dcb2-b0a8-80d8-adad-ff2c44fb226d" class="">
+</p></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23e6dcb2-b0a8-801f-8eb5-e31e78b8b3d4"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><ul id="23e6dcb2-b0a8-80fa-9b04-ee0abe8f09b4" class="toggle"><li><details open=""><summary>ResNet architecture 이해</summary><ul id="23f6dcb2-b0a8-80db-a631-f77a39307188" class="bulleted-list"><li style="list-style-type:disc">ResNet (<mark class="highlight-red"><strong>Res</strong></mark>idual <mark class="highlight-red"><strong>Net</strong></mark>work):  <ul id="23f6dcb2-b0a8-80ec-a52b-d1fc8c464151" class="bulleted-list"><li style="list-style-type:circle">2015년 ILSVRC(Image Large Scale Visual REcognition challenge) 대회에서 우승을 한 합성곱 신경망 모델</li></ul><ul id="23f6dcb2-b0a8-8094-828a-cd01166763b0" class="bulleted-list"><li style="list-style-type:circle">신경망이 깊어질수록 학습이 어려워지는 문제(기울기 소실 문제)를 해결하기 위해 고안된 <strong>잔차 학습(residual learning)</strong> 구조를 사용하는 합성곱 신경망(CNN)</li></ul></li></ul><ul id="23e6dcb2-b0a8-80fb-906f-fcef9dabfa74" class="bulleted-list"><li style="list-style-type:disc">ResNet architecture : <a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf">ResNet paper</a></li></ul><ul id="23e6dcb2-b0a8-8042-9b3d-c6783a92baaf" class="bulleted-list"><li style="list-style-type:disc">ResNet Variants 예시<figure id="23e6dcb2-b0a8-802c-b2bf-c654282e8bbf" class="image"><a href="image%205.png"><img style="width:768px" src="image%205.png"/></a></figure></li></ul><ul id="2406dcb2-b0a8-80e6-a54d-f179c866c65e" class="bulleted-list"><li style="list-style-type:disc">ResNet50 <figure id="2406dcb2-b0a8-8014-a072-e6dae98d9e93" class="image"><a href="image%206.png"><img style="width:768px" src="image%206.png"/></a><figcaption>ResNet50 architecture<br/>(원본 그림: <a href="https://www.researchgate.net/figure/Resnet50-architecture-with-convolutional-blocks-of-different-filter-sizes-and-max_fig2_368716443">https://www.researchgate.net/figure/Resnet50-architecture-with-convolutional-blocks-of-different-filter-sizes-and-max_fig2_368716443</a>)</figcaption></figure></li></ul><p id="2406dcb2-b0a8-8036-9c03-f5b5756c0f13" class="">
+</p><ul id="23e6dcb2-b0a8-80d3-9a09-c70e2b880389" class="toggle"><li><details open=""><summary>이미지에서의 잔차(Residual)란 ?</summary><p id="23e6dcb2-b0a8-804e-bbba-e4fc9b68a88a" class="">Residual= input - feature<div class="indented"><ul id="2406dcb2-b0a8-808f-868b-d30f76f2b530" class="bulleted-list"><li style="list-style-type:disc">input     : 하나의 convolution layer에서 입력으로 받는 이미지</li></ul><ul id="2406dcb2-b0a8-80f3-9e14-f5c613848a14" class="bulleted-list"><li style="list-style-type:disc">feature : 하나의 convolution layer에서 출력해 내는 이미지</li></ul></div></p><ul id="23e6dcb2-b0a8-8072-b9b1-f94de1dac5fc" class="toggle"><li><details open=""><summary>ResNet50에서 생성된 잔차(residual)의 시각화 예시</summary><figure id="23e6dcb2-b0a8-80af-a791-fc03a2903cfd" class="image"><a href="image%207.png"><img style="width:720px" src="image%207.png"/></a></figure><ul id="23e6dcb2-b0a8-8023-b6e9-e8dd69efc02a" class="bulleted-list"><li style="list-style-type:disc"> 실제 ResNet50 구조에서 skip connection이 있는 부분(layer1~4)<ul id="23e6dcb2-b0a8-803d-ab5d-f5e4367c0ae6" class="bulleted-list"><li style="list-style-type:circle">skip connection: 이전 단계에서의 잔차(residual)를 현재 레이어의 입력으로 다시 추가해 주는 연결</li></ul></li></ul><figure id="2406dcb2-b0a8-8006-af07-c28cde77d8c5" class="image"><a href="image%208.png"><img style="width:864px" src="image%208.png"/></a></figure></details></li></ul><p id="23e6dcb2-b0a8-8032-a014-d63d5ad38556" class="">
+</p></details></li></ul></details></li></ul></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23e6dcb2-b0a8-8005-8f06-fce83449f69a"><div style="font-size:1.5em"><span class="icon">💻</span></div><div style="width:100%"><ul id="23e6dcb2-b0a8-80e1-b5b5-cdc0b604af9f" class="toggle"><li><details open=""><summary>PatchCore End-to-End Overview</summary><ul id="23e6dcb2-b0a8-80f4-9d08-e1fce908eeed" class="bulleted-list"><li style="list-style-type:disc">정상 이미지 학습<figure id="23e6dcb2-b0a8-8041-9443-d25ed30d3e0c" class="image"><a href="image%209.png"><img style="width:432px" src="image%209.png"/></a></figure><figure id="23e6dcb2-b0a8-8083-b90b-cc5273669c91" class="image"><a href="image%2010.png"><img style="width:432px" src="image%2010.png"/></a></figure><p id="23e6dcb2-b0a8-808e-af50-f39f9b7c4981" class="">……</p></li></ul><ul id="23e6dcb2-b0a8-8047-9b7a-dc07da036a96" class="bulleted-list"><li style="list-style-type:disc">정상 이미지의 특징 맵 크기 및 시각화<figure id="23e6dcb2-b0a8-8064-af7f-fa1abc55e395" class="image"><a href="image%2011.png"><img style="width:192px" src="image%2011.png"/></a></figure><ul id="23e6dcb2-b0a8-80dc-a177-e7e6fd34aa59" class="bulleted-list"><li style="list-style-type:circle">정상 이미지 특징(1536차원 → 2차원 축소) vs Subsampled set(1536차원 → 2차원 축소)</li></ul><figure id="23f6dcb2-b0a8-8043-b182-e4aa09fc92be" class="image"><a href="image%2012.png"><img style="width:864px" src="image%2012.png"/></a></figure></li></ul><ul id="23e6dcb2-b0a8-80b8-9d3e-c5306aa1e2cd" class="bulleted-list"><li style="list-style-type:disc">정상 이미지의 이상 점수(k=3) 시각화 (shape: 28x28)<figure id="23e6dcb2-b0a8-8066-841f-c8832dfbb01c" class="image"><a href="image%2013.png"><img style="width:864px" src="image%2013.png"/></a></figure></li></ul><ul id="23e6dcb2-b0a8-80da-8763-f518e863ad87" class="bulleted-list"><li style="list-style-type:disc">비정상 이미지의 이상 점수(k=3) 시각화<figure id="23e6dcb2-b0a8-80d0-afbe-c113b3526869" class="image"><a href="image%2014.png"><img style="width:864px" src="image%2014.png"/></a></figure></li></ul><ul id="23e6dcb2-b0a8-808d-a85e-fbdd5233a3b4" class="bulleted-list"><li style="list-style-type:disc">이미지별 이상 점수의 시각화(segment_map) <ul id="23e6dcb2-b0a8-807d-a80c-d33fd782bcce" class="bulleted-list"><li style="list-style-type:circle">segment map: 시각화를 위해 28x28의 이상 점수를 224x224 크기로 upsampling한 것(interpolation=bilinear) </li></ul><figure id="23f6dcb2-b0a8-802d-a7a9-dc6f9ab3acb5" class="image"><a href="image%2015.png"><img style="width:624px" src="image%2015.png"/></a></figure></li></ul><ul id="23e6dcb2-b0a8-8088-bb06-d5b55f8577bc" class="bulleted-list"><li style="list-style-type:disc">정상 이미지 이상 점수 분포 vs 비정상 이미지 이상 점수 분포 비교<figure id="23e6dcb2-b0a8-8041-85e5-d8a61e254a3b" class="image"><a href="image%2016.png"><img style="width:624px" src="image%2016.png"/></a></figure></li></ul><ul id="23e6dcb2-b0a8-8090-9abe-e23db4c955bd" class="bulleted-list"><li style="list-style-type:disc">추론 결과 혼돈 행렬(Confusion Matrix)<figure id="23e6dcb2-b0a8-8008-ac6a-cf547d8959d9" class="image"><a href="image%2017.png"><img style="width:432px" src="image%2017.png"/></a></figure></li></ul><ul id="23e6dcb2-b0a8-806a-9e2d-c80bedae7218" class="bulleted-list"><li style="list-style-type:disc">성능 지수 산출<figure id="23e6dcb2-b0a8-8049-b178-debf8c5a0fa7" class="image"><a href="image%2018.png"><img style="width:336px" src="image%2018.png"/></a></figure></li></ul><p id="23e6dcb2-b0a8-80a5-97ab-d51a55df15ef" class="">
+</p><ul id="23e6dcb2-b0a8-802e-b971-d48751bae296" class="bulleted-list"><li style="list-style-type:disc">임계값에 따른 성능의 변화 관찰<ul id="23e6dcb2-b0a8-80b1-bebc-c365bc14ccf7" class="bulleted-list"><li style="list-style-type:circle">F1 score 기반 threshold 설정 후 추론 결과<figure id="23e6dcb2-b0a8-80cb-8329-f6757bb41120" class="image"><a href="image%2019.png"><img style="width:384px" src="image%2019.png"/></a></figure><figure id="23e6dcb2-b0a8-80ac-9fcf-c1ba35148e82" class="image"><a href="image%2020.png"><img style="width:384px" src="image%2020.png"/></a></figure></li></ul></li></ul><p id="23e6dcb2-b0a8-80ce-822b-f9e5c052a6db" class="">
+</p></details></li></ul></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23e6dcb2-b0a8-80b8-96aa-dc93157f067d"><div style="font-size:1.5em"><span class="icon">🔥</span></div><div style="width:100%"><ul id="23e6dcb2-b0a8-80dd-8870-dfaedaa2dc86" class="toggle"><li><details open=""><summary><strong>단계별 코딩 및 설명</strong></summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23d6dcb2-b0a8-8053-a42d-e3eeecd80bd1"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/database_gray.svg"/></div><div style="width:100%"><ul id="23d6dcb2-b0a8-80d5-9b6f-fb7016a6d1c3" class="toggle"><li><details open=""><summary><strong>Dataset 획득</strong></summary><ul id="23d6dcb2-b0a8-8062-9986-fa2fb6345e41" class="bulleted-list"><li style="list-style-type:disc">Dataset Name: MVTec</li></ul><ul id="23d6dcb2-b0a8-808f-8e87-fada95457d58" class="bulleted-list"><li style="list-style-type:disc">Source: <a href="https://www.kaggle.com/datasets/ipythonx/mvtec-ad">https://www.kaggle.com/datasets/ipythonx/mvtec-ad</a> </li></ul></details></li></ul><ul id="23d6dcb2-b0a8-80a8-a36f-d67295801996" class="toggle"><li><details open=""><summary>EDA(Explanatory Data Analysis) (참고: <a href="https://www.kaggle.com/code/bbonghag/mvtecad-eda-24-06-26">https://www.kaggle.com/code/bbonghag/mvtecad-eda-24-06-26</a>)</summary><ul id="23d6dcb2-b0a8-80c1-b50b-d9d00de7e3e0" class="bulleted-list"><li style="list-style-type:disc">폴더 구조 이해<figure id="23e6dcb2-b0a8-8012-908f-c221d1c28205" class="image"><a href="image%2021.png"><img style="width:666.960205078125px" src="image%2021.png"/></a></figure></li></ul><ul id="23d6dcb2-b0a8-80a0-99b2-eca43518eb00" class="bulleted-list"><li style="list-style-type:disc">이미지 파일 paths 생성 및 Dataset에 포함된 객체 종류 파악<figure id="23e6dcb2-b0a8-80ed-9a09-c8b60a81d90b" class="image"><a href="image%2022.png"><img style="width:672px" src="image%2022.png"/></a></figure></li></ul><ul id="23d6dcb2-b0a8-8068-8862-cdf81b5d7b63" class="bulleted-list"><li style="list-style-type:disc">dataframe으로 dataset 메타 정보 저장<figure id="23e6dcb2-b0a8-800b-8c64-e49a6bd1f52e" class="image"><a href="image%2023.png"><img style="width:672px" src="image%2023.png"/></a></figure></li></ul><ul id="23d6dcb2-b0a8-805c-97fe-dec5ea176365" class="bulleted-list"><li style="list-style-type:disc">이미지 파일 분포 확인(train vs test, normal vs abnormal)<figure id="23e6dcb2-b0a8-801c-bb5b-d3e9cbafcfdf" class="image"><a href="image%2024.png"><img style="width:671.9744262695312px" src="image%2024.png"/></a></figure><figure id="23e6dcb2-b0a8-80f1-9ed7-ce11b96e182d" class="image"><a href="image%2025.png"><img style="width:672px" src="image%2025.png"/></a></figure></li></ul><ul id="23d6dcb2-b0a8-8006-88f1-de0ba7828ca9" class="toggle"><li><details open=""><summary>샘플 이미지 시각화</summary><figure id="23e6dcb2-b0a8-8066-834e-ead317d5324d" class="image"><a href="image%2026.png"><img style="width:672px" src="image%2026.png"/></a></figure><figure id="23e6dcb2-b0a8-80f6-a1bf-f39edcba2407" class="image"><a href="image%2027.png"><img style="width:672px" src="image%2027.png"/></a></figure><figure id="23e6dcb2-b0a8-8025-ac0d-c11bfcbd33ec" class="image"><a href="image%2028.png"><img style="width:672px" src="image%2028.png"/></a></figure><figure id="23e6dcb2-b0a8-803c-9e79-cd595a3f167f" class="image"><a href="image%2029.png"><img style="width:672px" src="image%2029.png"/></a></figure><figure id="23e6dcb2-b0a8-80a3-b20c-dd398e3235f9" class="image"><a href="image%2030.png"><img style="width:672px" src="image%2030.png"/></a></figure><figure id="23e6dcb2-b0a8-8048-9c2d-cb8e3ef85d1b" class="image"><a href="image%2031.png"><img style="width:672px" src="image%2031.png"/></a></figure></details></li></ul><p id="23e6dcb2-b0a8-80eb-9232-fd662fba793c" class="">
+</p></details></li></ul></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23d6dcb2-b0a8-8034-ae67-e19488b2c701"><div style="font-size:1.5em"><span class="icon">💻</span></div><div style="width:100%"><ul id="23d6dcb2-b0a8-8094-99b1-e35979a14a53" class="toggle"><li><details open=""><summary>PatchCore 구현</summary><ul id="23e6dcb2-b0a8-802b-b8a4-d5aaddaeeae0" class="toggle"><li><details open=""><summary>PatchCore에서 사용하는 ResNet</summary><ul id="23e6dcb2-b0a8-8055-8f3f-f2f15f365bb8" class="bulleted-list"><li style="list-style-type:disc">Pretrained ResNet50 (ImageNet)</li></ul><ul id="23e6dcb2-b0a8-80a7-ada8-f851075ea100" class="bulleted-list"><li style="list-style-type:disc">Use only mid level layers<figure id="23e6dcb2-b0a8-8076-a1d1-cd694abd6cb2" class="image"><a href="image%2032.png"><img style="width:672px" src="image%2032.png"/></a></figure><figure id="23f6dcb2-b0a8-8056-93c8-fbbce968f47b" class="image"><a href="image%2033.png"><img style="width:240px" src="image%2033.png"/></a></figure></li></ul><p id="23e6dcb2-b0a8-8048-9bc0-f3f55ead240e" class="">
+</p></details></li></ul><ul id="23d6dcb2-b0a8-80e2-82b1-dee97098a64a" class="toggle"><li><details open=""><summary>From scratch</summary><ul id="23d6dcb2-b0a8-8056-964f-e432f3ca4134" class="bulleted-list"><li style="list-style-type:disc">프레임워크: Pytorch</li></ul><ul id="23d6dcb2-b0a8-8031-a03a-fd8284fcdf86" class="bulleted-list"><li style="list-style-type:disc">Backbone (feature extractor): Pretrained ResNet50 </li></ul><ul id="23e6dcb2-b0a8-800e-858f-e865830d5dd9" class="bulleted-list"><li style="list-style-type:disc">Feature Extractor로 사용될 부분: ResNet50.layer2[-1] &amp; ResNet50.layer3[-1]<figure id="2406dcb2-b0a8-8007-9c1c-d26cc24d4c58" class="image"><a href="image%2034.png"><img style="width:720px" src="image%2034.png"/></a><figcaption>ResNet50에서 Feature map을 생성하는 부분과 그 중에서 PatchCore가 Pretrained Encoder로 사용하는 부분(빨간색 사각형 표시)</figcaption></figure></li></ul><ul id="23e6dcb2-b0a8-80aa-bbfc-d18b0e9b94ce" class="bulleted-list"><li style="list-style-type:disc">Coreset Subsampling 기법 도입</li></ul></details></li></ul><ul id="23e6dcb2-b0a8-805f-a6a9-c8356c6f9be4" class="toggle"><li><details open=""><summary>핵심 코드 (참고: <a href="https://www.kaggle.com/code/akshaysom/anomaly-detection-using-patchcore-from-scratch">https://www.kaggle.com/code/akshaysom/anomaly-detection-using-patchcore-from-scratch</a>)</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="23e6dcb2-b0a8-80f5-b1c0-f98c6b2d09fa" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 특징 추출 모델 class 구현
+#class patchcore_feature_extractor(nn.Module)  
+class patchcore_feature_extractor(nn.Module):
+    def __init__(self, patch_size=3, stride=1, verbose=False):
+        super(patchcore_feature_extractor, self).__init__()  # 부모 클래스인 nn.Module을 상속 받기 위한 초기화 
+        
+        self.patch_size = patch_size 
+        self.stride = stride 
+        self.verbose = verbose 
+        self.features = None
+        
+        self.model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
+        self.model.eval()
+        # 모델이 학습하지 않도록 동결(freeze)
+        for param in self.model.parameters():
+            param.requires_grad =  False
+        
+        def hook(module, input, feature_map):
+            self.features.append(feature_map)
+            if (self.verbose):
+                print(f&quot;=&gt; feature_map.shape: {feature_map.shape}&quot;)
+        
+        # resnet50 모델의 &quot;layer2&quot; group과 &quot;layer3&quot; group의 마지막 layer에 대한 forward 계산이 끝났을 때 위에서 정의해 둔 &quot;hook&quot; 함수가 호출되도록 설정
+        self.model.layer2[-1].register_forward_hook(hook)
+        self.model.layer3[-1].register_forward_hook(hook)
+        
+    def forward(self, x, verbose=False):
+        self.verbose = verbose
+        self.features = []
+        x = x.to(device)
+        with torch.no_grad():
+            # feature extraction
+            _ = self.model(x)  # forward 계산 수행 시, register_forward_hook()에 의해서 self.features에 자동으로 추출된 feature가 저장되므로 반환값 받을 필요 없음.
+            
+        # locally aware patch feature 생성
+        self.avgpool = torch.nn.AvgPool2d(kernel_size=self.patch_size, stride=self.stride)
+        fmap_size = self.features[0].shape[-2]  # (28, 28)
+        # 최종 출력되는 feature map의 크기가 fmap_size=(28,28)이 되도록 하는 adaptive pooler 생성
+        self.adaptive_avg_pool = torch.nn.AdaptiveAvgPool2d(fmap_size) 
+        
+        ### shape 변화 추적용 출력
+        if verbose:
+            for i, ft_map in enumerate(self.features):
+                avg_pooled_ft_map = self.avgpool(ft_map)
+                adaptive_avg_pooled_ft_map = self.adaptive_avg_pool(avg_pooled_ft_map)
+                print(f&quot;\n[{i}] ft_map.shape                    : {ft_map.shape}&quot;)
+                print(f&quot;[{i}] avg_pooled_ft_map.shape         : {avg_pooled_ft_map.shape}&quot;)
+                print(f&quot;[{i}] adaptive_avg_pooled_ft_map.shape: {adaptive_avg_pooled_ft_map.shape}&quot;)
+                print(&quot;-&quot;*80)
+            print(&quot;=&quot;*100)
+        ###
+        
+        # feature map을 average pooling하고 크기 조정 =&gt; resized_maps: [1,512,28,28], [1,1024,28,28]
+        resized_map = [self.adaptive_avg_pool(self.avgpool(fmap)) for fmap in self.features]
+        
+        patchcore_features = torch.cat(resized_map, dim=1)  # # feature map들을 C차원에서 합치기 =&gt; [1, 512, 28, 28]+[1, 1024, 28, 28]=[1, 1536, 28, 28]
+        patchcore_features = patchcore_features.reshape(patchcore_features.shape[1], -1).T # [1536, 28, 28] =&gt; [1536, 28x28] =&gt; [28*28, 1536]  = [784, 1536]
+        
+        return patchcore_features
+        
+            </code></pre></details></li></ul></details></li></ul></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23e6dcb2-b0a8-8012-9fe5-f860cf3f8b5e"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><ul id="23e6dcb2-b0a8-8058-8a2b-fc0f9b683d99" class="toggle"><li><details open=""><summary>이진분류 문제 성능평가</summary><ul id="23e6dcb2-b0a8-8090-b856-ef23f2e7c3bf" class="toggle"><li><details open=""><summary>균형 데이터 또는 특정 관점을 강조하는 지표</summary><ol type="1" id="23e6dcb2-b0a8-80c6-be7f-d877698a6d11" class="numbered-list" start="1"><li>정밀도(Precision)</li></ol><ol type="1" id="23e6dcb2-b0a8-80c5-9124-dd9d66df9b1e" class="numbered-list" start="2"><li>재현율(Recall)</li></ol><ol type="1" id="23e6dcb2-b0a8-8011-940a-f6666880dd2f" class="numbered-list" start="3"><li>정확도(Accuracy)</li></ol><ol type="1" id="23e6dcb2-b0a8-8081-bed9-db5b985eb9af" class="numbered-list" start="4"><li>조화평균(F1 score)</li></ol><ol type="1" id="23e6dcb2-b0a8-8073-9908-dfb1358dacb6" class="numbered-list" start="5"><li>AUC-ROC: ROC 커브 아래의 면적: 값이 0.5에 가까울수록 모델의 성능이 무작위 수준에 가깝다는 의미. 1에 가까워야 우수한 모델로 해석<ol type="a" id="23e6dcb2-b0a8-805d-9859-d4a340ab69b0" class="numbered-list" start="1"><li>ROC curve(Receiver Operating Characteristic cuver): 이진 분류 모델의 성능을 시각화하는 기법<figure id="23e6dcb2-b0a8-804f-8c39-db33c3e7d2d5" class="image"><a href="image%2035.png"><img style="width:768px" src="image%2035.png"/></a></figure></li></ol><p id="23e6dcb2-b0a8-80a4-847f-d02180e8bc58" class="">
+</p></li></ol></details></li></ul><ul id="23e6dcb2-b0a8-809b-b5c9-cec0eca71aed" class="toggle"><li><details open=""><summary>불균형 데이터에도 견고한 평가 지표</summary><ol type="1" id="23e6dcb2-b0a8-8076-8de6-dc501b1e7062" class="numbered-list" start="1"><li>MCC(Matthews Correlation Coefficients)<figure id="23e6dcb2-b0a8-80e3-8fa4-d839bfd98185" class="image"><a href="image%2036.png"><img style="width:384px" src="image%2036.png"/></a></figure><p id="23e6dcb2-b0a8-8090-b2d2-d142d6110e00" class="">
+</p></li></ol><ol type="1" id="23e6dcb2-b0a8-80f3-88a2-def538810b4b" class="numbered-list" start="2"><li>AUPRC(Area Under the Precision-Recall Curve)<ol type="a" id="23e6dcb2-b0a8-803b-b06e-dc45530424fa" class="numbered-list" start="1"><li>fpr과 tpr를 각 축으로 하는 ROC 커브와 달리 Precision과 Recall을 각 축으로 하는 커브 아래의 면적<figure id="23e6dcb2-b0a8-80e9-ab5a-f2554052831f" class="image"><a href="image%2037.png"><img style="width:336px" src="image%2037.png"/></a></figure></li></ol><p id="23e6dcb2-b0a8-8023-a3fa-cdef9e6bac0f" class="">
+</p></li></ol></details></li></ul><p id="23e6dcb2-b0a8-8012-b2a6-c9d2156b8da5" class="">
+</p></details></li></ul></div></figure></details></li></ul></div></figure><p id="23e6dcb2-b0a8-8096-916e-d296a7dc5d4f" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
