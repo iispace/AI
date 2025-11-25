@@ -10,14 +10,28 @@
         
   - 작업 폴더 하위에 가상환경을 설치할 "env" 폴더 생성
         
-  - env 폴더에 가상환경 생성
+  - env 폴더에 가상환경 생성 및 활성화
     - 작업 폴더인 RL_CAR에서 터미널 열고 아래 명령 실행
-      - ``` python -m venv --system-site-packages env   ```
+      - ``` python -m venv env ```
+      - ``` source env/bin/activate ```
+
+        
     - 명령 실행 후 env 폴더에 가상환경이 설치되었는지 확인 : bin, include, lib 등의 폴더와 pyvenv.cfg 파일이 생성되었다면 OK
 
   - 가상환경에 필요한 라이브러리 추가 설치
-    - pip install opencv-python
+    - ``` pip install --upgrade pip ```
+    - ``` pip install numpy matplotlib opencv-python torch torchvision ```
     - ...
+    - 설치 확인
+      ```
+      python - <<EOF
+      import sys, numpy, cv2, torch
+      print("Python:", sys.version)
+      print("NumPy:", numpy.__version__)
+      print("OpenCV:", cv2.__version__)
+      print("Torch:", torch.__version__)
+      EOF
+        ```
 
 <hr>
 
