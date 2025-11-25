@@ -20,5 +20,5 @@
 |Rpi TFT LCD(2.2")<br><img width="128" height="99" alt="image" src="https://github.com/user-attachments/assets/df85263e-b199-404b-a6e1-91814022dfdc" />|Raspberry Pi 5 Display|Adafruit 2.2" PiTFT HAT - 320x240 Display|
 |18650 UPS for Rpi 5<br><img width="188" height="144" alt="image" src="https://github.com/user-attachments/assets/f2495056-ceca-4be2-85be-06a020088949" />|Raspberry Pi 5 파워 보드|5V 5A 충전 모듈(X1200 v1.2)|
 |ADXL345 3출 가속도 센서 모듈<br><img width="129" height="84" alt="image" src="https://github.com/user-attachments/assets/c679cd16-51cf-4549-84e1-71a5f6efe982" />|장애물 충돌 감지|IIC / SPI 통신 지원|
-|추가 프레임 및 서포트<br><img width="242" height="306" alt="image" src="https://github.com/user-attachments/assets/66447acc-2021-4557-bfeb-a9ecaaaf502c" />|부품 실장|3D 프린팅<br>- 아두이노, 라즈베리파이 고정 프레임<br>-모터 드라이버 모듈 고정 프레임<br>- 프레임 적층 지지대<br>  (50mm x 8, 30mm x 2, 25mm x 4, 20mm x 4, 10mm x 4)|
+|추가 프레임 및 서포트<br><img width="275" height="336" alt="image" src="https://github.com/user-attachments/assets/9f7fdaa5-307c-43c4-b67b-2a15c2da31a1" />|부품 실장|3D 프린팅<br>- 아두이노, 라즈베리파이 고정 프레임<br>-모터 드라이버 모듈 고정 프레임<br>- 프레임 적층 지지대<br>  (50mm x 8, 30mm x 2, 25mm x 4, 20mm x 4, 10mm x 4)|
 |Joystick enclosure<br><img width="127" height="90" alt="image" src="https://github.com/user-attachments/assets/c70f15b9-9e90-4970-a786-ce0cf1a671b2" />|조이스틱용 앤클로저|3D printing|
