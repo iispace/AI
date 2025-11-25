@@ -246,6 +246,7 @@
 
 ### 주행 테스트
 
+- 동영상에 보이는 Raspberry Pi 5와 카메라는 다음 단계로의 진행을 위해 이동체에 물리적으로 부착만 되어 있고, 전원 연결은 되어 있지 않은 상태임.
 
 https://github.com/user-attachments/assets/4c9adca8-86fc-4331-92ea-513db973d121
 
