@@ -21,8 +21,7 @@
 
     <img width="426" height="300" alt="image" src="https://github.com/user-attachments/assets/04178c57-8c2e-4a54-bf90-431877aa394a" />
 
-    <img width="520" height="400" alt="image" src="https://github.com/user-attachments/assets/b246876a-7c48-4c88-a510-bb53d7e84ca1" />
-
+    
 
   - 아두이노 코드 업로드
     ```
