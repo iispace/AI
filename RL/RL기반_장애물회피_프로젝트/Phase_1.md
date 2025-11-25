@@ -3,6 +3,8 @@
 
 ### 이동체 부분
 
+  - [재료](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/materials.md)
+    
   - 핀연결
     |HC-05|L298N|Arduino Uno|
     |:-|:-|:-|
