@@ -243,3 +243,9 @@
   }
   
   ```
+
+### 주행 테스트
+
+
+https://github.com/user-attachments/assets/4c9adca8-86fc-4331-92ea-513db973d121
+
