@@ -17,12 +17,15 @@
 |9V 배터리 홀더(배터리 포함)<br><img width="147" height="171" alt="image" src="https://github.com/user-attachments/assets/590e9d58-7672-45ec-b1bf-a82b4b8cbe40" />|조이스틱 power source||
 |Joystick Shield<br><img width="163" height="104" alt="image" src="https://github.com/user-attachments/assets/fe78cfb3-96a5-48bd-9df9-72f9d4bd3657" />|무선 조정기|무선 조정기 쉴드|
 |Raspberry Pi 5<br><img width="166" height="107" alt="image" src="https://github.com/user-attachments/assets/ee9c82a5-d972-41a3-ae7a-75169bf61d5e" />|강화학습 모델 구동|마이크로 컴퓨터|
+|Active Cooler for Raspberry Pi 5<br><img width="166" height="148" alt="image" src="https://github.com/user-attachments/assets/071681de-d3c0-4871-aafd-69482cd5530b" />|Raspberry Pi 5 쿨러||
 |OV5647 5M camera<br><img width="101" height="112" alt="image" src="https://github.com/user-attachments/assets/a7979b21-526f-4eef-8e29-7dbd3edac1a9" />|라즈베리파이 호환 카메라|Raspberry Pi 5용 연결 케이블 포함|
 |Rpi TFT LCD(2.2")<br><img width="128" height="99" alt="image" src="https://github.com/user-attachments/assets/df85263e-b199-404b-a6e1-91814022dfdc" />|Raspberry Pi 5 Display|Adafruit 2.2" PiTFT HAT - 320x240 Display|
 |18650 UPS for Rpi 5<br><img width="188" height="144" alt="image" src="https://github.com/user-attachments/assets/f2495056-ceca-4be2-85be-06a020088949" />|Raspberry Pi 5 파워 보드|5V 5A 충전 모듈(X1200 v1.2)|
 |ADXL345 3출 가속도 센서 모듈<br><img width="129" height="84" alt="image" src="https://github.com/user-attachments/assets/c679cd16-51cf-4549-84e1-71a5f6efe982" />|장애물 충돌 감지|IIC / SPI 통신 지원|
 |추가 프레임<br><img width="287" height="146" alt="image" src="https://github.com/user-attachments/assets/cc902b85-3ef2-4eeb-ad4e-eedf7414d8ab" />|부품 실장|3D 프린팅|
 |서포트<br><img width="154" height="87" alt="image" src="https://github.com/user-attachments/assets/581330a2-1ef5-4756-96d8-053a82871a1f" />|프레임 적층 지지대|5cm x 4<br>4cm x 4|
+|Joystick enclosure<br><img width="127" height="90" alt="image" src="https://github.com/user-attachments/assets/c70f15b9-9e90-4970-a786-ce0cf1a671b2" />|조이스틱용 앤클로저|3D printing|
+
 
 ## 1 단계: RC Car 제작 
 
@@ -269,3 +272,14 @@
   }
   
   ```
+
+## 2 단계: Raspberry Pi 5 부분
+
+### 카메라 연결
+
+  - Raspberry Pi 5 CAM/DISP 1 connector에 카메라 케이블 연결
+    
+    <img width="174" height="127" alt="image" src="https://github.com/user-attachments/assets/756bde61-8948-4c7e-97be-a962247ca1ca" />
+    <img width="145" height="127" alt="image" src="https://github.com/user-attachments/assets/ad4396f7-10ca-45ae-8d1c-1cb7ee8060b6" />
+
+
