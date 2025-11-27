@@ -8,8 +8,8 @@
 
 - 인터넷에 흔히 알려진 바와 같이 ``` python -m venv --system-site-packages env ``` 이 명령어를 이용하여 가상환경을 생성하면 picamera2와 같이 Rpi 5에 기본적으로 설치되어 있는 주요 라이브러리들을 가상환경에서도 별다른 작업 없이 그대로 사용할 수 있다. 
 - 그런데, 가상환경에서 opencv를 설치하기 위해 pip install opencv-python을 실행하면 opencv와 호환되는 버전의 numpy가 설치되지 못한 채 opencv가 설치된다.
-- 이 상태에서 import cv2를 하면 numpy.dtype error가 발생했다. 이유인 즉, opencv에서 사용하는 numpy version이 현재 Rpi 5 OS에 설치된 numpy version보다 낮은데, 가상환경에서는 Rpi 5 OS에 있는 라이브러리를 삭제하거나 추가하지 못하기 때문에 opencv가 설치되는 과정에서 numpy version이 수정되지 못했던 것이다.
-- Rpi 5 OS에 있는 numpy version을 건드리고 싶지는 않았기 때문에 다음과 같은 방법으로 Rpi 5 OS에 있는 python 환경과 독립적인 가상환경을 생성하고 필요한 라이브러리들은 다시 설치하거나 Rpi 5 OS에 있는 Python환경에서 직접 복사해 오는 방법으로 환경을 설정했다.
+- 이 상태에서 import cv2를 하면 numpy.dtype error가 발생했다. 이유인 즉, opencv에서 사용하는 numpy version이 현재 Rpi 5 OS에 설치되어 있는 기본 Python 환경에 포함된 numpy version보다 낮은데, 가상환경에서는 Rpi 5 OS에 있는 라이브러리를 삭제하거나 추가하지 못하기 때문에 opencv가 설치되는 과정에서 numpy version이 수정되지 못했던 것이다.
+- Rpi 5 OS에 있는 기본 파이썬 환경의 numpy version을 건드리고 싶지는 않았기 때문에 다음과 같은 방법으로 Rpi 5 OS에 있는 python 환경과 독립적인 가상환경을 생성하고 필요한 라이브러리들은 다시 설치하거나 Rpi 5 OS에 있는 Python환경에서 직접 복사해 오는 방법으로 환경을 설정했다.
 
 
 ### 가상환경 생성
@@ -33,7 +33,7 @@
     - Rpi 5 기본 Python 환경의 라이브러리들이 있는 경로로 가서 libcamera 폴더를 통째로 복사해서 현재 프로젝트의 가상환경 라이브러리 폴더에 붙여 넣었다.
       
       - Rpi 5 기본 Python 환경의 라이브러리들이 있는 경로: /usr/lib/python3/dist-packages
-      - 프로젝트 가상환경 라이브러리 폴더: {프로젝트 폴더}/env/lib/pythonX/site-packages
+      - 프로젝트 가상환경 라이브러리 폴더: {프로젝트 폴더}/env/lib/pythonX/site-packages (=> pythonX에서 X는 python의 version)
   
   - 다시 VSCode에 돌아와서 python code로 ```from picamera2 import Picamer2```를 실행했더니 이번에는 libcamera가 아니라 또 다른 어떤 모듈이 없다고 나왔는데, 이번에도 libcamera 모듈을 복사해 온 것처럼 같은 방법으로 복사해 왔다.
   - 또 다시 VSCode에 돌아와서 ```from picamera2 import Picamer2```를 실행했더니, 이번에는 문제 없이 잘 실행되었다.
