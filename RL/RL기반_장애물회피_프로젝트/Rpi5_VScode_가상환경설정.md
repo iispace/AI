@@ -2,7 +2,7 @@
 
 **⚠️ 주의사항**
 
-<img width="672" height="80" alt="image" src="https://github.com/user-attachments/assets/440ef8d3-3b2d-4ff8-9578-277259471a4a" />
+<img width="994" height="63" alt="image" src="https://github.com/user-attachments/assets/978f8b51-1d98-4a03-ae69-ab8ce9c47666" />
 
 <hr>
 
