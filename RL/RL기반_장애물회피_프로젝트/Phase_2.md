@@ -13,10 +13,11 @@
     - 작업 폴더에서 터미널 열고 아래 명령 실행
       - ``` python -m venv env ```
       - ``` source env/bin/activate ```
-        
-    - 명령 실행 후 env 폴더에 가상환경이 설치되었는지 확인 : bin, include, lib 등의 폴더와 pyvenv.cfg 파일이 생성되었다면 OK
 
-  - 가상환경에 필요한 라이브러리 추가 설치
+        <img width="744" height="189" alt="image" src="https://github.com/user-attachments/assets/6dc84b55-b82d-43a9-af90-128cea1b99f1" />
+
+
+  - 현재 작업 중인 terminal에서 가상환경에 필요한 라이브러리 계속 추가 설치
     - ``` pip install --upgrade pip ```
     - ``` pip install numpy matplotlib opencv-python torch torchvision ```
     - ``` pip install picamera2 ```
