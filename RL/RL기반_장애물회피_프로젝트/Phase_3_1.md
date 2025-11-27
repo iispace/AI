@@ -182,3 +182,5 @@
 
   https://github.com/user-attachments/assets/adfd2326-0cde-4d17-9a73-549db6160625
 
+
+### [Rpi 5 <==> Arduino Uno 양방향 Serial 통신 테스트](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_1_1.md)
