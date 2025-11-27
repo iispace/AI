@@ -158,10 +158,13 @@ void loop() {
       digitalWrite(CtrlLED, LOW);
     }
   }
-  //rpiSerial.print("from Uno: ");
-  //rpiSerial.println(sensor_value);
-  rpiSerial.write(sensor_value);
+  //rpiSerial.print("from Uno: ");    // string을 보내면 병목 현상이 생겨 간헐적 통신 장애 발생
+  //rpiSerial.println(sensor_value);  // string을 보내면 병목 현상이 생겨 간헐적 통신 장애 발생
+  rpiSerial.write(sensor_value);   
   delay(100);
 }
 
 ```
+
+### 테스트 
+
