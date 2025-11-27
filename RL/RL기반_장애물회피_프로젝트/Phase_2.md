@@ -19,6 +19,8 @@
   - 가상환경에 필요한 라이브러리 추가 설치
     - ``` pip install --upgrade pip ```
     - ``` pip install numpy matplotlib opencv-python torch torchvision ```
+    - ``` pip install picamera2 ```
+    - ``` pip install gpiozero ```
     - ...
     - 설치 확인
       ```
