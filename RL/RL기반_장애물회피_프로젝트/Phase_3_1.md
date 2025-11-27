@@ -172,3 +172,12 @@
   }
 
   ```
+
+<hr>
+
+### 테스트 동영상
+
+Rpi 5에서 전진 신호와 정지 신호를 번갈아 보내면 Arduino에 연결된 모터 드라이버가 구동되며 LED가 켜지고 꺼진다.
+
+https://github.com/user-attachments/assets/adfd2326-0cde-4d17-9a73-549db6160625
+
