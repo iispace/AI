@@ -160,6 +160,7 @@ void loop() {
   }
   //rpiSerial.print("from Uno: ");    // string을 보내면 병목 현상이 생겨 간헐적 통신 장애 발생
   //rpiSerial.println(sensor_value);  // string을 보내면 병목 현상이 생겨 간헐적 통신 장애 발생
+  sensor_value = random(0, 10);
   rpiSerial.write(sensor_value);   
   delay(100);
 }
