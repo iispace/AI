@@ -68,7 +68,6 @@ if __name__ == "__main__":
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-//SoftwareSerial btSerial(2,3);
 SoftwareSerial rpiSerial(4,5); // RX, TX
 
 #define Speed_L 11
