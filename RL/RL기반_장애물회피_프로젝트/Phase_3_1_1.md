@@ -14,19 +14,20 @@ def control_thread():
     while True:
         ser.write(b'G')
         print("G data sent to uno")
-        time.sleep(2)   # 7초에 한 번씩 "HIGH" 신호 전송
+        time.sleep(1)   # 5초에 한 번씩 "HIGH" 신호 전송
         ser.write(b'0')
         print("0 data sent to uno")
         while ser.in_waiting > 0:
-            print(ser.readline().strip().decode("utf-8"))
-        time.sleep(5)
-            
+            #print(ser.readline().strip().decode("utf-8"))  # <== string을 받으면 병목 발생
+            data = ser.read(1)  # 1byte 읽기   
+            print("sensor data from Uno: ", int.from_bytes(data, 'big'))
+        time.sleep(4)
 
 def main():
     W, H = 640, 480
     # 카메라 객체 생성
     camera = mycamera.MyPiCamera(W, H)
-    filepath = "/home/pi/{프로젝트_폴더}/video/train"
+    filepath = "/home/pi/ARserverance/video/train"
     i = 0
 
     try:
@@ -50,19 +51,19 @@ def main():
         ser.close()
         cv2.destroyAllWindows()
 
-
-
 if __name__ == "__main__":
     task1 = threading.Thread(target=control_thread)
     task1.start()
     main()
     ser.close()
+
 ```
+
 
 ### Arduino 코드
 
 ```
-// Rpi 5에서 시리얼 신호 받아 RC카 제어 프로그램 <2025-11-27>
+// Rpi 5에서 시리얼 신호 받아 RC카 제어하고 Rpi 5로 센서값 전달하는 프로그램  
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
@@ -104,7 +105,6 @@ void setup() {
     digitalWrite(CtrlLED, LOW);
     delay(100);
   }
-
 }
 
 void loop() {
@@ -158,8 +158,9 @@ void loop() {
       digitalWrite(CtrlLED, LOW);
     }
   }
-  rpiSerial.print("from Uno: ");
-  rpiSerial.println(sensor_value);
+  //rpiSerial.print("from Uno: ");
+  //rpiSerial.println(sensor_value);
+  rpiSerial.write(sensor_value);
   delay(100);
 }
 
