@@ -24,16 +24,16 @@
 
        <img width="847" height="34" alt="image" src="https://github.com/user-attachments/assets/3d6a511e-3ecd-4830-b6e3-6106a132ba8a" />
 
-    - 설치 확인
-      ```
-      python - <<EOF
-      import sys, numpy, cv2, torch
-      print("Python:", sys.version)
-      print("NumPy:", numpy.__version__)
-      print("OpenCV:", cv2.__version__)
-      print("Torch:", torch.__version__)
-      EOF
+      - 설치 확인
         ```
+        python - <<EOF
+        import sys, numpy, cv2, torch
+        print("Python:", sys.version)
+        print("NumPy:", numpy.__version__)
+        print("OpenCV:", cv2.__version__)
+        print("Torch:", torch.__version__)
+        EOF
+          ```
 
       - 설치된 라이브러리 중 picamera2를 확인하기 위해 가상환경 내에서 python을 실행한 후 ```from picamera2 import Picamera2 ```를 했을 때 libcamera 모듈이 없다는 오류 발생. => Rpi 5 OS에 기본으로 설치된 Python 환경에서 해당 라이브러리를 복사한 후 현재 사용중인 가상환경의 라이브러리 폴더에 붙여 넣어서 해결.
         
@@ -42,7 +42,7 @@
 
       - libcamera 모듈을 붙여넣기 한 후에 가상환경의 python에서 ```from picamera2 import Picamera2 ```을 다시 실행하니, 이번에는 pykms 모듈 없음 오류 발생. => libcamera 모듈을 복사해서 붙여넣기한 것처럼 같은 방법으로 pykms 모듈을 붙여넣기하여 해결.
      
-      - ``` pip install gpiozero ```
+    - ``` pip install gpiozero ```
         
 <hr>
 
