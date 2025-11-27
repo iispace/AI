@@ -40,8 +40,8 @@
 
 ### [4단계] 강화학습 모델 연구
 
- - 선행 연구 고찰(#)
- - 강화학습 모델 설계 및 구현](#)
+ - [선행 연구 고찰](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_4_1.md)
+ - [강화학습 모델 설계 및 구현](#)
 
 
 ### [5단계: RC 기능 제거, 이동체 강화학습 모델 탑재 및 학습](#)
