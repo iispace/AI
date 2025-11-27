@@ -1,4 +1,4 @@
-# 3단계: Arduino <-> Raspberry Pi 5 UART 통신 및 카메라 테스트
+# 3단계: 1. Arduino <-> Raspberry Pi 5 UART 통신 및 카메라 테스트
 
 ### Raspberry Pi 5 (이하 Rpi 5)와 Arduino Uno 간 시리얼 통신 설정:
 
