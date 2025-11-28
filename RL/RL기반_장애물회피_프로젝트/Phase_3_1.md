@@ -198,3 +198,12 @@
   - Rpi 5는 Arduino에게 제어 신호를 보내고, Arduino는 Rpi 5에게 센서값을 보내는 양방향 통신 테스트 프로그램과 실험 동영상
     
     [Rpi 5 <==> Arduino Uno 양방향 Serial 통신 테스트](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_1_1.md)
+
+<hr>
+
+### 양방향 통신 및 Thread 간 데이터 접근
+
+  - Rpi 5는 Arduino에게 랜덤으로 변경되는 제어 신호를 보내고, Arduino는 Rpi 5에 0~9 범위에 있는 임의의 숫자는 센서값으로 보내는 양방향 통신 테스트 프로그램과 실험 동영상.
+  - Rpi 5의 main thread에서 생성한 제어 신호는 serial_thread에서 arudino에 전송하고, serial_thread에서 수신한 arduino의 센서값은 main_thread에서 출력함.
+
+    [양방향 통신 및 Thread 간 데이터 접근](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_1_2.md)
