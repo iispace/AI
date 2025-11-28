@@ -56,3 +56,12 @@
 
     <img width="702" height="356" alt="image" src="https://github.com/user-attachments/assets/b5459fdb-f9d6-47e2-9f6e-1e4912f201db" />
 
+
+### Rpi 5 부팅시 특정 Python 스크립트 자동 실행 방법 
+
+ - nano와 같은 편집기로 Rpi 5의 default autostart 파일을 열고 자동 실행할 파이썬 스크립트를 등록하면 됨
+   
+   - default autostart 파일 열기: ``` sudo nano /etc/xdg/lxsession/DXDE-pi/autostart ```
+   - 파일 끝에 추가할 내용: ``` lxterminal -e sudo {python3} /home/pi/{프로젝트폴더}/{실행할_파이썬_스크립트.py} ```
+     - 위 명령어에서 {python3} 부분에는 실행할 파이썬 스크립트를 작성할 때 사용한 가상환경의 경로와 함께 지정
+   - 내용 추가 후에는 Ctrl+X를 누르고 Save modified buffer?라는 질문에 y를 입력한 후 [엔터]키를 치면 변경 내용이 저장되고 nano 편집기가 종료됨
