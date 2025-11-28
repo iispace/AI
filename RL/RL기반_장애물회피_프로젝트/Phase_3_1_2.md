@@ -16,6 +16,10 @@ import time
 import random 
 
 ser = serial.Serial('/dev/ttyAMA2', 9600, timeout=0.1)  # UART2 (GPIO4-TX, GPIO5-RX)
+time.sleep(0.5)
+
+# 버퍼 초기화
+ser.reset_input_buffer()
 
 gCtrlData = '-1'
 gSensorValue = '-1'.encode()
@@ -49,7 +53,7 @@ def main():
             # 제어 데이터 값 갱신 
             gCtrlData = random.choice(chars)
             # 아두이노에서 수신한 센서 값 출력
-            print("sensor data from Uno: ", int.from_bytes(gSensorValue, 'big'))
+            print("sensor data from Uno: ", int.from_bytes(gSensorValue, 'big', signed=True))
 
             _, image = camera.read()
             image = cv2.flip(image, -1)
@@ -194,7 +198,7 @@ void loop() {
     Serial.println("No command received from Rpi 5. Stopping motors.");
   }
   // 센서 값 랜덤하게 갱신
-  sensor_value = random(0, 10);
+  sensor_value = random(-10, 10);
   // Rpi 5에 센서 값 전송
   rpiSerial.write(sensor_value);
   Serial.print("Sent to Rpi 5: ");
