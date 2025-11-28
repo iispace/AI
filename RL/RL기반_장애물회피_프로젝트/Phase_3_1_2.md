@@ -26,7 +26,7 @@ def serial_thread():
     while True:
         ser.write(gCtrlData.encode())
         print(f"data sent to uno: {gCtrlData}")
-        time.sleep(0.5)   # 5초에 한 번씩 신호 전송
+        time.sleep(0.5)    
         while ser.in_waiting > 0:
             gSensorValue = ser.read(1) # 1byte 읽기
         time.sleep(0.5)
