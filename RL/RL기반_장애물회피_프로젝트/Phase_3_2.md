@@ -8,6 +8,9 @@
     <img width="182" height="144" alt="image" src="https://github.com/user-attachments/assets/0a8a995c-08ce-43a9-9471-5c2f1ad4bda3" />
     <img width="223" height="144" alt="image" src="https://github.com/user-attachments/assets/86fd045e-0bd7-4202-840f-768e4a8de1c5" />
 
+  - Rpi 5 Configuration 수정
+
+    
 
 ### 2. Raspberry Pi 5 Display 
 
