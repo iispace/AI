@@ -56,8 +56,9 @@
 
     <img width="702" height="356" alt="image" src="https://github.com/user-attachments/assets/b5459fdb-f9d6-47e2-9f6e-1e4912f201db" />
 
+<hr>
 
-### Rpi 5 부팅시 특정 Python 스크립트 자동 실행 방법 
+### [※] Rpi 5 부팅시 특정 Python 스크립트 자동 실행 방법 
 
  - nano와 같은 편집기로 Rpi 5의 default autostart 파일을 열고 자동 실행할 파이썬 스크립트를 등록하면 됨
    
