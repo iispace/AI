@@ -81,12 +81,11 @@ if __name__ == "__main__":
 ### 아두이노 코드
 
 ```
-// Rpi 5에서 시리얼 신호 받아 RC카 제어하고 Rpi 5로 센서값 전달하는 프로그램 <2025-11-27>
+// 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 센서값 전달하는 프로그램 
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-//SoftwareSerial btSerial(2,3);
 SoftwareSerial rpiSerial(4,5); // RX, TX
 
 #define Speed_L 11
@@ -96,11 +95,11 @@ SoftwareSerial rpiSerial(4,5); // RX, TX
 #define RIGHT_2 7    // right motor reverse
 #define Speed_R 6
 
-#define CtrlLED 12   // Rpi 5로부터 시리얼 신호 받으면 동작하는 LED
+#define CtrlLED 12   // Rpi 5로부터 제어 신호 받으면 동작하는 LED
 
 char c;
 int speed = 128;  // duty cycle: 50% i.e., 0.5
-int sensor_value = 9;
+int sensor_value = -1;
 
 void setup() {
   rpiSerial.begin(9600);
@@ -116,19 +115,17 @@ void setup() {
 
   pinMode(CtrlLED, OUTPUT);
 
-  //Serial.println("....bluetooth test....");
+  // 아두이노가 준비 되었음을 알리기 위한 깜박임
   for (int i=0;i<5;i++){
     digitalWrite(CtrlLED, HIGH);
     delay(100);
     digitalWrite(CtrlLED, LOW);
     delay(100);
   }
-
 }
 
 void loop() {
   if(rpiSerial.available() > 0){
-    //delay(10);
     c = rpiSerial.read();
     Serial.print("Received command from Rpi 5: ");
     Serial.println(c);
@@ -179,9 +176,9 @@ void loop() {
       digitalWrite(CtrlLED, LOW);
     }
   }
-  //rpiSerial.print("from Uno: ");
-  //rpiSerial.println(sensor_value);
+  // 센서 값 랜덤하게 갱신
   sensor_value = random(0, 10);
+  // Rpi 5에 센서 값 전송
   rpiSerial.write(sensor_value);
   Serial.print("Sent to Rpi 5: ");
   Serial.println(sensor_value);
