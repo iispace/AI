@@ -186,3 +186,11 @@ void loop() {
 }
 
 ```
+
+
+### 테스트
+
+
+
+https://github.com/user-attachments/assets/931c0243-4dc0-42db-a2ec-bec8d906d086
+
