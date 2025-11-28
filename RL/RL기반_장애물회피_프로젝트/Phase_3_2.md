@@ -11,8 +11,14 @@
 
 ### 2. Raspberry Pi 5 Display 
 
-     
+  #### 2.1. PiTFT Display     
 
   - [Adafruit 2.2" PiTFT HAT - 320x240 Display](https://learn.adafruit.com/adafruit-2-2-pitft-hat-320-240-primary-display-for-raspberry-pi)
 
     <img width="240" height="180" alt="image" src="https://github.com/user-attachments/assets/c1a7c082-d7f8-4693-9a36-8da8b55c2ef5" />
+
+<br>
+
+  #### 2.2. Rpi 5 pin map
+
+  <img width="632" height="400" alt="image" src="https://github.com/user-attachments/assets/4f362feb-b717-4978-8a53-f26366a93247" />
