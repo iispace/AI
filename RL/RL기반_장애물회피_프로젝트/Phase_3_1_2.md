@@ -16,7 +16,7 @@ import random
 
 ser = serial.Serial('/dev/ttyAMA2', 9600, timeout=0.1)  # UART2 (GPIO4-TX, GPIO5-RX)
 
-gCtrlData = '0'
+gCtrlData = '-1'
 gSensorValue = '-1'.encode()
 chars = ['G', 'B', 'L', 'R', '0']
 
@@ -138,6 +138,7 @@ void loop() {
       digitalWrite(RIGHT_2, LOW);   // 7
       analogWrite(Speed_R, speed);   // 6
       digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
     }
     else if (c == 'G'){  // (전진) 
       analogWrite(Speed_L, speed);   // 11
@@ -147,6 +148,7 @@ void loop() {
       digitalWrite(RIGHT_2, HIGH);   // 7
       analogWrite(Speed_R, speed);   // 6
       digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
     }
     else if (c == 'L'){  // (좌회전) 
       analogWrite(Speed_L, speed);   // 11
@@ -156,6 +158,7 @@ void loop() {
       digitalWrite(RIGHT_2, LOW);   // 7
       analogWrite(Speed_R, speed);   // 6
       digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
     }
     else if (c == 'R'){ // (우회전) 
       analogWrite(Speed_L, speed);   // 11
@@ -165,6 +168,7 @@ void loop() {
       digitalWrite(RIGHT_2, HIGH);   // 7
       analogWrite(Speed_R, speed);   // 6
       digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
     }
     else if (c == '0'){
       analogWrite(Speed_L, 0);
@@ -174,6 +178,7 @@ void loop() {
       digitalWrite(RIGHT_2, HIGH);   // 7
       analogWrite(Speed_R, 0);   // 6
       digitalWrite(CtrlLED, LOW);
+      c = '\0';  // 명령어 처리 후 초기화
     }
   }
   // 센서 값 랜덤하게 갱신
@@ -182,6 +187,7 @@ void loop() {
   rpiSerial.write(sensor_value);
   Serial.print("Sent to Rpi 5: ");
   Serial.println(sensor_value);
+  sensor_value = -1; // 전송 후 초기화
   delay(1000);
 }
 
