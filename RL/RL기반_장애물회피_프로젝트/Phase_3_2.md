@@ -8,11 +8,16 @@
     <img width="182" height="144" alt="image" src="https://github.com/user-attachments/assets/0a8a995c-08ce-43a9-9471-5c2f1ad4bda3" />
     <img width="223" height="144" alt="image" src="https://github.com/user-attachments/assets/86fd045e-0bd7-4202-840f-768e4a8de1c5" />
 
-    <img width="441" height="108" alt="image" src="https://github.com/user-attachments/assets/3cd69a81-5f94-471b-84c4-f6a83f4c881e" />
+    <img width="599" height="139" alt="image" src="https://github.com/user-attachments/assets/ca89f1b5-2649-49da-9060-05761484f717" />
 
-  - Rpi 5 Configuration 수정
+    [Raspberry Pi 5 power mgmt UPS shield X1200 설명](https://suptronics.com/Raspberrypi/Power_mgmt/x1200-v1.2.html)
 
-    
+    [Rpi 5에 X1200 설정 방법](https://suptronics.com/Raspberrypi/Power_mgmt/x120x-v1.0_software.html) 
+
+<br>
+
+     
+<hr>    
 
 ### 2. Raspberry Pi 5 Display 
 
