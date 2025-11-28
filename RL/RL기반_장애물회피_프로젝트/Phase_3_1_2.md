@@ -190,6 +190,7 @@ void loop() {
     digitalWrite(RIGHT_2, HIGH);   // 7
     analogWrite(Speed_R, 0);       // 6
     digitalWrite(CtrlLED, LOW);
+    Serial.println("No command received from Rpi 5. Stopping motors.");
   }
   // 센서 값 랜덤하게 갱신
   sensor_value = random(0, 10);
