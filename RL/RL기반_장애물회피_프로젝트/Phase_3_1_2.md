@@ -181,6 +181,16 @@ void loop() {
       c = '\0';  // 명령어 처리 후 초기화
     }
   }
+  else {
+    // Rpi 5로부터 제어 신호를 받지 못하면 모터 정지
+    analogWrite(Speed_L, 0);
+    digitalWrite(LEFT_1, HIGH);    // 10 
+    digitalWrite(LEFT_2, HIGH);    // 9
+    digitalWrite(RIGHT_1, HIGH);   // 8
+    digitalWrite(RIGHT_2, HIGH);   // 7
+    analogWrite(Speed_R, 0);       // 6
+    digitalWrite(CtrlLED, LOW);
+  }
   // 센서 값 랜덤하게 갱신
   sensor_value = random(0, 10);
   // Rpi 5에 센서 값 전송
