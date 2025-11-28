@@ -29,7 +29,6 @@ def serial_thread():
         time.sleep(0.5)   # 5초에 한 번씩 신호 전송
         while ser.in_waiting > 0:
             gSensorValue = ser.read(1) # 1byte 읽기
-            #print("sensor data from Uno: ", int.from_bytes(gSensorValue, 'big'))
         time.sleep(0.5)
             
 
