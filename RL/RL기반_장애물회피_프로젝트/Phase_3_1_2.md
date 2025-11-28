@@ -45,7 +45,9 @@ def main():
 
     try:
         while (camera.isOpened()):
+            # 제어 데이터 값 갱신 
             gCtrlData = random.choice(chars)
+            # 아두이노에서 수신한 센서 값 출력
             print("sensor data from Uno: ", int.from_bytes(gSensorValue, 'big'))
 
             _, image = camera.read()
