@@ -39,7 +39,7 @@ def main():
     W, H = 640, 480
     # 카메라 객체 생성
     camera = mycamera.MyPiCamera(W, H)
-    filepath = "/home/pi/ARserverance/video/train"
+    filepath = "/home/pi/{프로젝트폴더}/video/train"
     i = 0
 
 
