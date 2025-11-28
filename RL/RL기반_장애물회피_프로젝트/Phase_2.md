@@ -54,7 +54,7 @@
 
   - 아래 그림에서 VSCode 하단 오른쪽 코너에 노란색 사각형으로 표시한 부분을 클릭하여 현재 프로젝트를 위해 생성한 가상환경 선택
 
-    <img width="702" height="356" alt="image" src="https://github.com/user-attachments/assets/b5459fdb-f9d6-47e2-9f6e-1e4912f201db" />
+    <img width="492" height="250" alt="image" src="https://github.com/user-attachments/assets/b5459fdb-f9d6-47e2-9f6e-1e4912f201db" />
 
 <hr>
 
