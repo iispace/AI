@@ -19,7 +19,7 @@
 
   - 현재 작업 중인 terminal에서 가상환경에 필요한 라이브러리 계속 추가 설치
     - ``` pip install --upgrade pip ```
-    - ``` pip install numpy matplotlib opencv-python torch torchvision ```
+    - ``` pip install numpy matplotlib opencv-python torch torchvision gpiozero lgpio pyserial ```
     - picamera2"를 설치하기 위해 ```pip install picamera2```를 실행했을 때, libcap headers 설치가 필요하다는 오류 메시지가 나오면 다음과 같이 apt로 libcap-dev를 설치한 후 다시 시도했더니 설치됨.
 
        <img width="847" height="34" alt="image" src="https://github.com/user-attachments/assets/3d6a511e-3ecd-4830-b6e3-6106a132ba8a" />
@@ -42,8 +42,6 @@
 
       - libcamera 모듈을 붙여넣기 한 후에 가상환경의 python에서 ```from picamera2 import Picamera2 ```을 다시 실행하니, 이번에는 pykms 모듈 없음 오류 발생. => libcamera 모듈을 복사해서 붙여넣기한 것처럼 같은 방법으로 pykms 모듈을 붙여넣기하여 해결.
      
-    - ``` pip install gpiozero ```
-        
 
 
 ### 2. VSCode 열고 python interpretor 선택  
