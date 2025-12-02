@@ -4,6 +4,11 @@
 ### 1. Python 가상환경 생성
  
   - Raspberry Pi 5 OS인 bookworm은 이미 설치된 상태임
+    
+  - 먼저, Rpi 5 리눅스 시스템의 패키지 목록을 최신 상태로 업데이트
+    
+    - ```sudo apt update```
+    - ```sudo apt full-upgrade```
       
   - Raspberry Pi 5 홈 폴더 하위에 작업 폴더 생성
         
