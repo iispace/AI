@@ -15,7 +15,8 @@
          - WAIT_FOR_POWER_BUTTON=1 (새 항목 추가)
       3. 수정 후 저장 및 편집기 종료: Ctrl+X -> y -> [엔터]키 입력
 
-         <img width="417" height="300" alt="image" src="https://github.com/user-attachments/assets/1ad8eec5-894f-4aed-b38c-f4467a119b58" />
+         <img width="417" height="300" alt="image" src="https://github.com/user-attachments/assets/7938d672-66dc-46ab-97da-cdc903c7d0be" />
+         <img width="417" height="300" alt="image" src="https://github.com/user-attachments/assets/1653b634-8f91-43af-8de2-f99ee7abe0d4" />
 
       5. Rpi 5 리부팅
 
