@@ -5,7 +5,7 @@
 
   - **보호 회로가 장착된 18650 Battery의 크기가 구입한 UPS(X1200)의 배터리 홀더 크기보다 커서 장착할 수 없었으므로, UPS 대신 5V 2A 출력의 보조배터리를 USB-C로 연결함**
   - 5V 5A를 공급할 수 있는 UPS 대신에 5V 2A 출력의 보조배터리를 사용하므로, 필요한 전력을 최소화할 수 있도록 Display 장치는 부착하지 않도록 하였음.
-  - Rpi 5는 기본적으로 전원이 공급되면 자동으로 부팅이 되도록 설정되어 있으나, 실험의 편의성을 위해 전원이 공급되더라도 자동으로 부팅되지 않고 Power Button을 눌러야 부팅이 되도록 수정함.
+  - Rpi 5는 기본적으로 전원이 공급되면 자동으로 부팅이 되도록 설정되어 있으나, 실험의 편의성을 위해 전원이 공급되더라도 자동으로 부팅되지 않고 Power Button을 눌러야 부팅이 되도록 수정함[[1]](#ref_1).
 
     - 설정 방법:
       
@@ -57,3 +57,10 @@
   #### 2.2. Rpi 5 pin map
 
   <img width="632" height="400" alt="image" src="https://github.com/user-attachments/assets/4f362feb-b717-4978-8a53-f26366a93247" />
+
+
+<hr>
+
+### Reference 
+
+[1]<a id="ref_1">[Raspberry Pi bootloader configuration]</a>(https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-bootloader-configuration)
