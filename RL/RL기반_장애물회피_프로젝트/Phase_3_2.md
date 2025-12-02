@@ -63,4 +63,4 @@
 
 ### Reference 
 
-[1]<a id="ref_1">[Raspberry Pi bootloader configuration]</a>(https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-bootloader-configuration)
+[1]<a id="ref_1"></a> [Raspberry Pi bootloader configuration](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-bootloader-configuration)
