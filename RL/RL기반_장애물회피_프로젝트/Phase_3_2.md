@@ -20,6 +20,18 @@
 
       5. Rpi 5 리부팅
 
+  - 마지막으로, 전원이 꺼질 때 Rpi 5는 기본적으로 약 1W ~ 1.4W의 전력을 소모하는데, 이 전력 소모량을 0.01W로 줄일 수 있도록 eeprom-config 설정을 아래와 같이 수정함[2](#ref_2).
+
+    - 설정 방법:
+
+      1. 편집기로 설정 파일 열기:  ```sudo rpi-eeprom-config -e```
+      2. BOOT_ORDER 항목의 값을 0xf461에서 0xf416으로 수정
+
+         <img width="1054" height="246" alt="image" src="https://github.com/user-attachments/assets/044f3227-3a62-4024-b744-969ddcd49fcc" />
+
+      4. 수정 후 저장 및 편집기 종료: Ctrl+X -> y -> [엔터]키 입력
+      5. Rpi 5 리부팅
+    
   <br>
   
   <hr>
@@ -64,3 +76,4 @@
 ### Reference 
 
 [1]<a id="ref_1"></a> [Raspberry Pi bootloader configuration](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-bootloader-configuration)
+[2]<a id="ref_2"></a> [Raspberry Pi Power Supply](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#power-supply)
