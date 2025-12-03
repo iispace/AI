@@ -11,7 +11,7 @@
 
   **1.2. eeprom-config 설정 변경**
   
-  - Rpi 5는 기본적으로 전원 공급 시 자동으로 부팅되도록 설정되어 있으나, 실험 과정에서 연구자의 의도에 따라 장치의 전원을 보다 효율적으로 제어할 수 있도록, 전원이 공급되더라도 자동으로 부팅되지 않고 Power Button을 눌러야만 부팅이 이루어지도록 수정[[1]](#ref_1).
+  - Rpi 5는 기본적으로 전원 공급 시 자동으로 부팅되도록 설정되어 있으나, 실험 과정에서 연구자의 의도에 따라 장치의 전원을 보다 효율적으로 제어할 수 있도록, 전원이 공급되더라도 자동으로 부팅되지 않고 Power Button을 눌러야만 부팅이 이루어지도록 수정[[1]](#ref_1). 이 때 수정하는 항목인 ``` POWER_OFF_ON_HALF ```를 기본값인 ```0```에서 ```1```로 수정하면 전원이 꺼졌을 때에도 Rpi 5가 기본적으로 소비하던 대기 전력을 약 1W ~ 1.4W에서 0.01W로 줄여주는 효과도 있음[[2]](#"ref_2").
 
       - 설정 방법:
       
@@ -26,20 +26,10 @@
 
         4. Rpi 5 리부팅
 
-  <br>
+     <br>
 
-  - 전원이 꺼질 때 Rpi 5는 기본적으로 약 1W ~ 1.4W의 전력을 소모하는데, 이 전력 소모량을 0.01W로 줄일 수 있도록 eeprom-config 설정을 아래와 같이 수정[[2]](#ref_2).
-
-    - 설정 방법:
-
-      1. 편집기로 설정 파일 열기:  ```sudo rpi-eeprom-config -e```
-      2. BOOT_ORDER 항목의 값을 0xf461에서 0xf416으로 수정
-
-         <img width="1054" height="246" alt="image" src="https://github.com/user-attachments/assets/044f3227-3a62-4024-b744-969ddcd49fcc" />
-
-      4. 수정 후 저장 및 편집기 종료: Ctrl+X -> y -> [엔터]키 입력
-      5. Rpi 5 리부팅
-    
+      - Rpi 5는 전원이 연결된 상태에서 소프트웨어적으로 "shutdown"을 수행해도, 보드가 완전히 차단되는 하드웨어 전원 오프가 기본적으로 적용되지 않음. 기본 설정에서는 SoC가 저전력 대기 상태로 남고, 보드의 5V 라인은 계속 활성화되어 일부 회로가 전원 공급을 받고 있는 상태임. 이 때문에 기본 설정에서는 "전원 껴짐"으로 보이는 상태라도 약 1.2W ~ 1.6W의 전력을 지속적으로 소비함[[3]](#ref_3").
+       
   <br>
   
   <hr>
@@ -86,3 +76,5 @@
 [1]<a id="ref_1"></a> [Raspberry Pi bootloader configuration](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-bootloader-configuration)
 
 [2]<a id="ref_2"></a> [Raspberry Pi Power Supply](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#power-supply)
+
+[3]<a id="ref_3"></a> [Reducing Raspberry Pi 5's power consumption by 140x](https://www.jeffgeerling.com/blog/2023/reducing-raspberry-pi-5s-power-consumption-140x)
