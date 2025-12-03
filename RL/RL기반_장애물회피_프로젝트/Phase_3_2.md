@@ -32,7 +32,7 @@
        
   <br>
 
- **※Rpi 5 소비 전력 모니터링 Python script**
+ **※Rpi 5 소비 전력 모니터링 Python script[[4]](#ref_4)**
  ```
 '''
 Usage example:
@@ -175,3 +175,5 @@ except KeyboardInterrupt:
 [2]<a id="ref_2"></a> [Raspberry Pi Power Supply](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#power-supply)
 
 [3]<a id="ref_3"></a> [Reducing Raspberry Pi 5's power consumption by 140x](https://www.jeffgeerling.com/blog/2023/reducing-raspberry-pi-5s-power-consumption-140x)
+
+[4]<a id="ref_4"></a>[RPi 5 read supply currents?](https://forums.raspberrypi.com/viewtopic.php?t=359249)
