@@ -21,6 +21,9 @@
 
  <img width="1020" height="400" alt="image" src="https://github.com/user-attachments/assets/fd408eb5-31a2-4b51-a05f-e66eb2a8a8c1" />
 
+  - [Rpi 5 3D model step file](https://www.elecrow.com/blog/download-the-raspberry-pi-5-3d-design-stp-file-for-free-from-elecrow.html)
+  - [Rpi 5 Active Cooler 3D model step file](https://www.printables.com/model/858776-raspberry-pi-active-cooler/files)
+  - [Arduino Uno 3D model step file](https://www.printables.com/model/358867-arduino-uno-3d-model-stp/remixes)
 
 <hr>
 
