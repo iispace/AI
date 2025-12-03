@@ -25,6 +25,8 @@
   - [Rpi 5 Active Cooler 3D model step file](https://www.printables.com/model/858776-raspberry-pi-active-cooler/files)
   - [Arduino Uno 3D model step file](https://www.printables.com/model/358867-arduino-uno-3d-model-stp/remixes)
 
+    <img width="476" height="400" alt="image" src="https://github.com/user-attachments/assets/4f5ab685-6078-4db1-be15-954d1fb50b60" />
+
 <hr>
 
 ### [1단계: RC Car 제작을 통한 모터 드라이버 동작 확인](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_1.md)
