@@ -3,22 +3,28 @@
 
 ### 1. Power Supply  
 
-  - **보호 회로가 장착된 18650 Battery의 크기가 구입한 UPS(X1200)의 배터리 홀더 크기보다 커서 장착할 수 없었으므로, UPS 대신 5V 2A 출력의 보조배터리를 USB-C로 연결함**
+<br>
+
+  **1.1. 보호 회로가 장착된 18650 Battery의 크기가 구입한 UPS(X1200)의 배터리 홀더 크기보다 커서 장착할 수 없었으므로, UPS 대신 5V 2A 출력의 보조배터리를 USB-C로 연결함**
+  
   - 5V 5A를 공급할 수 있는 UPS 대신에 5V 2A 출력의 보조배터리를 사용하므로, 필요한 전력을 최소화할 수 있도록 Display 장치는 부착하지 않도록 하였음.
+
+  **1.2. eeprom-config 설정 변경**
+  
   - Rpi 5는 기본적으로 전원이 공급되면 자동으로 부팅이 되도록 설정되어 있으나, 실험의 편의성을 위해 전원이 공급되더라도 자동으로 부팅되지 않고 Power Button을 눌러야 부팅이 되도록 수정함[[1]](#ref_1).
 
-    - 설정 방법:
+      - 설정 방법:
       
-      1. 편집기로 설정 파일 열기:  ```sudo rpi-eeprom-config -e```
-      2. 아래 항목 수정 및 추가
-         - POWER_OFF_ON_HALF=1  (기본값은 0이었으나, 이 값을 1로 변경)
-         - WAIT_FOR_POWER_BUTTON=1 (새 항목 추가)
-      3. 수정 후 저장 및 편집기 종료: Ctrl+X -> y -> [엔터]키 입력
+        1. 편집기로 설정 파일 열기:  ```sudo rpi-eeprom-config -e```
+        2. 아래 항목 수정 및 추가
+           - POWER_OFF_ON_HALF=1  (기본값은 0이었으나, 이 값을 1로 변경)
+           - WAIT_FOR_POWER_BUTTON=1 (새 항목 추가)
+        3. 수정 후 저장 및 편집기 종료: Ctrl+X -> y -> [엔터]키 입력
 
-         <img width="417" height="300" alt="image" src="https://github.com/user-attachments/assets/7938d672-66dc-46ab-97da-cdc903c7d0be" />
-         <img width="417" height="300" alt="image" src="https://github.com/user-attachments/assets/1653b634-8f91-43af-8de2-f99ee7abe0d4" />
+           <img width="417" height="300" alt="image" src="https://github.com/user-attachments/assets/7938d672-66dc-46ab-97da-cdc903c7d0be" />
+           <img width="417" height="300" alt="image" src="https://github.com/user-attachments/assets/1653b634-8f91-43af-8de2-f99ee7abe0d4" />
 
-      5. Rpi 5 리부팅
+        4. Rpi 5 리부팅
 
   <br>
 
