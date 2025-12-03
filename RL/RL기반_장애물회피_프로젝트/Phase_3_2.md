@@ -78,4 +78,5 @@
 ### Reference 
 
 [1]<a id="ref_1"></a> [Raspberry Pi bootloader configuration](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-bootloader-configuration)
+
 [2]<a id="ref_2"></a> [Raspberry Pi Power Supply](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#power-supply)
