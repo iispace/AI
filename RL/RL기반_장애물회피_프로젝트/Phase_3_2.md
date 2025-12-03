@@ -176,4 +176,4 @@ except KeyboardInterrupt:
 
 [3]<a id="ref_3"></a> [Reducing Raspberry Pi 5's power consumption by 140x](https://www.jeffgeerling.com/blog/2023/reducing-raspberry-pi-5s-power-consumption-140x)
 
-[4]<a id="ref_4"></a>[RPi 5 read supply currents?](https://forums.raspberrypi.com/viewtopic.php?t=359249)
+[4]<a id="ref_4"></a> [RPi 5 read supply currents?](https://forums.raspberrypi.com/viewtopic.php?t=359249)
