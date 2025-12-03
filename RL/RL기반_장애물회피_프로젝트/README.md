@@ -32,11 +32,11 @@
 ### [2단계: Raspberry Pi 5에 Python 가상환경 설정](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_2.md)
 
  
-### [3단계] 통신, 카메라, 디스플레이 및 Rpi 5 전원
+### [3단계] Rpi 5 <-> Arduino Uno 통신, Rpi 5 전원, 카메라 + Arduino 가속도 센서 
 
   - [Arduino <-> Raspberry Pi 5 UART 통신 및 카메라 테스트](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_1.md)
   - [Rpi 5 Power Supply & Display](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_2.md)
-
+  - [Arduino 가속도 센서](#)
 
 ### [4단계] 강화학습 모델 연구
 
