@@ -6,7 +6,7 @@
 2. Rpi 5에 Python 가상 환경 설정
 3. 하드웨어 구현
    
-   3.1. 이동체 제어보드인 아두이노와 Raspberry Pi 5 사이의 UART 통신 구현 및 테스트
+   3.1. 이동체 제어보드인 아두이노와 Raspberry Pi 5 사이의 UART 통신 및 카메라 테스트
    
    3.2. Raspberry Pi 5 전원 공급 장치 연결
 
