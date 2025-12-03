@@ -31,7 +31,104 @@
       - Rpi 5는 전원이 연결된 상태에서 소프트웨어적으로 "shutdown"을 수행해도, 보드가 완전히 차단되는 하드웨어 전원 오프가 기본적으로 적용되지 않음. 기본 설정에서는 SoC가 저전력 대기 상태로 남고, 보드의 5V 라인은 계속 활성화되어 일부 회로가 전원 공급을 받고 있는 상태임. 이 때문에 기본 설정에서는 "전원 껴짐"으로 보이는 상태라도 약 1.2W ~ 1.6W의 전력을 지속적으로 소비함[[3]](#ref_3).
        
   <br>
-  
+
+ **※Rpi 5 소비 전력 모니터링 Python script**
+ ```
+'''
+Usage example:
+
+    - 현재 소비 전력 모니터링 : python power_monitor.py
+
+    - 1초 간격으로 소비 전력 모니터링: python power_monitor.py 1
+'''
+
+import subprocess
+import time
+import sys
+
+def printq(arg):
+    if not quiet:
+        print(arg)
+
+quiet = False
+period = 0
+
+# 옵션 처리
+for opt in sys.argv[1:]:
+    if opt in ('help', '--help', '-h'):
+        print(f'Usage: {sys.argv[0]} [-q] <period>')
+        print('Prints detailed power consumption details for the Raspberry Pi by parsing the output of `vcgencmd pmic_read_adc`.\n')
+        print('If <period> is provided, the output is refreshed every <period> seconds.')
+        print('-q quiet output (only print total power consumption)')
+        sys.exit(0)
+    elif opt == '-q':
+        quiet = True
+    else:
+        period = float(opt)
+
+try:
+    while True:
+        result = subprocess.run(['vcgencmd', 'pmic_read_adc'], stdout=subprocess.PIPE)
+        lines = result.stdout.decode('utf-8').split('\n')
+        curs = {}
+        vols = {}
+        pows = {}
+
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            label = line.split(' ')[0]
+            raw_val = line.split('=')[1]
+
+            # 단위 처리
+            if raw_val.endswith('A'):
+                val = float(raw_val[:-1])  # Ampere
+                shortLabel = label[:-2]
+                curs[shortLabel] = val
+            elif raw_val.endswith('V'):
+                val = float(raw_val[:-1])  # Volt
+                shortLabel = label[:-2]
+                vols[shortLabel] = val
+            elif raw_val.endswith('mV'):
+                val = float(raw_val[:-2]) / 1000.0  # mV → V
+                shortLabel = label[:-2]
+                vols[shortLabel] = val
+            elif raw_val.endswith('mA'):
+                val = float(raw_val[:-2]) / 1000.0  # mA → A
+                shortLabel = label[:-2]
+                curs[shortLabel] = val
+
+        for key in list(curs.keys()):
+            if key in vols:
+                pows[key] = curs[key] * vols[key]
+                printq(f'{key:10s} {vols[key]:10f} V {curs[key]:10f} A {pows[key]:10f} W')
+                del curs[key]
+                del vols[key]
+
+        # 남은 값 출력
+        for key in vols:
+            printq(f'{key:10s} {vols[key]:10f} V')
+        for key in curs:
+            printq(f'{key:10s} {curs[key]:10f} A')
+
+        if quiet:
+            print(f'{sum(pows.values()):.5f} W')
+        else:
+            print(f'            Total power consumption: {sum(pows.values()):10f} W')
+
+        if not period:
+            break
+        else:
+            time.sleep(period)
+            printq('--------------------------------------------------')
+
+except KeyboardInterrupt:
+    print("\nStopped by user.")
+
+ ```
+ <img width="560" height="400" alt="image" src="https://github.com/user-attachments/assets/91526c88-c484-4d4e-a6aa-201c4c8c7eae" />
+
   <hr>
   
   - 나중에 보호 회로가 없는 18650 배터리가 준비되었을 때 UPS(X1200)을 사용하려면 아래 내용 참고.
