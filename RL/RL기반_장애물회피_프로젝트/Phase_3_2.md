@@ -40,6 +40,8 @@ Usage example:
     - 현재 소비 전력 모니터링 : python power_monitor.py
 
     - 1초 간격으로 소비 전력 모니터링: python power_monitor.py 1
+
+    - 2초 간격으로 소비 전력의 합계만 모니터링: python power_monitor.py 2 -q
 '''
 
 import subprocess
