@@ -105,6 +105,7 @@ void loop() {
   delay(1000);
 }
 
+// 측정값의 정확한 이해를 돕기 위한 설정 레지스터 값 읽기
 void readConfigValue() {
   uint16_t fs_sel, afs_sel;
   Wire.beginTransmission(MPU);
@@ -120,6 +121,7 @@ void readConfigValue() {
   }
 }
 
+// MOT_THR, MOT_DUR 값을 의도한 대로 설정하기 위해 센서에 설정된 레지스터 값 읽어 확인하기
 void read_MOT_Detect_ConfigValue() {
 // Register 25 (SMPLRT_DIV) 읽기
   Wire.beginTransmission(MPU);
