@@ -19,8 +19,7 @@
 
 ## 최종 하드웨어 구성도(안)
 
- <img width="602" height="350" alt="image" src="https://github.com/user-attachments/assets/b8397133-7123-4830-956b-729bcffc675d" />
- <img width="280" height="350" alt="image" src="https://github.com/user-attachments/assets/73e1293d-6619-4772-8a25-7f97668f7650" />
+ <img width="936" height="400" alt="image" src="https://github.com/user-attachments/assets/35225848-c7b3-4d55-9498-ed600a0990e0" />
 
 
 <hr>
