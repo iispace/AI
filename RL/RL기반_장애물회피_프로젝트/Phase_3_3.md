@@ -16,7 +16,7 @@
 ### 3축 가속도 센서(GY-521) 테스트 코드
 
   ```
-  #include <Wire.h>
+#include <Wire.h>
 #include <Arduino.h>
 
 const int MPU = 0x68;   // I2C address of the MPU-6050
@@ -30,7 +30,7 @@ void collisionISR() {
 }
 
 void readConfigValue();
-void read_MOT_DUR_ConfigValue();
+void read_MOT_Detect_ConfigValue();
 
 void setup() {
   Wire.begin();
@@ -65,7 +65,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(2), collisionISR, RISING);
 
   readConfigValue();
-  read_MOT_DUR_ConfigValue();
+  read_MOT_Detect_ConfigValue();
 
   Serial.println("\nMPU6050 Initialized, Collision Detection is waiting...");
 }
@@ -120,7 +120,7 @@ void readConfigValue() {
   }
 }
 
-void read_MOT_DUR_ConfigValue() {
+void read_MOT_Detect_ConfigValue() {
 // Register 25 (SMPLRT_DIV) 읽기
   Wire.beginTransmission(MPU);
   Wire.write(0x19);  // 25 decimal
