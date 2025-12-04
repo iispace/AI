@@ -54,10 +54,11 @@ def serial_thread():
     global gCtrlData
 
     while True:
-
-        ser.write(gCtrlData.encode())
-        time.sleep(0.5)
-        print(f"data sent to uno: {gCtrlData}")
+        if gCtrlData != '-1':
+            ser.write(gCtrlData.encode())
+            time.sleep(0.5)
+            print(f"data sent to uno: {gCtrlData}")
+            gCtrlData = '-1'
         while ser.in_waiting > 0:
             gSensorValue = ser.read(1).strip().decode('utf-8', errors='ignore') # 1byte 읽어서 문자로 변환
 
@@ -92,6 +93,7 @@ def main():
                 print("sensor data from Uno: ",gSensorValue) 
                 # 충돌 발생 시그널 받았을 때 처리해야 할 일 여기에 구현
                 led_blicking(0.05)   # 50ms 간격으로 10번 깜박임
+                time.sleep(3)  # 충돌 감지 신호 수신 후 3초 동안 대기 (아두이노 쪽에서도 같은 시간 동안 대기함)
                 time.sleep(0.1)
                 gSensorValue = None
             
@@ -128,7 +130,7 @@ if __name__ == "__main__":
 ##### Aruino Uno 코드
 
   ```
-   // 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 충돌 감지 이벤트 전달 프로그램  
+  // 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 충돌 감지 이벤트 전달 프로그램  
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
@@ -216,8 +218,8 @@ void loop() {
     c='\0';
     //sensor_value = -2; // 기본 센서 값으로 복귀
     led_blinking();
-    delay(3000); // 충돌 후 3초간 대기 후 다시 루프 진행
     rpiSerial.flush();  // 차량이 멈춘 후 Rpi 5로부터 오는 잔여 데이터 제거
+    delay(3000); // 충돌 후 3초간 대기 후 다시 루프 진행
     collisionDetected = false; // 플래그 리셋
   } 
 
