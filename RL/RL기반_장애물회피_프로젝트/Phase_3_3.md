@@ -215,3 +215,5 @@ void readRegistryValue(uint8_t Reg_Addr, int8_t num_regs, const uint8_t* bit_mas
 [2]<a id="ref_2"></a> [MPU-6000 and MPU-6050 Register Map and Description Revision 4.2](https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Register-Map1.pdf)
 
 [3]<a id="ref_3"></a> [MPU-6000 and MPU-6050 Product Specification Revision 3.4](https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf)
+
+[4]<a id="ref_4"></a> [Arduino Tutorials: GY-521](https://github.com/iispace/Arduino_Learning_Tutorials/tree/main/GY_512_%EA%B0%80%EC%86%8D%EB%8F%84%EC%84%BC%EC%84%9C)
