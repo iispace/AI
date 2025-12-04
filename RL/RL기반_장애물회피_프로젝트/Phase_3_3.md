@@ -23,6 +23,7 @@ const int MPU = 0x68;   // I2C address of the MPU-6050
 int16_t AcX, AcY, AcZ, Tmp, GyX, GyY, GyZ;
 int16_t AC_scale = 16384; // 가속도계 스케일 (±2g 설정 시 16384 LSB/g)
 uint8_t GY_scale = 131;  // 자이로스코프 스케일 (±250°/s 설정 시 131 LSB/°/s)
+int8_t interruptPin = 2; // Arduino 외부 인터럽트 핀 번호
 
 volatile bool collisionDetected = false; // 인터럽트 발생 플래그
 
@@ -31,8 +32,18 @@ void collisionISR() {
   collisionDetected = true;
 }
 
-void readConfigValue();
-void read_MOT_Detect_ConfigValue();
+/* 설정 레지스터 값 읽기용 마스크 및 제목 배열 
+  - SEL_masks, SEL_titles: 기본 스케일 범위(Full scale range) 확인 (측정값을 사람이 이해할 수 있는 물리량으로 변환하기 위해 필요)
+  - MOT_masks, MOT_titles: 충격 감지 시 인터럽트 발생을 위한 모션 디텍션 설정값 확인
+*/
+const uint8_t SEL_masks[] = {0x18, 0x18}; // GYRO_CONFIG 레지스터의 FS_SEL 비트와 ACCEL_CONFIG 레지스터의 AFS_SEL 비트 추출용 마스크
+const char* SEL_titles[] = {"GYRO_FS_SEL", "ACCEL_AFS_SEL"};
+
+const uint8_t MOT_masks[] = {0xFF, 0x07}; // SMPLRT_DIV 레지스터의 모든 비트와 CONFIG 레지스터의 DLPF_CFG 비트 추출용 마스크
+const char* MOT_titles[] = {"SMPLRT_DIV(Reg 25)", "DLPG_CFG(Reg 26)"};
+
+void readRegistryValue(uint8_t, int8_t, const uint8_t*, const char*[]); 
+
 
 void setup() {
   Wire.begin();
@@ -63,14 +74,14 @@ void setup() {
   Wire.endTransmission(true);
 
   // Arduino 외부 인터럽트 핀 연결 (GY-521 INT → D2)
-  pinMode(2, INPUT);
+  pinMode(interruptPin, INPUT);
   attachInterrupt(digitalPinToInterrupt(2), collisionISR, RISING);
 
-  readConfigValue();
-  read_MOT_Detect_ConfigValue();
 
-  Serial.println("\nMPU6050 Initialized, Collision Detection is waiting...");
-  
+  // 설정 레지스터 값 읽기 및 출력
+  readRegistryValue(0x1B, 2, SEL_masks, SEL_titles);
+  readRegistryValue(0x19, 2, MOT_masks, MOT_titles);
+
   Serial.println("\nACCELEROMETER(LSB)\tTEMP\tGYROSCOPE(LSB)");
   Serial.println("ax\tay\taz\tT\tgx\tgy\tgz");
 }
@@ -95,7 +106,7 @@ void loop() {
   GyY=Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)          
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 
-  // 측정값(raw data)을 scale대비 변환하여 출력 (소수점 3자리)
+  // 변환 및 출력 (소수점 3자리)
   Serial.print((float)AcX / AC_scale, 3); Serial.print("\t");
   Serial.print((float)AcY / AC_scale, 3); Serial.print("\t");
   Serial.print((float)AcZ / AC_scale, 3); Serial.print("\t");
@@ -108,61 +119,44 @@ void loop() {
 }
 
 // 측정값의 정확한 이해를 돕기 위한 설정 레지스터 값 읽기
-void readConfigValue() {
-  uint16_t gyro_cfg, accel_cfg;
+void readRegistryValue(uint8_t Reg_Addr, int8_t num_regs, const uint8_t* bit_masks, const char* titles[]) {
+  /*
+    - Reg_Addr: 읽고자 하는 시작 레지스터 주소
+    - num_regs: 읽고자 하는 연속 레지스터의 개수
+    - bit_mask: 관심 있는 비트만 추출하기 위한 마스크 (예: 0x07은 하위 3비트 추출용)
+  */
+  uint16_t configs[2];  // 가변 길이 배열을 지원하지 않으므로, 최대 2개 레지스터까지만 처리할 수 있게 제한
   Wire.beginTransmission(MPU);
-  Wire.write(0x1B);  // GYRO_CONFIG register
+  Wire.write(Reg_Addr);  // start register address to read
   Wire.endTransmission(false);
-  Wire.requestFrom(MPU, 2, true);  // request a total of 2 registers
+  Wire.requestFrom(MPU, num_regs, true);  // request a total num_regs number of registers
 
-  if (Wire.available()) {
-    gyro_cfg = Wire.read();
-    accel_cfg = Wire.read();
-    // DLPF_CFG 추출 (하위 3비트)
-    uint8_t fs_sel = gyro_cfg & 0x18; // 0x18 = 0001 1000 이므로, fs_sel_cfg와 0x18의 AND 연산을 통해 중간 2 비트만 추출(Bit4, Bit3)
-    uint8_t afs_sel = accel_cfg & 0x18; // 0x18 = 0001 1000 이므로, afs_sel_cfg와 0x18의 AND 연산을 통해 중간 2 비트만 추출(Bit4, Bit3)
+  if (Wire.available() >= num_regs) {
+    for (int i = 0; i < num_regs; i++) {
+      configs[i] = Wire.read() & bit_masks[i]; // 비트 마스크 적용하여 관심 비트만 추출
+    }
 
-    Serial.print("GYRO FS_SEL bits: "); Serial.print(fs_sel);
-    Serial.print(" | ACCELEROMETER AFS_SEL bits: ");  Serial.println(afs_sel);
-    delay(1000);
+  for (int i = 0; i < num_regs; i++) {
+      Serial.print(titles[i]);
+      Serial.print(": ");
+      Serial.print(configs[i]);
+      Serial.print(" | ");
+    }
+    Serial.println();
+  }
+
+  // 샘플링 레이트 계산 및 출력 (Reg_Addr가 0x19인 경우에만)
+  if (Reg_Addr == 0x19) {
+    // 기본 클럭은 8kHz, DLPF 활성화 시 1kHz
+    int base_rate = (configs[1] == 0 || configs[1] == 7) ? 8000 : 1000;
+    float sample_rate = base_rate / (1.0 + configs[0]);
+
+    Serial.print("Calculated Sample Rate: ");
+    Serial.print(sample_rate);
+    Serial.println(" Hz");
   }
 }
-
-// MOT_THR, MOT_DUR 값을 의도한 대로 설정하기 위해 센서에 설정된 레지스터 값 읽어 확인하기
-void read_MOT_Detect_ConfigValue() {
-// Register 25 (SMPLRT_DIV) 읽기
-  Wire.beginTransmission(MPU);
-  Wire.write(0x19);  // 25 decimal
-  Wire.endTransmission(false);
-  Wire.requestFrom(MPU, 1, true);
-  uint8_t smplrt_div = Wire.read();
-
-  // Register 26 (CONFIG) 읽기
-  Wire.beginTransmission(MPU);
-  Wire.write(0x1A);  // 26 decimal
-  Wire.endTransmission(false);
-  Wire.requestFrom(MPU, 1, true);
-  uint8_t config = Wire.read();
-
-  Serial.print("SMPLRT_DIV (Reg 25): ");
-  Serial.println(smplrt_div);
-  Serial.print("CONFIG (Reg 26)    : ");
-  Serial.println(config);
-
-  // DLPF_CFG 추출 (하위 3비트)
-  uint8_t dlpf_cfg = config & 0x07; // 0x07 = 0000 0111 이므로, config와 0x07의 AND 연산을 통해 하위 3비트만 추출
-  Serial.print("DLPF_CFG bits: ");
-  Serial.println(dlpf_cfg);
-
-  // 기본 클럭은 8kHz, DLPF 활성화 시 1kHz
-  int base_rate = (dlpf_cfg == 0 || dlpf_cfg == 7) ? 8000 : 1000;
-  float sample_rate = base_rate / (1.0 + smplrt_div);
-
-  Serial.print("Calculated Sample Rate: ");
-  Serial.print(sample_rate);
-  Serial.println(" Hz");
-}
-  ```
+```
 <br>
 
 ### 테스트 결과 (가독성을 위해 센서 측정값에 scale을 적용하여 변환한 값 출력)
