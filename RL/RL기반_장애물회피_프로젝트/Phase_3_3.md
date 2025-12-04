@@ -1,6 +1,6 @@
 # Arduino Uno: 3축 가속도 센서 설치
 
-### 3축 가속도 센서(GY-521)
+### 3축 가속도 센서(MPU-6050 칩 기반 GY-521 모듈)
 
   <img width="162" height="200" alt="image" src="https://github.com/user-attachments/assets/25136f72-c91e-435f-9221-1fb939ad1148" />
   <img width="168" height="200" alt="image" src="https://github.com/user-attachments/assets/5273478e-4e2d-4256-80c2-485e567b03fd" />
@@ -243,4 +243,4 @@ void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
 
 [3]<a id="ref_3"></a> [MPU-6000 and MPU-6050 Product Specification Revision 3.4](https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf)
 
-[4]<a id="ref_4"></a> [Arduino Tutorials: GY-521](https://github.com/iispace/Arduino_Learning_Tutorials/tree/main/GY_512_%EA%B0%80%EC%86%8D%EB%8F%84%EC%84%BC%EC%84%9C)
+[4]<a id="ref_4"></a> [Arduino Tutorials: GY-521(MPU-6050)](https://github.com/iispace/Arduino_Learning_Tutorials/tree/main/GY_512_%EA%B0%80%EC%86%8D%EB%8F%84%EC%84%BC%EC%84%9C)
