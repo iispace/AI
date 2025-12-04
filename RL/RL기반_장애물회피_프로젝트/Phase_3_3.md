@@ -171,7 +171,9 @@ void read_MOT_Detect_ConfigValue() {
 
 <br>
 
-### 센서 측정값(raw data)을 그대로 출력할 경우의 값 해석 방법 
+<hr>
+
+### ※ 센서 측정값(raw data)을 그대로 출력할 경우의 값 해석 방법 
 
 <img width="1082" height="275" alt="image" src="https://github.com/user-attachments/assets/b410634f-772b-4d30-95e8-0e4189ac6c81" />
 
