@@ -108,20 +108,6 @@ void loop() {
 }
 
 // 측정값의 정확한 이해를 돕기 위한 설정 레지스터 값 읽기
-// void readConfigValue() {
-//   uint16_t fs_sel, afs_sel;
-//   Wire.beginTransmission(MPU);
-//   Wire.write(0x1B);  // GYRO_CONFIG register
-//   Wire.endTransmission(false);
-//   Wire.requestFrom(MPU, 2, true);  // request a total of 2 registers
-
-//   if (Wire.available()) {
-//     fs_sel = Wire.read();
-//     afs_sel = Wire.read();
-//     Serial.print("\nGyro FS_SEL: ");  Serial.print(fs_sel);
-//     Serial.print(" | Accel AFS_SEL: ");  Serial.println(afs_sel);
-//   }
-// }
 void readConfigValue() {
   uint16_t gyro_cfg, accel_cfg;
   Wire.beginTransmission(MPU);
