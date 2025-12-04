@@ -15,8 +15,112 @@
 
 ### Rpi 5에서 제어 신호 받아 모터 구동하며, 가속도 센서를 통해 아두이노에서 충돌 감지 시 Rpi 5로 "Y" 문자 전송하는 테스트 코드
 
+##### Rpi 5 코드
+
+```
+from typing import List
+from gpiozero import Button, DigitalOutputDevice, PWMOutputDevice, TonalBuzzer, LED 
+
+import carserve_camera
+import cv2
+import threading
+import serial 
+import time 
+
+import random 
+
+ser = serial.Serial('/dev/ttyAMA2', 9600, timeout=0.1)  # UART2 (GPIO4-TX, GPIO5-RX)
+time.sleep(0.5)
+
+LED_Green = LED(17)  # Rpi 5 Ready Indicator
+
+# 버퍼 초기화
+ser.reset_input_buffer()
+
+gCtrlData = '-1'   
+#gSensorValue = '-1'.encode()
+gSensorValue = None
+chars = ['G', 'B', 'L', 'R', '0']
+
+def serial_thread():
+    global gSensorValue
+    global gCtrlData
+
+    while True:
+
+        ser.write(gCtrlData.encode())
+        time.sleep(0.5)
+        print(f"data sent to uno: {gCtrlData}")
+        while ser.in_waiting > 0:
+            gSensorValue = ser.read(1).strip().decode('utf-8', errors='ignore') # 1byte 읽어서 문자로 변환
+
+        time.sleep(0.5)
+            
+for i in range(10):
+    #print(f"[{i}]")
+    LED_Green.on()
+    time.sleep(0.1)
+    LED_Green.off()
+    time.sleep(0.1)
+
+
+def main():
+    global gCtrlData 
+    global gSensorValue
+       
+    W, H = 640, 480
+    # 카메라 객체 생성
+    camera = carserve_camera.Carserve_PiCamera(W, H)
+    filepath = "/home/pi/Carserverance/video/train"
+    i = 0
+
+    try:
+        while (camera.isOpened()):
+            # 제어 데이터 값 갱신
+            gCtrlData = random.choice(chars) 
+            # 아두이노에서 수신한 센서 값 출력
+
+            #print("sensor data from Uno: ", int.from_bytes(gSensorValue, 'big', signed=True)) 
+            if gSensorValue is not None:
+                print("sensor data from Uno: ",gSensorValue) 
+                # 충돌 발생 시그널 받았을 때 처리해야 할 일 여기에 구현
+                time.sleep(0.1)
+                gSensorValue = None
+            
+
+            _, image = camera.read()
+            image = cv2.flip(image, -1)
+            cv2.imshow('Original image', image)
+
+            height, _, _ = image.shape  # (480, 640, 3) => height: 480
+            save_image = image[int(height/2):, :, :]
+            cv2.imshow('Save image', save_image)
+
+            # 이미지 파일로 저장
+            cv2.imwrite("%s_%05d.png" % (filepath, i), save_image)
+            i += 1
+            time.sleep(1)  # 1초마다 반복
+
+        cv2.destroyAllWindows()
+
+    except KeyboardInterrupt:
+        ser.close()
+        cv2.destroyAllWindows()
+
+
+
+if __name__ == "__main__":
+    task1 = threading.Thread(target=serial_thread)
+    task1.start()
+    main()
+    ser.close()
+
+```
+
+##### Aruino Uno 코드
+
   ```
-  // 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 센서값 전달하는 프로그램 <2025-11-28>
+  // 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 센서값 전달하는 프로그램 
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
@@ -40,18 +144,24 @@ const int interruptPin = 2; // MPU-6050 인터럽트 핀 연결 (Arduino D2)
 const int MPU = 0x68;   // I2C address of the MPU-6050
 volatile bool collisionDetected = false; // 인터럽트 발생 플래그
 
-// ISR (Interrupt Service Routine)
-void collisionISR() {
-  collisionDetected = true;
-} 
+
 
 // --------------------- Variables -------------------- //
 char c = '\0';    // default control command to stop motor
 int speed = 128;   // duty cycle: 25% i.e., 0.25
 //int sensor_value = -2;  // This value will be 1 and sent to Rpi 5 when Collision is detected
 
+void motorStop();
 void wakeUpMPU6050() ;
 void enableCollisionDetection(uint8_t, uint8_t);
+
+
+// ----------- ISR (Interrupt Service Routine) ----------- //
+void collisionISR() {
+  collisionDetected = true;
+  motorStop();
+  c='\0';
+} 
 
 // -------------------- Setup & Loop ------------------- //
 void setup() {
@@ -80,7 +190,7 @@ void setup() {
   // ----------------------- MPU-6050 Init ---------------------- //
   Wire.begin();
   wakeUpMPU6050();
-  enableCollisionDetection(4, 20); // threshold = 4 LSB( ≈ 0.24 g), duration=20 samples(≈ 20 * 0.125 ms = 2.5 ms)
+  enableCollisionDetection(2, 20); // threshold = 2 LSB( ≈ 0.12 g), duration=20 samples(≈ 20 * 0.125 ms = 2.5 ms)
 
 }
 
@@ -155,27 +265,14 @@ void loop() {
       c = '\0';  // 명령어 처리 후 초기화
     }
     else if (c == '0'){
-      analogWrite(Speed_L, 0);
-      //LEFT_1 = HIGH 이고 LEFT_2 = HIGH 이면 두 핀 사이의 전압 차이가 없어 전류가 흐르지 않음. 즉, 왼쪽 모터 정지 
-      digitalWrite(LEFT_1, HIGH);    // 10 
-      digitalWrite(LEFT_2, HIGH);    // 9
-      //RIGHT_1=HIGH, RIGHT_2=HIGH 이면 두 핀 사이의 전압 차이가 없어 전류가 흐르지 않음. 즉, 오른쪽 모터 정지
-      digitalWrite(RIGHT_1, HIGH);   // 8
-      digitalWrite(RIGHT_2, HIGH);   // 7
-      analogWrite(Speed_R, 0);   // 6
-      digitalWrite(CtrlLED, LOW);
+      motorStop();
       c = '\0';  // 명령어 처리 후 초기화
     }
   }
   else {
     // Rpi 5로부터 제어 신호를 받지 못하면 모터 정지
-    analogWrite(Speed_L, 0);
-    digitalWrite(LEFT_1, HIGH);    // 10 
-    digitalWrite(LEFT_2, HIGH);    // 9
-    digitalWrite(RIGHT_1, HIGH);   // 8
-    digitalWrite(RIGHT_2, HIGH);   // 7
-    analogWrite(Speed_R, 0);   // 6
-    digitalWrite(CtrlLED, LOW);
+    motorStop();
+    c = '\0';  // 명령어 처리 후 초기화
     Serial.println("No command received from Rpi 5. Stopping motors.");
   }
   // 센서 값 랜덤하게 갱신 (통신 테스트용)
@@ -185,6 +282,16 @@ void loop() {
   //Serial.println(sensor_value);
   //sensor_value = -2;
   delay(1000);
+}
+
+void motorStop(){
+  analogWrite(Speed_L, 0);
+  digitalWrite(LEFT_1, HIGH);    // 10 
+  digitalWrite(LEFT_2, HIGH);    // 9
+  digitalWrite(RIGHT_1, HIGH);   // 8
+  digitalWrite(RIGHT_2, HIGH);   // 7
+  analogWrite(Speed_R, 0);   // 6
+  digitalWrite(CtrlLED, LOW);
 }
 
 void wakeUpMPU6050() {
@@ -198,13 +305,13 @@ void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
   // Motion Detection Threshold 설정 (Register 0x1F)
   Wire.beginTransmission(MPU);
   Wire.write(0x1F);  // MOT_THR register
-  Wire.write(threshold);    // threshold 값 (필요시 조정, 단위: LSB)
+  Wire.write(threshold);    // threshold 값 (필요시 조정, 단위: LSB): 1 LSB = (1 / 16384) * 1000 ≈ 0.061 g, so threshold=4이면 4 * 0.061 g = 0.24 g
   Wire.endTransmission(true);
 
   // Motion Detection Duration 설정 (Register 0x20)
   Wire.beginTransmission(MPU);
   Wire.write(0x20);  // MOT_DUR register
-  Wire.write(duration);    // duration 값 (필요시 조정, 단위: 샘플)
+  Wire.write(duration);    // duration 값 (필요시 조정, 단위: samples): 1 sample = 1/8 kHz = 0.125 ms, so duration=20이면 20 * 0.125 ms = 2.5 ms
   Wire.endTransmission(true);
 
   Wire.beginTransmission(MPU);
@@ -221,6 +328,7 @@ void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
   delay(20);
 }
 
+
   ```
 <br>
 
@@ -228,7 +336,7 @@ void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
 
   - 간혹 발생하는 통신 누락에 대비하기 위해 아두이노에서 충돌 감지 건별 마다 충돌 신호인 "Y"를 0.1초 간격으로 5번 전송한다.
   - 테스트에 사용된 충돌 감지 임계값:
-    - 가속도: threshold = 4 LSB (=> 4 / 16384 ≈ 0.24 g)
+    - 가속도: threshold = 2 LSB (=> 2 / 16384 ≈ 0.12 g)
     - 지속 시간: duration=20 samples(=> 20 * 0.125 ms = 2.5 ms)
       
   - 아래 그림과 같이, Rpi 5에서 모터 제어 신호를 받아 운행 중에 충돌 감지도 잘 일어나고, 충돌이 감지되었을 때 Rpi 5로 메시지 전송도 잘 된다.
