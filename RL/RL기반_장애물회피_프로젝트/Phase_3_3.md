@@ -13,151 +13,215 @@
 
 <br>
 
-### 3축 가속도 센서(GY-521) 테스트 코드
+### Rpi 5에서 제어 신호 받아 모터 구동하며, 가속도 센서를 통해 아두이노에서 충돌 감지 시 Rpi 5로 "Y" 문자 전송하는 테스트 코드
 
   ```
-#include <Wire.h>
+  // 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 센서값 전달하는 프로그램 <2025-11-28>
+
 #include <Arduino.h>
+#include <SoftwareSerial.h>
+#include <Wire.h>
 
+// --------------- Rpi 5 Serial --------------- //
+SoftwareSerial rpiSerial(4,5); // RX, TX
+
+// ------------ Motor Control Pins ------------ //
+#define Speed_L 11
+#define LEFT_1 10    // left motor forward
+#define LEFT_2 9     // left motor reverse
+#define RIGHT_1 8    // right motor forward
+#define RIGHT_2 7    // right motor reverse
+#define Speed_R 6
+
+#define CtrlLED 12   // Rpi 5로부터 시리얼 신호 받으면 동작하는 LED
+
+// -------------------- MPU-6050-- ------------------- //
+const int interruptPin = 2; // MPU-6050 인터럽트 핀 연결 (Arduino D2)
 const int MPU = 0x68;   // I2C address of the MPU-6050
-int16_t AcX, AcY, AcZ, Tmp, GyX, GyY, GyZ;
-int16_t AC_scale = 16384; // 가속도계 스케일 (±2g 설정 시 16384 LSB/g)
-uint8_t GY_scale = 131;  // 자이로스코프 스케일 (±250°/s 설정 시 131 LSB/°/s)
-int8_t interruptPin = 2; // Arduino 외부 인터럽트 핀 번호
-
 volatile bool collisionDetected = false; // 인터럽트 발생 플래그
 
 // ISR (Interrupt Service Routine)
 void collisionISR() {
   collisionDetected = true;
+} 
+
+// --------------------- Variables -------------------- //
+char c = '\0';    // default control command to stop motor
+int speed = 128;   // duty cycle: 25% i.e., 0.25
+//int sensor_value = -2;  // This value will be 1 and sent to Rpi 5 when Collision is detected
+
+void wakeUpMPU6050() ;
+void enableCollisionDetection(uint8_t, uint8_t);
+
+// -------------------- Setup & Loop ------------------- //
+void setup() {
+  rpiSerial.begin(9600);
+  Serial.begin(9600);
+  delay(20);
+
+  // Motor control pins
+  pinMode(Speed_L, OUTPUT);  // 11
+  pinMode(LEFT_1, OUTPUT);   // 10
+  pinMode(LEFT_2, OUTPUT);   // 9
+  pinMode(RIGHT_1, OUTPUT);  // 8
+  pinMode(RIGHT_2, OUTPUT);  // 7
+  pinMode(Speed_R, OUTPUT);  // 6
+
+  pinMode(CtrlLED, OUTPUT);
+
+  // 아두이노가 준비 되었음을 알리기 위한 깜박임(Arduino Ready Indicator)
+  for (int i=0;i<5;i++){
+    digitalWrite(CtrlLED, HIGH);
+    delay(100);
+    digitalWrite(CtrlLED, LOW);
+    delay(100);
+  }
+
+  // ----------------------- MPU-6050 Init ---------------------- //
+  Wire.begin();
+  wakeUpMPU6050();
+  enableCollisionDetection(4, 20); // threshold = 4 LSB( ≈ 0.24 g), duration=20 samples(≈ 20 * 0.125 ms = 2.5 ms)
+
 }
 
-/* 설정 레지스터 값 읽기용 마스크 및 제목 배열 
-  - SEL_masks, SEL_titles: 기본 스케일 범위(Full scale range) 확인 (측정값을 사람이 이해할 수 있는 물리량으로 변환하기 위해 필요)
-  - MOT_masks, MOT_titles: 충격 감지 시 인터럽트 발생을 위한 모션 디텍션 설정값 확인
-*/
-const uint8_t SEL_masks[] = {0x18, 0x18}; // GYRO_CONFIG 레지스터의 FS_SEL 비트와 ACCEL_CONFIG 레지스터의 AFS_SEL 비트 추출용 마스크
-const char* SEL_titles[] = {"GYRO_FS_SEL", "ACCEL_AFS_SEL"};
 
-const uint8_t MOT_masks[] = {0xFF, 0x07}; // SMPLRT_DIV 레지스터의 모든 비트와 CONFIG 레지스터의 DLPF_CFG 비트 추출용 마스크
-const char* MOT_titles[] = {"SMPLRT_DIV(Reg 25)", "DLPG_CFG(Reg 26)"};
+void loop() {
+  // ---------------- 충돌 인터럽트 처리 ---------------- //
+  if(collisionDetected){
+    //sensor_value = 1; // 충돌 감지 시 센서 값 1로 설정
+    for (int i=0; i<5; i++) { 
+      rpiSerial.write('Y');   // 충돌 감지 신호를 Rpi 5로 5번 전송 (통신 실패할 경우를 대비하여...) 
+      Serial.println("===== Collision detected! Sent to Rpi 5: Y ===== ");
+      delay(100);
+    }
+    collisionDetected = false; // 플래그 리셋
+    //sensor_value = -2; // 기본 센서 값으로 복귀
+  } 
 
-void readRegistryValue(uint8_t, int8_t, const uint8_t*, const char*[]); 
+  // --------------- Rpi 5의 제어 신호 처리 ---------------- //
+  if(rpiSerial.available() > 0){
+    delay(10);
+    c = rpiSerial.read();
+    Serial.print("Received command from Rpi 5: ");
+    Serial.println(c);
+    
 
+    if (c == 'B'){  // (후진) 
+      analogWrite(Speed_L, speed);   // 11
+      //LEFT_1 = HIGH 이고 LEFT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐르지만 방향이 반대. 즉, 왼쪽 모터가 역방향으로 회전함 
+      digitalWrite(LEFT_1, HIGH);    // 10 
+      digitalWrite(LEFT_2, LOW);    // 9
+      //RIGHT_1 = HIGH 이고 RIGHT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐르지만 방향이 반대. 즉, 오른쪽 모터가 역방향으로 회전함 
+      digitalWrite(RIGHT_1, HIGH);   // 8
+      digitalWrite(RIGHT_2, LOW);   // 7
+      analogWrite(Speed_R, speed);   // 6
+      digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+    else if (c == 'G'){  // (전진) 
+      analogWrite(Speed_L, speed);   // 11
+      //LEFT_1=LOW,  LEFT_2=HIGHT이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 왼쪽 모터가 정방향으로 회전  
+      digitalWrite(LEFT_1, LOW);    // 10 
+      digitalWrite(LEFT_2, HIGH);    // 9
+      //RIGHT_1=LOW, RIGHT_2=HIGH 이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 오른쪽 모터가 정방향으로 회전
+      digitalWrite(RIGHT_1, LOW);   // 8
+      digitalWrite(RIGHT_2, HIGH);   // 7
+      analogWrite(Speed_R, speed);   // 6
+      digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+    else if (c == 'L'){  // (좌회전) 
+      analogWrite(Speed_L, speed);   // 11
+      //LEFT_1=LOW,  LEFT_2=HIGHT이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐르지만 방향은 거꾸로. 즉, 왼쪽 모터가 정방향으로 회전  
+      digitalWrite(LEFT_1, LOW);    // 10 
+      digitalWrite(LEFT_2, HIGH);    // 9
+      //RIGHT_1 = HIGH 이고 RIGHT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐름. 즉, 오른쪽 모터가 역방향으로 회전함 
+      digitalWrite(RIGHT_1, HIGH);   // 8
+      digitalWrite(RIGHT_2, LOW);   // 7
+      analogWrite(Speed_R, speed);   // 6
+      digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+    else if (c == 'R'){ // (우회전) 
+      analogWrite(Speed_L, speed);   // 11
+      //LEFT_1 = HIGH 이고 LEFT_2 = LOW이면 두 핀 사이의 전압 차이가 생기므로 전류가 흐르지만 방향은 역방향. 즉, 왼쪽 모터가 역방향으로 회전함 
+      digitalWrite(LEFT_1, HIGH);    // 10 
+      digitalWrite(LEFT_2, LOW);    // 9
+      //RIGHT_1=LOW, RIGHT_2=HIGH 이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 오른쪽 모터가 정방향으로 회전
+      digitalWrite(RIGHT_1, LOW);   // 8
+      digitalWrite(RIGHT_2, HIGH);   // 7
+      analogWrite(Speed_R, speed);   // 6
+      digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+    else if (c == '0'){
+      analogWrite(Speed_L, 0);
+      //LEFT_1 = HIGH 이고 LEFT_2 = HIGH 이면 두 핀 사이의 전압 차이가 없어 전류가 흐르지 않음. 즉, 왼쪽 모터 정지 
+      digitalWrite(LEFT_1, HIGH);    // 10 
+      digitalWrite(LEFT_2, HIGH);    // 9
+      //RIGHT_1=HIGH, RIGHT_2=HIGH 이면 두 핀 사이의 전압 차이가 없어 전류가 흐르지 않음. 즉, 오른쪽 모터 정지
+      digitalWrite(RIGHT_1, HIGH);   // 8
+      digitalWrite(RIGHT_2, HIGH);   // 7
+      analogWrite(Speed_R, 0);   // 6
+      digitalWrite(CtrlLED, LOW);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+  }
+  else {
+    // Rpi 5로부터 제어 신호를 받지 못하면 모터 정지
+    analogWrite(Speed_L, 0);
+    digitalWrite(LEFT_1, HIGH);    // 10 
+    digitalWrite(LEFT_2, HIGH);    // 9
+    digitalWrite(RIGHT_1, HIGH);   // 8
+    digitalWrite(RIGHT_2, HIGH);   // 7
+    analogWrite(Speed_R, 0);   // 6
+    digitalWrite(CtrlLED, LOW);
+    Serial.println("No command received from Rpi 5. Stopping motors.");
+  }
+  // 센서 값 랜덤하게 갱신 (통신 테스트용)
+  //sensor_value = random(-10, 20);
+  //rpiSerial.write(sensor_value);
+  //Serial.print("Sent to Rpi 5: ");
+  //Serial.println(sensor_value);
+  //sensor_value = -2;
+  delay(1000);
+}
 
-void setup() {
-  Wire.begin();
-  Serial.begin(9600);
-
-  // MPU-6050 깨우기
+void wakeUpMPU6050() {
   Wire.beginTransmission(MPU);
   Wire.write(0x6B);  // PWR_MGMT_1 register
   Wire.write(0);     // set to zero (wakes up the MPU-6050)
   Wire.endTransmission(true);
+}
 
+void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
   // Motion Detection Threshold 설정 (Register 0x1F)
   Wire.beginTransmission(MPU);
   Wire.write(0x1F);  // MOT_THR register
-  Wire.write(8);    // threshold 값 (필요시 조정, 단위: LSB)  => 16 LSB = (16 / 16384) * 1000 = 0.976 g (약 1 g. 즉 지구 중력 가속도와 유사한 크기의 가속도)
+  Wire.write(threshold);    // threshold 값 (필요시 조정, 단위: LSB)
   Wire.endTransmission(true);
 
   // Motion Detection Duration 설정 (Register 0x20)
   Wire.beginTransmission(MPU);
   Wire.write(0x20);  // MOT_DUR register
-  Wire.write(20);    // duration 값 (필요시 조정, 단위: 샘플) => if 40 샘플: 40 * 0.125 ms = 5ms (샘플링 레이트가 8kHz일 때, 샘플 주기는 1000 ms / 8000 Hz = 0.125 ms) 
+  Wire.write(duration);    // duration 값 (필요시 조정, 단위: 샘플)
   Wire.endTransmission(true);
 
-  // Interrupt Enable 설정 (Register 0x38)
   Wire.beginTransmission(MPU);
   Wire.write(0x38);  // INT_ENABLE register
   Wire.write(0x40);  // MOT_EN 비트 활성화
   Wire.endTransmission(true);
 
-  // Arduino 외부 인터럽트 핀 연결 (GY-521 INT → D2)
   pinMode(interruptPin, INPUT);
-  attachInterrupt(digitalPinToInterrupt(2), collisionISR, RISING);
-
-
-  // 설정 레지스터 값 읽기 및 출력
-  readRegistryValue(0x1B, 2, SEL_masks, SEL_titles);
-  readRegistryValue(0x19, 2, MOT_masks, MOT_titles);
+  attachInterrupt(digitalPinToInterrupt(interruptPin), collisionISR, RISING);
+  delay(20);
 
   Serial.println("\nACCELEROMETER(LSB)\tTEMP\tGYROSCOPE(LSB)");
   Serial.println("ax\tay\taz\tT\tgx\tgy\tgz");
+  delay(20);
 }
 
-void loop() {
-  if (collisionDetected) {
-    Serial.println("COLLISION");
-    collisionDetected = false; // 플래그 초기화
-  }
-
-  // 기존 센서 데이터 읽기
-  Wire.beginTransmission(MPU);
-  Wire.write(0x3B);  // starting with register 0x3B (ACCEL_XOUT_H)
-  Wire.endTransmission(false);
-  Wire.requestFrom(MPU, 14, true);  // request a total of 12 registers
-
-  AcX=Wire.read()<<8|Wire.read();  // 0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
-  AcY=Wire.read()<<8|Wire.read();  // 0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
-  AcZ=Wire.read()<<8|Wire.read();  // 0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L) 
-  Tmp=Wire.read()<<8|Wire.read();  // 0x41 (TEMP_OUT_H) & 0x42 (TEMP_OUT_L)       
-  GyX=Wire.read()<<8|Wire.read();  // 0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
-  GyY=Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)          
-  GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-
-  // 변환 및 출력 (소수점 3자리)
-  Serial.print((float)AcX / AC_scale, 3); Serial.print("\t");
-  Serial.print((float)AcY / AC_scale, 3); Serial.print("\t");
-  Serial.print((float)AcZ / AC_scale, 3); Serial.print("\t");
-  Serial.print(Tmp / 340.00 + 36.53, 2); Serial.print("\t"); // 온도는 소수점 2자리만
-  Serial.print((float)GyX / GY_scale, 3); Serial.print("\t");
-  Serial.print((float)GyY / GY_scale, 3); Serial.print("\t");
-  Serial.println((float)GyZ / GY_scale, 3);
-
-  delay(333);
-}
-
-// 측정값의 정확한 이해를 돕기 위한 설정 레지스터 값 읽기
-void readRegistryValue(uint8_t Reg_Addr, int8_t num_regs, const uint8_t* bit_masks, const char* titles[]) {
-  /*
-    - Reg_Addr: 읽고자 하는 시작 레지스터 주소
-    - num_regs: 읽고자 하는 연속 레지스터의 개수
-    - bit_mask: 관심 있는 비트만 추출하기 위한 마스크 (예: 0x07은 0000 0111이므로, AND 연산을 통해 bit0 ~ bit2까지 하위 3비트를 추출하기 위한 마스크 비트로 사용됨)
-    - titles  : 각 레지스터 값에 대한 설명 문자열 배열
-  */
-  uint16_t configs[2];  // 가변 길이 배열을 지원하지 않으므로, 최대 2개 레지스터까지만 처리할 수 있게 제한
-  Wire.beginTransmission(MPU);
-  Wire.write(Reg_Addr);  // start register address to read
-  Wire.endTransmission(false);
-  Wire.requestFrom(MPU, num_regs, true);  // request a total num_regs number of registers
-
-  if (Wire.available() >= num_regs) {
-    for (int i = 0; i < num_regs; i++) {
-      configs[i] = Wire.read() & bit_masks[i]; // 비트 마스크 적용하여 관심 비트만 추출
-    }
-
-  for (int i = 0; i < num_regs; i++) {
-      Serial.print(titles[i]);
-      Serial.print(": ");
-      Serial.print(configs[i]);
-      Serial.print(" | ");
-    }
-    Serial.println();
-  }
-
-  // 샘플링 레이트 계산 및 출력 (Reg_Addr가 0x19인 경우에만)
-  if (Reg_Addr == 0x19) {
-    // 기본 클럭은 8kHz, DLPF 활성화 시 1kHz
-    int base_rate = (configs[1] == 0 || configs[1] == 7) ? 8000 : 1000;
-    float sample_rate = base_rate / (1.0 + configs[0]);
-
-    Serial.print("Calculated Sample Rate: ");
-    Serial.print(sample_rate);
-    Serial.println(" Hz");
-  }
-}
-```
+  ```
 <br>
 
 ### 테스트 결과 (가독성을 위해 센서 측정값에 scale을 적용하여 변환한 값 출력)
