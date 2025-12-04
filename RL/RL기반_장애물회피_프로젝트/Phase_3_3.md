@@ -123,7 +123,8 @@ void readRegistryValue(uint8_t Reg_Addr, int8_t num_regs, const uint8_t* bit_mas
   /*
     - Reg_Addr: 읽고자 하는 시작 레지스터 주소
     - num_regs: 읽고자 하는 연속 레지스터의 개수
-    - bit_mask: 관심 있는 비트만 추출하기 위한 마스크 (예: 0x07은 하위 3비트 추출용)
+    - bit_mask: 관심 있는 비트만 추출하기 위한 마스크 (예: 0x07은 0000 0111이므로, AND 연산을 통해 bit0 ~ bit2까지 하위 3비트를 추출하기 위한 마스크 비트로 사용됨)
+    - titles  : 각 레지스터 값에 대한 설명 문자열 배열
   */
   uint16_t configs[2];  // 가변 길이 배열을 지원하지 않으므로, 최대 2개 레지스터까지만 처리할 수 있게 제한
   Wire.beginTransmission(MPU);
