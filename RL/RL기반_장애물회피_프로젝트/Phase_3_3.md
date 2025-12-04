@@ -167,7 +167,7 @@ void read_MOT_Detect_ConfigValue() {
 
 ### 테스트 결과 (가독성을 위해 센서 측정값에 scale을 적용하여 변환한 값 출력)
 
-<img width="432" height="300" alt="image" src="https://github.com/user-attachments/assets/12885eb1-9e8b-4655-aa14-21b0db8c819d" />
+<img width="720" height="500" alt="image" src="https://github.com/user-attachments/assets/12885eb1-9e8b-4655-aa14-21b0db8c819d" />
 
 <br>
 
