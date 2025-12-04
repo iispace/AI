@@ -42,6 +42,13 @@ gCtrlData = '-1'
 gSensorValue = None
 chars = ['G', 'B', 'L', 'R', '0']
 
+def led_blicking(ts:float):
+    for i in range(10):
+        LED_Green.on()
+        time.sleep(ts)
+        LED_Green.off()
+        time.sleep(ts)
+
 def serial_thread():
     global gSensorValue
     global gCtrlData
@@ -56,13 +63,13 @@ def serial_thread():
 
         time.sleep(0.5)
             
-for i in range(10):
-    #print(f"[{i}]")
-    LED_Green.on()
-    time.sleep(0.1)
-    LED_Green.off()
-    time.sleep(0.1)
-
+# for i in range(10):
+#     #print(f"[{i}]")
+#     LED_Green.on()
+#     time.sleep(0.1)
+#     LED_Green.off()
+#     time.sleep(0.1)
+led_blicking(0.1)
 
 def main():
     global gCtrlData 
@@ -84,6 +91,7 @@ def main():
             if gSensorValue is not None:
                 print("sensor data from Uno: ",gSensorValue) 
                 # 충돌 발생 시그널 받았을 때 처리해야 할 일 여기에 구현
+                led_blicking(0.05)   # 50ms 간격으로 10번 깜박임
                 time.sleep(0.1)
                 gSensorValue = None
             
@@ -120,7 +128,7 @@ if __name__ == "__main__":
 ##### Aruino Uno 코드
 
   ```
-  // 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 센서값 전달하는 프로그램 
+   // 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 충돌 감지 이벤트 전달 프로그램  
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
@@ -151,6 +159,7 @@ char c = '\0';    // default control command to stop motor
 int speed = 128;   // duty cycle: 25% i.e., 0.25
 //int sensor_value = -2;  // This value will be 1 and sent to Rpi 5 when Collision is detected
 
+void led_blinking();
 void motorStop();
 void wakeUpMPU6050() ;
 void enableCollisionDetection(uint8_t, uint8_t);
@@ -159,8 +168,7 @@ void enableCollisionDetection(uint8_t, uint8_t);
 // ----------- ISR (Interrupt Service Routine) ----------- //
 void collisionISR() {
   collisionDetected = true;
-  motorStop();
-  c='\0';
+  
 } 
 
 // -------------------- Setup & Loop ------------------- //
@@ -204,8 +212,13 @@ void loop() {
       Serial.println("===== Collision detected! Sent to Rpi 5: Y ===== ");
       delay(100);
     }
-    collisionDetected = false; // 플래그 리셋
+    motorStop();
+    c='\0';
     //sensor_value = -2; // 기본 센서 값으로 복귀
+    led_blinking();
+    delay(3000); // 충돌 후 3초간 대기 후 다시 루프 진행
+    rpiSerial.flush();  // 차량이 멈춘 후 Rpi 5로부터 오는 잔여 데이터 제거
+    collisionDetected = false; // 플래그 리셋
   } 
 
   // --------------- Rpi 5의 제어 신호 처리 ---------------- //
@@ -284,6 +297,16 @@ void loop() {
   delay(1000);
 }
 
+// 충돌 감지를 알리는 LED 깜박임 함수
+void led_blinking(){
+  for (int i=0;i<10;i++){
+    digitalWrite(CtrlLED, HIGH);
+    delay(50);
+    digitalWrite(CtrlLED, LOW);
+    delay(50);
+  }
+}
+
 void motorStop(){
   analogWrite(Speed_L, 0);
   digitalWrite(LEFT_1, HIGH);    // 10 
@@ -327,7 +350,6 @@ void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
   Serial.println("ax\tay\taz\tT\tgx\tgy\tgz");
   delay(20);
 }
-
 
   ```
 <br>
