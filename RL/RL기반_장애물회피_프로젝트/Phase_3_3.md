@@ -224,50 +224,12 @@ void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
   ```
 <br>
 
-### 테스트 결과 (가독성을 위해 센서 측정값에 scale을 적용하여 변환한 값 출력)
+### 테스트 결과 
 
-<img width="720" height="500" alt="image" src="https://github.com/user-attachments/assets/12885eb1-9e8b-4655-aa14-21b0db8c819d" />
-
-<br>
-
-<hr>
-
-### ※ 센서 측정값(raw data)을 그대로 출력할 경우의 값 해석 방법 
-
-<img width="1082" height="275" alt="image" src="https://github.com/user-attachments/assets/b410634f-772b-4d30-95e8-0e4189ac6c81" />
-
-- **Accelerometer(가속도) 해석**
-  - MPU-6050의 Full Scale Range: +/-2g, 1g ≈ 16384 LSB(raw값) <== 28번 레지스터(ACCEL_CONFIG)에 설정된 값
-
-    <img width="1347" height="252" alt="image" src="https://github.com/user-attachments/assets/31a719b8-b79c-44fb-ad16-46a7a52b9ff2" />
-
-    <img width="855" height="209" alt="image" src="https://github.com/user-attachments/assets/a948b630-47f0-4ac8-a3e4-4e6d06ea9f17" />
-
-    - Accelerometer(가속도)의 측정값이 X=780, Y=732, Z=17640일 때,
-      - X축: 780 / 16384 ≈ 0.048 g = 48mg
-      - Y축: 732 / 16384 ≈ 0.045 g = 45mg
-      - Z축: 17640 / 16384 ≈ 1.08 g = 1080mg
-        
-    - **의미:**
-      - 센서가 평평한 바닥에 놓여 있을 때, 중력은 Z축 방향으로 작용하므로, 약 1g 근처 값이 나오면 정상
-      - 위의 예에서 보면, Z축에서 1.08g가 측정되었으므로 중력 방향이 Z축임을 확인할 수 있음
-      - X,Y축의 값은 거의 0g에 가까우므로, 센서가 바닥에 거의 수평으로 놓여 있다는 것을 확인할 수 있음(약간의 기울기만 존재)
-
-  <br>
-  
-- **Gyroscope(각속도) 해석**
-  - MPU-6050의 Full Scale Range: +/-250°/s , 1 LSB ≈ 131°/s  <== 27번 레지스터(GYRO_CONFIG)에 설정된 값
-
-    <img width="911" height="178" alt="image" src="https://github.com/user-attachments/assets/a4223f92-5e1a-46ec-ae39-5d8997106b45" />
-
-    - Gyroscope(각속도)의 측정값이 X=-423, Y=589, Z=143일 때,
-      - X축: -423 / 131 ≈ -3.2°/s  (=> 1초에 시계 방향으로 3.2도 회전. 이는 아주 작은 값으로 거의 정지 상태를 의미)
-      - Y축: 589 / 131 ≈ 4.5°/s    (=> 1초에 반시계 방향으로 4.5도 회전. 이는 아주 작은 값으로 거의 정지 상태를 의미)
-      - Z축: 143 / 131 ≈ 1.1°/s    (=> 1초에 반시계 방향으로 1.1도 회전. 이는 아주 작은 값으로 거의 정지 상태를 의미)
-
-    - **의미:**
-      - 센서가 가만히 놓여 있는 것 같지만, 노이즈 또는 미세한 흔들림으로 인해 아주 작은 회전 값이 측정됨.
-      - 실제로는 거의 회전하지 않고 있는 상태를 보여줌.
+  - 간혹 발생하는 통신 누락에 대비하기 위해 아두이노에서 충돌 감지 건별 마다 충돌 신호인 "Y"를 0.1초 간격으로 5번 전송한다.
+  - 아래 그림과 같이, Rpi 5에서 모터 제어 신호를 받아 운행 중에 충돌 감지도 잘 일어나고, 충돌이 감지되었을 때 Rpi 5로 메시지 전송도 잘 된다.
+         
+  <img width="1196" height="502" alt="image" src="https://github.com/user-attachments/assets/10e140db-2cd7-4083-9e64-2cba28e97272" />
 
 <br>
 
