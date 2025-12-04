@@ -227,6 +227,10 @@ void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
 ### 테스트 결과 
 
   - 간혹 발생하는 통신 누락에 대비하기 위해 아두이노에서 충돌 감지 건별 마다 충돌 신호인 "Y"를 0.1초 간격으로 5번 전송한다.
+  - 테스트에 사용된 충돌 감지 임계값:
+    - 가속도: threshold = 4 LSB (=> 4 / 16384 ≈ 0.24 g)
+    - 지속 시간: duration=20 samples(=> 20 * 0.125 ms = 2.5 ms)
+      
   - 아래 그림과 같이, Rpi 5에서 모터 제어 신호를 받아 운행 중에 충돌 감지도 잘 일어나고, 충돌이 감지되었을 때 Rpi 5로 메시지 전송도 잘 된다.
          
   <img width="1196" height="502" alt="image" src="https://github.com/user-attachments/assets/10e140db-2cd7-4083-9e64-2cba28e97272" />
