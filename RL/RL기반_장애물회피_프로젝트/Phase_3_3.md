@@ -21,6 +21,8 @@
 
 const int MPU = 0x68;   // I2C address of the MPU-6050
 int16_t AcX, AcY, AcZ, Tmp, GyX, GyY, GyZ;
+int16_t AC_scale = 16384; // 가속도계 스케일 (±2g 설정 시 16384 LSB/g)
+uint8_t GY_scale = 131;  // 자이로스코프 스케일 (±250°/s 설정 시 131 LSB/°/s)
 
 volatile bool collisionDetected = false; // 인터럽트 발생 플래그
 
@@ -45,13 +47,13 @@ void setup() {
   // Motion Detection Threshold 설정 (Register 0x1F)
   Wire.beginTransmission(MPU);
   Wire.write(0x1F);  // MOT_THR register
-  Wire.write(16);    // threshold 값 (필요시 조정, 단위: LSB)  => 16 LSB = (16 / 16384) * 1000 = 0.976 g (약 1 g. 즉 지구 중력 가속도와 유사한 크기의 가속도)
+  Wire.write(8);    // threshold 값 (필요시 조정, 단위: LSB)  => 16 LSB = (16 / 16384) * 1000 = 0.976 g (약 1 g. 즉 지구 중력 가속도와 유사한 크기의 가속도)
   Wire.endTransmission(true);
 
   // Motion Detection Duration 설정 (Register 0x20)
   Wire.beginTransmission(MPU);
   Wire.write(0x20);  // MOT_DUR register
-  Wire.write(40);    // duration 값 (필요시 조정, 단위: 샘플) => 40 샘플 = 40 * 0.125 ms = 5ms (샘플링 레이트가 8kHz일 때, 샘플 주기는 1000 ms / 8000 Hz = 0.125 ms) 
+  Wire.write(20);    // duration 값 (필요시 조정, 단위: 샘플) => if 40 샘플: 40 * 0.125 ms = 5ms (샘플링 레이트가 8kHz일 때, 샘플 주기는 1000 ms / 8000 Hz = 0.125 ms) 
   Wire.endTransmission(true);
 
   // Interrupt Enable 설정 (Register 0x38)
@@ -68,6 +70,9 @@ void setup() {
   read_MOT_Detect_ConfigValue();
 
   Serial.println("\nMPU6050 Initialized, Collision Detection is waiting...");
+  
+  Serial.println("\nACCELEROMETER(LSB)\tTEMP\tGYROSCOPE(LSB)");
+  Serial.println("ax\tay\taz\tT\tgx\tgy\tgz");
 }
 
 void loop() {
@@ -90,34 +95,50 @@ void loop() {
   GyY=Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)          
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 
-  Serial.print("Accelerometer (in LSB unit): ");
-  Serial.print("X = "); Serial.print(AcX); 
-  Serial.print(" | Y = "); Serial.print(AcY); 
-  Serial.print(" | Z = "); Serial.print(AcZ); 
-  Serial.print(" Temperature: ");
-  Serial.print(Tmp / 340.00 + 36.53);
-  Serial.print(" Gyroscope  (in LSB unit): ");
-  Serial.print("X = "); Serial.print(GyX);  
-  Serial.print(" | Y = "); Serial.print(GyY); 
-  Serial.print(" | Z = "); Serial.println(GyZ); 
-  Serial.println();
+  // 변환 및 출력 (소수점 3자리)
+  Serial.print((float)AcX / AC_scale, 3); Serial.print("\t");
+  Serial.print((float)AcY / AC_scale, 3); Serial.print("\t");
+  Serial.print((float)AcZ / AC_scale, 3); Serial.print("\t");
+  Serial.print(Tmp / 340.00 + 36.53, 2); Serial.print("\t"); // 온도는 소수점 2자리만
+  Serial.print((float)GyX / GY_scale, 3); Serial.print("\t");
+  Serial.print((float)GyY / GY_scale, 3); Serial.print("\t");
+  Serial.println((float)GyZ / GY_scale, 3);
 
-  delay(1000);
+  delay(333);
 }
 
 // 측정값의 정확한 이해를 돕기 위한 설정 레지스터 값 읽기
+// void readConfigValue() {
+//   uint16_t fs_sel, afs_sel;
+//   Wire.beginTransmission(MPU);
+//   Wire.write(0x1B);  // GYRO_CONFIG register
+//   Wire.endTransmission(false);
+//   Wire.requestFrom(MPU, 2, true);  // request a total of 2 registers
+
+//   if (Wire.available()) {
+//     fs_sel = Wire.read();
+//     afs_sel = Wire.read();
+//     Serial.print("\nGyro FS_SEL: ");  Serial.print(fs_sel);
+//     Serial.print(" | Accel AFS_SEL: ");  Serial.println(afs_sel);
+//   }
+// }
 void readConfigValue() {
-  uint16_t fs_sel, afs_sel;
+  uint16_t gyro_cfg, accel_cfg;
   Wire.beginTransmission(MPU);
   Wire.write(0x1B);  // GYRO_CONFIG register
   Wire.endTransmission(false);
   Wire.requestFrom(MPU, 2, true);  // request a total of 2 registers
 
   if (Wire.available()) {
-    fs_sel = Wire.read();
-    afs_sel = Wire.read();
-    Serial.print("\nGyro FS_SEL: ");  Serial.print(fs_sel);
-    Serial.print(" | Accel AFS_SEL: ");  Serial.println(afs_sel);
+    gyro_cfg = Wire.read();
+    accel_cfg = Wire.read();
+    // DLPF_CFG 추출 (하위 3비트)
+    uint8_t fs_sel = gyro_cfg & 0x18; // 0x18 = 0001 1000 이므로, fs_sel_cfg와 0x18의 AND 연산을 통해 중간 2 비트만 추출(Bit4, Bit3)
+    uint8_t afs_sel = accel_cfg & 0x18; // 0x18 = 0001 1000 이므로, afs_sel_cfg와 0x18의 AND 연산을 통해 중간 2 비트만 추출(Bit4, Bit3)
+
+    Serial.print("GYRO FS_SEL bits: "); Serial.print(fs_sel);
+    Serial.print(" | ACCELEROMETER AFS_SEL bits: ");  Serial.println(afs_sel);
+    delay(1000);
   }
 }
 
