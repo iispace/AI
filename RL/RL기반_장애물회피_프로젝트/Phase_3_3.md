@@ -95,7 +95,7 @@ void loop() {
   GyY=Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)          
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
 
-  // 변환 및 출력 (소수점 3자리)
+  // 측정값(raw data)을 scale대비 변환하여 출력 (소수점 3자리)
   Serial.print((float)AcX / AC_scale, 3); Serial.print("\t");
   Serial.print((float)AcY / AC_scale, 3); Serial.print("\t");
   Serial.print((float)AcZ / AC_scale, 3); Serial.print("\t");
@@ -165,13 +165,15 @@ void read_MOT_Detect_ConfigValue() {
   ```
 <br>
 
-### 테스트 결과
+### 테스트 결과 (가독성을 위해 센서 측정값에 scale을 적용하여 변환한 값 출력)
 
-<img width="1082" height="275" alt="image" src="https://github.com/user-attachments/assets/b410634f-772b-4d30-95e8-0e4189ac6c81" />
+<img width="432" height="300" alt="image" src="https://github.com/user-attachments/assets/12885eb1-9e8b-4655-aa14-21b0db8c819d" />
 
 <br>
 
-### 측정값 해석 방법 
+### 센서 측정값(raw data)을 그대로 출력할 경우의 값 해석 방법 
+
+<img width="1082" height="275" alt="image" src="https://github.com/user-attachments/assets/b410634f-772b-4d30-95e8-0e4189ac6c81" />
 
 - **Accelerometer(가속도) 해석**
   - MPU-6050의 Full Scale Range: +/-2g, 1g ≈ 16384 LSB(raw값) <== 28번 레지스터(ACCEL_CONFIG)에 설정된 값
