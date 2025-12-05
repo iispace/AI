@@ -145,7 +145,236 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print("Program ended")
+
+```
+
+<br>
+
+## Arduino Uno 코드
+
+```
+// 시리얼 통신으로 Rpi 5에서 제어 신호 받아 이동체를 제어하고 Rpi 5로 충돌 감지 이벤트 전달 프로그램 <2025-12-04>
+
+#include <Arduino.h>
+#include <SoftwareSerial.h>
+#include <Wire.h>
+
+// --------------- Rpi 5 Serial --------------- //
+SoftwareSerial rpiSerial(4,5); // RX, TX
+
+// ------------ Motor Control Pins ------------ //
+#define Speed_L 11
+#define LEFT_1 10    // left motor forward
+#define LEFT_2 9     // left motor reverse
+#define RIGHT_1 8    // right motor forward
+#define RIGHT_2 7    // right motor reverse
+#define Speed_R 6
+
+#define CtrlLED 12   // Rpi 5로부터 시리얼 신호 받으면 동작하는 LED
+
+// -------------------- MPU-6050-- ------------------- //
+const int interruptPin = 2; // MPU-6050 인터럽트 핀 연결 (Arduino D2)
+const int MPU = 0x68;   // I2C address of the MPU-6050
+volatile bool collisionDetected = false; // 인터럽트 발생 플래그
+
+
+
+// --------------------- Variables -------------------- //
+char c = '\0';    // default control command to stop motor
+int speed = 128;   // duty cycle: 25% i.e., 0.25
+//int sensor_value = -2;  // This value will be 1 and sent to Rpi 5 when Collision is detected
+
+void led_blinking();
+void motorStop();
+void wakeUpMPU6050() ;
+void enableCollisionDetection(uint8_t, uint8_t);
+
+
+// ----------- ISR (Interrupt Service Routine) ----------- //
+void collisionISR() {
+  collisionDetected = true;
+  
+} 
+
+// -------------------- Setup & Loop ------------------- //
+void setup() {
+  rpiSerial.begin(9600);
+  Serial.begin(9600);
+  delay(20);
+
+  // Motor control pins
+  pinMode(Speed_L, OUTPUT);  // 11
+  pinMode(LEFT_1, OUTPUT);   // 10
+  pinMode(LEFT_2, OUTPUT);   // 9
+  pinMode(RIGHT_1, OUTPUT);  // 8
+  pinMode(RIGHT_2, OUTPUT);  // 7
+  pinMode(Speed_R, OUTPUT);  // 6
+
+  pinMode(CtrlLED, OUTPUT);
+
+  // 아두이노가 준비 되었음을 알리기 위한 깜박임(Arduino Ready Indicator)
+  for (int i=0;i<5;i++){
+    digitalWrite(CtrlLED, HIGH);
+    delay(100);
+    digitalWrite(CtrlLED, LOW);
+    delay(100);
+  }
+
+  // ----------------------- MPU-6050 Init ---------------------- //
+  Wire.begin();
+  wakeUpMPU6050();
+  enableCollisionDetection(2, 20); // threshold = 2 LSB( ≈ 0.12 g), duration=20 samples(≈ 20 * 0.125 ms = 2.5 ms)
+
+}
+
+
+void loop() {
+  // ---------------- 충돌 인터럽트 처리 ---------------- //
+  if(collisionDetected){
+    //sensor_value = 1; // 충돌 감지 시 센서 값 1로 설정
+    for (int i=0; i<5; i++) { 
+      rpiSerial.write('Y');   // 충돌 감지 신호를 Rpi 5로 5번 전송 (통신 실패할 경우를 대비하여...) 
+      Serial.println("===== Collision detected! Sent to Rpi 5: Y ===== ");
+      delay(100);
+    }
+    motorStop();
+    c='\0';
+    //sensor_value = -2; // 기본 센서 값으로 복귀
+    led_blinking();
+    rpiSerial.flush();  // 차량이 멈춘 후 Rpi 5로부터 오는 잔여 데이터 제거
+    delay(3000); // 충돌 후 3초간 대기 후 다시 루프 진행
+    collisionDetected = false; // 플래그 리셋
+  } 
+
+  // --------------- Rpi 5의 제어 신호 처리 ---------------- //
+  if(rpiSerial.available() > 0){
+    delay(10);
+    c = rpiSerial.read();
+    Serial.print("Received command from Rpi 5: ");
+    Serial.println(c);
     
+
+    if (c == 'B'){  // (후진) 
+      analogWrite(Speed_L, speed);   // 11
+      //LEFT_1 = HIGH 이고 LEFT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐르지만 방향이 반대. 즉, 왼쪽 모터가 역방향으로 회전함 
+      digitalWrite(LEFT_1, HIGH);    // 10 
+      digitalWrite(LEFT_2, LOW);    // 9
+      //RIGHT_1 = HIGH 이고 RIGHT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐르지만 방향이 반대. 즉, 오른쪽 모터가 역방향으로 회전함 
+      digitalWrite(RIGHT_1, HIGH);   // 8
+      digitalWrite(RIGHT_2, LOW);   // 7
+      analogWrite(Speed_R, speed);   // 6
+      digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+    else if (c == 'G'){  // (전진) 
+      analogWrite(Speed_L, speed);   // 11
+      //LEFT_1=LOW,  LEFT_2=HIGHT이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 왼쪽 모터가 정방향으로 회전  
+      digitalWrite(LEFT_1, LOW);    // 10 
+      digitalWrite(LEFT_2, HIGH);    // 9
+      //RIGHT_1=LOW, RIGHT_2=HIGH 이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 오른쪽 모터가 정방향으로 회전
+      digitalWrite(RIGHT_1, LOW);   // 8
+      digitalWrite(RIGHT_2, HIGH);   // 7
+      analogWrite(Speed_R, speed);   // 6
+      digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+    else if (c == 'L'){  // (좌회전) 
+      analogWrite(Speed_L, speed);   // 11
+      //LEFT_1=LOW,  LEFT_2=HIGHT이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐르지만 방향은 거꾸로. 즉, 왼쪽 모터가 정방향으로 회전  
+      digitalWrite(LEFT_1, LOW);    // 10 
+      digitalWrite(LEFT_2, HIGH);    // 9
+      //RIGHT_1 = HIGH 이고 RIGHT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐름. 즉, 오른쪽 모터가 역방향으로 회전함 
+      digitalWrite(RIGHT_1, HIGH);   // 8
+      digitalWrite(RIGHT_2, LOW);   // 7
+      analogWrite(Speed_R, speed);   // 6
+      digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+    else if (c == 'R'){ // (우회전) 
+      analogWrite(Speed_L, speed);   // 11
+      //LEFT_1 = HIGH 이고 LEFT_2 = LOW이면 두 핀 사이의 전압 차이가 생기므로 전류가 흐르지만 방향은 역방향. 즉, 왼쪽 모터가 역방향으로 회전함 
+      digitalWrite(LEFT_1, HIGH);    // 10 
+      digitalWrite(LEFT_2, LOW);    // 9
+      //RIGHT_1=LOW, RIGHT_2=HIGH 이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 오른쪽 모터가 정방향으로 회전
+      digitalWrite(RIGHT_1, LOW);   // 8
+      digitalWrite(RIGHT_2, HIGH);   // 7
+      analogWrite(Speed_R, speed);   // 6
+      digitalWrite(CtrlLED, HIGH);
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+    else if (c == '0'){
+      motorStop();
+      c = '\0';  // 명령어 처리 후 초기화
+    }
+  }
+  else {
+    // Rpi 5로부터 제어 신호를 받지 못하면 모터 정지
+    motorStop();
+    c = '\0';  // 명령어 처리 후 초기화
+    Serial.println("No command received from Rpi 5. Stopping motors.");
+  }
+  // 센서 값 랜덤하게 갱신 (통신 테스트용)
+  //sensor_value = random(-10, 20);
+  //rpiSerial.write(sensor_value);
+  //Serial.print("Sent to Rpi 5: ");
+  //Serial.println(sensor_value);
+  //sensor_value = -2;
+  delay(1000);
+}
+
+// 충돌 감지를 알리는 LED 깜박임 함수
+void led_blinking(){
+  for (int i=0;i<10;i++){
+    digitalWrite(CtrlLED, HIGH);
+    delay(50);
+    digitalWrite(CtrlLED, LOW);
+    delay(50);
+  }
+}
+
+void motorStop(){
+  analogWrite(Speed_L, 0);
+  digitalWrite(LEFT_1, HIGH);    // 10 
+  digitalWrite(LEFT_2, HIGH);    // 9
+  digitalWrite(RIGHT_1, HIGH);   // 8
+  digitalWrite(RIGHT_2, HIGH);   // 7
+  analogWrite(Speed_R, 0);   // 6
+  digitalWrite(CtrlLED, LOW);
+}
+
+void wakeUpMPU6050() {
+  Wire.beginTransmission(MPU);
+  Wire.write(0x6B);  // PWR_MGMT_1 register
+  Wire.write(0);     // set to zero (wakes up the MPU-6050)
+  Wire.endTransmission(true);
+}
+
+void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
+  // Motion Detection Threshold 설정 (Register 0x1F)
+  Wire.beginTransmission(MPU);
+  Wire.write(0x1F);  // MOT_THR register
+  Wire.write(threshold);    // threshold 값 (필요시 조정, 단위: LSB): 1 LSB = (1 / 16384) * 1000 ≈ 0.061 g, so threshold=4이면 4 * 0.061 g = 0.24 g
+  Wire.endTransmission(true);
+
+  // Motion Detection Duration 설정 (Register 0x20)
+  Wire.beginTransmission(MPU);
+  Wire.write(0x20);  // MOT_DUR register
+  Wire.write(duration);    // duration 값 (필요시 조정, 단위: samples): 1 sample = 1/8 kHz = 0.125 ms, so duration=20이면 20 * 0.125 ms = 2.5 ms
+  Wire.endTransmission(true);
+
+  Wire.beginTransmission(MPU);
+  Wire.write(0x38);  // INT_ENABLE register
+  Wire.write(0x40);  // MOT_EN 비트 활성화
+  Wire.endTransmission(true);
+
+  pinMode(interruptPin, INPUT);
+  attachInterrupt(digitalPinToInterrupt(interruptPin), collisionISR, RISING);
+  delay(20);
+
+  Serial.println("\nACCELEROMETER(LSB)\tTEMP\tGYROSCOPE(LSB)");
+  Serial.println("ax\tay\taz\tT\tgx\tgy\tgz");
+  delay(20);
+}
 
 ```
 
