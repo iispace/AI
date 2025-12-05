@@ -25,7 +25,7 @@
 
 ## 하드웨어 모형
 
- <img width="976" height="400" alt="image" src="https://github.com/user-attachments/assets/61a91467-1e9a-49c3-8563-df844aad7ceb" />
+ <img width="1056" height="400" alt="image" src="https://github.com/user-attachments/assets/85f72427-f718-4344-b512-90ff58b525d2" />
 
   - [Rpi 5 3D model step file](https://www.elecrow.com/blog/download-the-raspberry-pi-5-3d-design-stp-file-for-free-from-elecrow.html)
   - [Rpi 5 Active Cooler 3D model step file](https://www.printables.com/model/858776-raspberry-pi-active-cooler/files)
