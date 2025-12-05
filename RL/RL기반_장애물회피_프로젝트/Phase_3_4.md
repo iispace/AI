@@ -3,8 +3,7 @@
 ## 결선도
 
 
-<img width="516" height="300" alt="image" src="https://github.com/user-attachments/assets/37103bbc-f64d-41c0-8256-a68dcef9d651" />
-
+<img width="540" height="300" alt="image" src="https://github.com/user-attachments/assets/7ceeebb8-894f-4208-8fea-33bade3ca871" />
 <img width="471" height="300" alt="image" src="https://github.com/user-attachments/assets/c1729632-c819-4d10-8fed-1ab479787d63" />
 
 
