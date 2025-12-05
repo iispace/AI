@@ -149,4 +149,5 @@ if __name__ == "__main__":
 
 ## 테스트 결과
 
-  <img width="692" height="400" alt="image" src="https://github.com/user-attachments/assets/3b21b4ce-fb0e-4e38-9d0d-20976149b355" />
+  <img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/80cb2f1c-fa63-4862-ba4c-a5fd807dbdd4" />
+
