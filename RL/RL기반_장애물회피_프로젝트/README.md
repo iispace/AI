@@ -19,7 +19,7 @@
 
 1. 단안 카메라를 통해 실제 환경의 데이터를 2D image 형태로 입력 데이터로 수집하고, 이를 기반으로 입력 데이터의 노이즈와 물리적 오차를 학습 가능한 파라미터로 포함하되, 경량화된 강화학습 모델 설계(연산량의 상한을 설정하는 방안 연구하여 설계에 적용). 
 2. 보상 함수의 일반화를 위해 보상의 분포를 추정하는 inverse RL 형태 시도
-3. Nonocular Camera를 설치한 Micro Computer(Raspberry Pi 5)와 Micro Controller (Arduino Uno) 기반의 non-holonomic mobile vehicle(carserverance)을 제작하고, 설계한 강화학습 모델을 탑재하여 실제 환경에서 스스로 장애물을 회피하며 이동할 수 있도록 학습 진행
+3. Monocular Camera를 설치한 Micro Computer(Raspberry Pi 5)와 Micro Controller (Arduino Uno) 기반의 non-holonomic mobile vehicle(carserverance)을 제작하고, 설계한 강화학습 모델을 탑재하여 실제 환경에서 스스로 장애물을 회피하며 이동할 수 있도록 학습 진행
 4. 기준 시간 동안 carserverance가 스스로 이동하며 장애물을 얼마나 정확하게 회피하는 지를 측정하여 Baseline model과의 차이 비교
 5. 모델이 생성한 representation과 출력의 관계를 분석하여 설계한 모델이 어떤 상태에서 어떤 행동을 선택하는지 이유를 설명할 수 있는 단서 추적
 6. (추가 연구 목표) 물리적 안전성과 소프트웨어적 안전성 추가
