@@ -9,7 +9,7 @@
    3.1. 이동체 제어보드인 아두이노와 Raspberry Pi 5 사이의 UART 통신 및 카메라 테스트<br>
    3.2. Raspberry Pi 5 전원 공급 장치 연결<br>
    3.3. Arduino Uno 3축 가속도 센서 설치<br>
-   3.4. Raspberry Pi 5 프로그램 동작 On/Off 버튼 추가<br>
+   3.4. Raspberry Pi 5 프로그램 Hold/Resume On/Off 버튼 추가<br>
    
 5. 강화학습 모델 설계 및 구현
 6. 강화학습 모델 탑재 및 학습
@@ -48,7 +48,7 @@
   - [Arduino <-> Raspberry Pi 5 UART 통신 및 카메라 테스트](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_1.md)
   - [Rpi 5 Power Supply & Display](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_2.md)
   - [Arduino 가속도 센서](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_3.md)
-  - [Rpi 5 프로그램 동작 On/Off 버튼 추가](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_4.md)
+  - [Rpi 5 프로그램 Hold/Resume On/Off 버튼 추가](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_3_4.md)
 
 ### [4단계] 강화학습 모델 연구
 
