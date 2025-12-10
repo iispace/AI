@@ -1,4 +1,4 @@
-# Raspberry Pi 5의 파이썬 프로그램 동작 Hold/Resume 토클 스위치 추가
+# Raspberry Pi 5의 파이썬 프로그램 동작 Hold/Resume 토글 스위치 추가
 
 ## 결선도
 
