@@ -275,10 +275,8 @@ void loop() {
 
     if (c == 'B'){  // (후진) 
       analogWrite(Speed_L, speed);   // 11
-      //LEFT_1 = HIGH 이고 LEFT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐르지만 방향이 반대. 즉, 왼쪽 모터가 역방향으로 회전함 
       digitalWrite(LEFT_1, HIGH);    // 10 
       digitalWrite(LEFT_2, LOW);    // 9
-      //RIGHT_1 = HIGH 이고 RIGHT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐르지만 방향이 반대. 즉, 오른쪽 모터가 역방향으로 회전함 
       digitalWrite(RIGHT_1, HIGH);   // 8
       digitalWrite(RIGHT_2, LOW);   // 7
       analogWrite(Speed_R, speed);   // 6
@@ -287,10 +285,8 @@ void loop() {
     }
     else if (c == 'G'){  // (전진) 
       analogWrite(Speed_L, speed);   // 11
-      //LEFT_1=LOW,  LEFT_2=HIGHT이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 왼쪽 모터가 정방향으로 회전  
       digitalWrite(LEFT_1, LOW);    // 10 
       digitalWrite(LEFT_2, HIGH);    // 9
-      //RIGHT_1=LOW, RIGHT_2=HIGH 이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 오른쪽 모터가 정방향으로 회전
       digitalWrite(RIGHT_1, LOW);   // 8
       digitalWrite(RIGHT_2, HIGH);   // 7
       analogWrite(Speed_R, speed);   // 6
@@ -299,10 +295,8 @@ void loop() {
     }
     else if (c == 'L'){  // (좌회전) 
       analogWrite(Speed_L, speed);   // 11
-      //LEFT_1=LOW,  LEFT_2=HIGHT이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐르지만 방향은 거꾸로. 즉, 왼쪽 모터가 정방향으로 회전  
       digitalWrite(LEFT_1, LOW);    // 10 
       digitalWrite(LEFT_2, HIGH);    // 9
-      //RIGHT_1 = HIGH 이고 RIGHT_2 = LOW이면 두 핀 사이의 전압이 다르므로 전류가 흐름. 즉, 오른쪽 모터가 역방향으로 회전함 
       digitalWrite(RIGHT_1, HIGH);   // 8
       digitalWrite(RIGHT_2, LOW);   // 7
       analogWrite(Speed_R, speed);   // 6
@@ -311,10 +305,8 @@ void loop() {
     }
     else if (c == 'R'){ // (우회전) 
       analogWrite(Speed_L, speed);   // 11
-      //LEFT_1 = HIGH 이고 LEFT_2 = LOW이면 두 핀 사이의 전압 차이가 생기므로 전류가 흐르지만 방향은 역방향. 즉, 왼쪽 모터가 역방향으로 회전함 
       digitalWrite(LEFT_1, HIGH);    // 10 
       digitalWrite(LEFT_2, LOW);    // 9
-      //RIGHT_1=LOW, RIGHT_2=HIGH 이면 두 핀 사이의 전압 차이가 발생하므로 전류가 흐름. 즉, 오른쪽 모터가 정방향으로 회전
       digitalWrite(RIGHT_1, LOW);   // 8
       digitalWrite(RIGHT_2, HIGH);   // 7
       analogWrite(Speed_R, speed);   // 6
