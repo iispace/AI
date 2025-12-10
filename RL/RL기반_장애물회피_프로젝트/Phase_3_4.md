@@ -393,5 +393,14 @@ void enableCollisionDetection(uint8_t threshold, uint8_t duration) {
 
 ## 테스트 결과
 
-  <img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/80cb2f1c-fa63-4862-ba4c-a5fd807dbdd4" />
+- 통신 중 충돌 감지 신호 처리
+  
+  <img width="781" height="470" alt="image" src="https://github.com/user-attachments/assets/cd6f78f1-1c99-4219-aafe-07cd0283feeb" />
 
+- 통신 중 토글 스위치 신호 처리(Hold)
+
+  <img width="717" height="456" alt="image" src="https://github.com/user-attachments/assets/965f7f79-fe52-4846-b7d1-1a781b6a650a" />
+
+- 통신 중 토글 스위치 신호 처리(Resume)
+
+  <img width="742" height="501" alt="image" src="https://github.com/user-attachments/assets/8d3d49b6-6843-496f-9fe5-2f7882f03ca5" />
