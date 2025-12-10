@@ -1,4 +1,4 @@
-# 강화학습 모델/알고리즘 설계
+# 4단계: 2. 강화학습 모델/알고리즘 설계 및 구현
 
 
 ## Micro Computer(Rpi 5) Overall Software Diagram
