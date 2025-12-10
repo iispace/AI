@@ -105,7 +105,7 @@ def main():
     # Camera 객체 생성       
     W, H = 640, 480
     camera = carserve_camera.Carserve_PiCamera(W, H)
-    filepath = "/home/pi/Carserverance/video/train"
+    filepath = "/home/pi/{프로젝트_폴더}/video/train"
     i = 0
 
     # Rpi 5 ready indication
