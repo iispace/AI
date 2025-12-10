@@ -3,10 +3,11 @@
 
 ## Overall Software Diagram
 
-**1. Micro Computer(Rpi 5):**
+**1. Micro Computer(Rpi 5)**
 
   <img width="1245" height="603" alt="image" src="https://github.com/user-attachments/assets/7e9789fd-14ed-482e-804c-44abe86cde0e" />
 
+<br>
 <br>
 <br>
 
