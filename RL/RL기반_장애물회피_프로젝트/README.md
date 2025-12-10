@@ -64,7 +64,7 @@
 ### [4단계] 강화학습 모델 연구
 
  - [선행 연구 고찰](https://github.com/iispace/AI/tree/main/RL/%EA%B4%80%EB%A0%A8%EB%85%BC%EB%AC%B8)
- - [강화학습 모델 설계 및 구현](https://github.com/iispace/AI/blob/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_4_1.md)
+ - [강화학습 모델 설계 및 구현](https://github.com/iispace/AI/edit/main/RL/RL%EA%B8%B0%EB%B0%98_%EC%9E%A5%EC%95%A0%EB%AC%BC%ED%9A%8C%ED%94%BC_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/Phase_4_2.md)
 
 
 ### [5단계: 이동체 강화학습 모델 탑재 및 학습](#)
