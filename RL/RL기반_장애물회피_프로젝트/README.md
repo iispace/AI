@@ -34,7 +34,7 @@
 
 ## 하드웨어 모형
 
- <img width="1347" height="547" alt="image" src="https://github.com/user-attachments/assets/b4ac9ba7-bed1-4913-a112-fa014f414010" />
+ <img width="1544" height="617" alt="image" src="https://github.com/user-attachments/assets/48513acf-e24a-47c7-bf65-078ff3c9dad1" />
 
 
   - [Rpi 5 3D model step file](https://www.elecrow.com/blog/download-the-raspberry-pi-5-3d-design-stp-file-for-free-from-elecrow.html)
