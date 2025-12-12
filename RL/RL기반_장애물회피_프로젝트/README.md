@@ -41,7 +41,8 @@
   - [Rpi 5 Active Cooler 3D model step file](https://www.printables.com/model/858776-raspberry-pi-active-cooler/files)
   - [Arduino Uno 3D model step file](https://www.printables.com/model/358867-arduino-uno-3d-model-stp/remixes)
 
-    <img width="580" height="400" alt="image" src="https://github.com/user-attachments/assets/2d615726-43fd-4e32-a77a-2a6d35f452b5" />
+    <img width="620" height="400" alt="image" src="https://github.com/user-attachments/assets/158130b7-5c6b-4dbb-9a71-63f0a13b65fc" />
+
 
 
 <hr>
