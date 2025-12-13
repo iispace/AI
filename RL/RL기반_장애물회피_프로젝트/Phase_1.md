@@ -19,8 +19,10 @@
     |TX||D2|
     |RX||D3|
 
+  
 
-  |<img width="426" height="300" alt="image" src="https://github.com/user-attachments/assets/04178c57-8c2e-4a54-bf90-431877aa394a" />|<img width="459" height="300" alt="image" src="https://github.com/user-attachments/assets/3413f5a1-ea4e-48e9-8417-6ff12360aba0" />|
+
+  |<img width="426" height="300" alt="image" src="https://github.com/user-attachments/assets/04178c57-8c2e-4a54-bf90-431877aa394a" />|<img width="459" height="300" alt="image" src="https://github.com/user-attachments/assets/5b437edd-f7b1-44cc-bf26-125c1fb86d8f" />|
   |:-:|:-:|
   |결선 방법1 (모터 연결 부분:일반적 방법)|결선 방법2 (모터 연결 부분: 본 프로젝트에서 연결한 방법)|
 
