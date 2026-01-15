@@ -81,3 +81,4 @@
 
 |용어|설명|
 |:-|:-|
+|SLAM|Simultaneous Localization and Mapping|
