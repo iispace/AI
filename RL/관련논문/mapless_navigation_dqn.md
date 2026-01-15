@@ -1,0 +1,79 @@
+# 제목 
+
+- [Mapless Navigation Based on DQN Cnsidering Moving Obstacles, and Training Time Reduction Algorithm](https://koreascience.kr/article/JAKO202111236685836.pdf)
+- 이동 장애물을 고려한 DQN 기반 Mapless Navigation 및 학습 시간 단축 알고리즘
+  
+# 저자
+
+- 윤범진(Beomjin Yoon), 유승열(Seungryeol Yoo)
+- 한국정보통신학회논문지 Vol.25, No.3, pp.377-383, Mar. 2021
+
+# Abstract
+
+- 공장 물류창고, 서비스영역에서 유연한 물류이송을 위한 자율 이동형 모바일 로봇의 사용 증가
+- SLAM(Simulaneous Localization and Mapping)을 수행하기 위해 많은 수작업 필요 => 개선된 모바일 로봇 자율 주행 필요성 커짐
+- DQN 기반 고정 및 이동 장애물을 피해 최적의 경로로 주행하는 Mapless navigation 알고리즘 및 학습시간 단축 알고리즘 제안
+  - 오랜 시간과 많은 수작업이 필요한 SLAM 생성 문제에 대한 대안으로, 강화학습 기반 자율주행 모델 생성
+  - DQN은 trail and error를 기반으로 하기 때문에 학습 시간이 굉장히 길다는 문제가 있음. 이 문제의 완화를 위해 학습 시간 단축 알고리즘 제안
+
+ # Keywords:
+
+- Reinforcement neural network, DQN, Mobile robot, Autonomous driving, Obstacle
+- 강화학습, 딥러닝, 모바일 로봇, 자율주행, 장애물
+  
+
+# 용어 정리
+
+|용어|설명|
+|:-|:-|
+
+
+# 실험 환경 구성
+- ROS와 Turblebot3 Machine Learning 튜토리얼 패키지 기반 에피소드 시퀸스 및 알고리즘을 수정하여 시뮬레이션 구성
+- GAZEBO 시뮬레이션 환경 사용 제목 
+
+- [Mapless Navigation Based on DQN Cnsidering Moving Obstacles, and Training Time Reduction Algorithm](https://koreascience.kr/article/JAKO202111236685836.pdf)
+- 이동 장애물을 고려한 DQN 기반 Mapless Navigation 및 학습 시간 단축 알고리즘
+  
+# 저자
+
+- 윤범진(Beomjin Yoon), 유승열(Seungryeol Yoo)
+- 한국정보통신학회논문지 Vol.25, No.3, pp.377-383, Mar. 2021
+
+# Abstract
+
+- 공장 물류창고, 서비스영역에서 유연한 물류이송을 위한 자율 이동형 모바일 로봇의 사용 증가
+- SLAM(Simulaneous Localization and Mapping)을 수행하기 위해 많은 수작업 필요 => 개선된 모바일 로봇 자율 주행 필요성 커짐
+- DQN 기반 고정 및 이동 장애물을 피해 최적의 경로로 주행하는 Mapless navigation 알고리즘 및 학습시간 단축 알고리즘 제안
+  - 오랜 시간과 많은 수작업이 필요한 SLAM 생성 문제에 대한 대안으로, 강화학습 기반 자율주행 모델 생성
+  - DQN은 trail and error를 기반으로 하기 때문에 학습 시간이 굉장히 길다는 문제가 있음. 이 문제의 완화를 위해 학습 시간 단축 알고리즘 제안
+
+ # Keywords:
+
+- Reinforcement neural network, DQN, Mobile robot, Autonomous driving, Obstacle
+- 강화학습, 딥러닝, 모바일 로봇, 자율주행, 장애물
+  
+
+# 용어 정리
+
+|용어|설명|
+|:-|:-|
+
+
+# 실험 환경 구성
+- ROS와 Turblebot3 Machine Learning 튜토리얼 패키지 기반 에피소드 시퀸스 및 알고리즘을 수정하여 시뮬레이션 구성
+- GAZEBO 시뮬레이션 환경 사용
+  - 시뮬레이션 구동 컴퓨터 사양: Intel Xeon E3-1270v5, RAM 16Gb, Geforce GTX1070 89Gb / Ubuntu 및 Keras
+  - 에피소드 하나의 종료 기준:
+    - 모바일 로봇이 목표 지점에 도착하거나
+    - 벽, 장애물, 사람과 충돌하거나
+    - 200초를 초과하여도 목표지점에 도착하지 못했을 때를 종료시점으로 함. 
+  - 6m x 6m 크기 정사각형 벽 내부에 고정된 원통형 장애물 2개가 존재하는 가상 공간
+  - 장애물 크기: 반지름 0.3m, 약 2m 간격을 두고 설치
+    <img width="538" height="295" alt="image" src="https://github.com/user-attachments/assets/ee007fdf-ba32-41e7-9557-8986b1369fa6" />
+    
+    <img width="566" height="587" alt="image" src="https://github.com/user-attachments/assets/caaa1bb5-bc3c-4cae-aad0-c2aae8b544ed" />
+
+    <img width="576" height="298" alt="image" src="https://github.com/user-attachments/assets/2061c184-2167-4897-86b0-ac003c319a34" />
+
+    <img width="558" height="212" alt="image" src="https://github.com/user-attachments/assets/6f8919dd-09c3-41e6-ba23-488e7eb7f394" />
