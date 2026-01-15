@@ -14,7 +14,7 @@
 - SLAM(Simulaneous Localization and Mapping)을 수행하기 위해 많은 수작업 필요 => 개선된 모바일 로봇 자율 주행 필요성 커짐
 - DQN 기반 고정 및 이동 장애물을 피해 최적의 경로로 주행하는 Mapless navigation 알고리즘 및 학습시간 단축 알고리즘 제안
   - 오랜 시간과 많은 수작업이 필요한 SLAM 생성 문제에 대한 대안으로, 강화학습 기반 자율주행 모델 생성
-  - DQN은 trail and error를 기반으로 하기 때문에 학습 시간이 굉장히 길다는 문제가 있음. 이 문제의 완화를 위해 학습 시간 단축 알고리즘 제안
+  - DQN은 trail and error를 기반으로 하기 때문에 학습 시간이 굉장히 길다는 문제가 있음. 이 문제의 완화를 위해 학습 시간 단축 알고리즘 제안 => Target size를 처음에는 크게 설정하고 하나의 에피소드가 종료될 때마다 점진적으로 크기를 줄여 나가면서 학습 시키는 방법 제안
 
  # Keywords:
 
@@ -70,6 +70,7 @@
     - 200초를 초과하여도 목표지점에 도착하지 못했을 때를 종료시점으로 함. 
   - 6m x 6m 크기 정사각형 벽 내부에 고정된 원통형 장애물 2개가 존재하는 가상 공간
   - 장애물 크기: 반지름 0.3m, 약 2m 간격을 두고 설치
+    
     <img width="538" height="295" alt="image" src="https://github.com/user-attachments/assets/ee007fdf-ba32-41e7-9557-8986b1369fa6" />
     
     <img width="566" height="587" alt="image" src="https://github.com/user-attachments/assets/caaa1bb5-bc3c-4cae-aad0-c2aae8b544ed" />
@@ -77,3 +78,17 @@
     <img width="576" height="298" alt="image" src="https://github.com/user-attachments/assets/2061c184-2167-4897-86b0-ac003c319a34" />
 
     <img width="558" height="212" alt="image" src="https://github.com/user-attachments/assets/6f8919dd-09c3-41e6-ba23-488e7eb7f394" />
+
+    <img width="578" height="182" alt="image" src="https://github.com/user-attachments/assets/7d6b624d-901c-4f4f-b6b5-0e56e066f06d" />
+
+
+# DQN 구성
+- FCN과 dropout layer로 구성
+- 입력: 라이다의 스캔 데이터와 목표 지점까지의 거리 및 방향
+
+  <img width="550" height="283" alt="image" src="https://github.com/user-attachments/assets/58e2f9b8-7157-4e1e-a02a-899ac67264df" />
+
+# 학습 시간 단축 조건 실험 결과
+
+  <img width="541" height="410" alt="image" src="https://github.com/user-attachments/assets/56c95ef0-b53a-4b31-897a-165e6bfd87b6" />
+
