@@ -8,9 +8,7 @@
 
 # Abstract
 
--
 - 지도 없이 주변 센서 정보만으로 모바일 로봇이 장애물을 피하며 목적지까지 이동하는 **mapless navigation 문제를 Deep RL로 해결하는 연구**
--
 - **계층적 강화학습 구조(HRL-Hierarchical Reinforcement Learning)를 도입해 장애물 회피 및 가치 기반 행동 선택을 향상**시킴으로써, 기존의 end-to-end DQN/DRL 기법보다 난이도 높은 환경에서도 견고하게 동작하도록 설계
   - Two different subgoal:
     - Predictive Neighbouring Space Scoring(PNSS): 예측 기반 인접 공간 평가(점수화)
