@@ -52,7 +52,31 @@
   - Env 2: Arona and two examples of the robot visual features ---- 181
   
  
-  
+# Mobile Robot 특징
+  - 환경 인지(Environment perception)
+  - 동적 의사 결정(Dynamic decision making)
+  - 행동 제어(Behavioural control)
+
+# Mobile Robot 활용 예시
+  - 군용: 지뢰 제거(demining)나 정찰(reconnaissance)등 위험 임무 수행 등
+  - 민간용: 무인 지상 차량 기반 창고 자동화, 무인 항공기 기반 전력선 검사 등
+  - 기타: 도시 수색 및 구조, 재난 구호, 가정용 서비스 로봇(domestic service robots) 등
+
+# 전통적인 모바일 로봇 내비게이션 시스템 구성 모듈:
+  - A mapping and localiation module: 환경 지도 생성 후 지도 상에서의 현재 위치와 목표 지점 추정
+  - A global path planner: 가능한 경로 생성
+  - A local planner: Global planner가 제안한 일련의 경우지를 따라 이동
+  ==> 결론적으로, 전통적 모바일 로봇 내비게이션 방식은 정확한 지도 생성에 크게 의존하는 방식 => 지도 기반 방식(map-based method)
+
+# 전통적 모바일 로봇 내비게이션 방식인 map-based method의 문제점:
+  - 지도 신뢰성 문제:
+    - 지도 제작은 시간 및 노력 집약적 작업을 요구함
+    - 지도 수정과 유지보수에 대한 장기 비용 높음
+    - 지도 제작에 사용되는 센서의 고정밀도 필요
+
+# Mapless navigation: 지도 없이 이동 로봇이 환경을 완전히 알지 못하고 부분적인 관측 정보만을 가지고도 충돌 없는 경로를 찾아내는 것
+
+
 
 # 용어 정리
 
