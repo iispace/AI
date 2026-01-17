@@ -36,3 +36,222 @@
 
   <img width="1208" height="498" alt="image" src="https://github.com/user-attachments/assets/d9394b8c-1f54-4d61-99bd-1413350a6701" />
 
+
+## Baseline Code (DQN)
+
+```
+import cv2
+import serial
+import time 
+import random
+import numpy as np
+from collections import deque 
+
+import torch 
+import torch.nn as nn 
+import torch.optim as optim 
+import torch.nn.functional as F
+
+from picamera2 import Picamera2 # required for camera module v3, Raspberry Pi에서 기본으로 제공되는 라이브러리
+import numpy as np 
+
+class PiCamera_DQN():
+    def __init__(self, width, height):
+        self.cap = Picamera2()
+
+        self.width = width
+        self.height = height 
+        self.is_open = True 
+
+        try:
+            self.config = self.cap.create_video_configuration(main={"format": "RGB888", "size": (width, height)})
+            self.cap.align_configuration(self.config)
+            self.cap.configure(self.config)
+
+            self.cap.start()
+        except:
+            self.is_open=False
+        return 
+    
+    def read(self, dst=None):
+        # allocate blank image to avoid returning a "None"
+        if dst is None:
+            dst = np.empty((self.height, self.width, 3), dtype=np.uint8)
+        
+        if self.is_open:
+            dst = self.cap.capture_array()  # 카메라로부터 이미지를 캡쳐하여 Numpy 배열 형태로 변환하는 함수
+
+        # dst is either blank or the previously captured image at this point 
+        return self.is_open, dst 
+    
+    def isOpened(self):
+        return self.is_open
+    
+    def release(self):
+        if self.is_open:
+            self.cap.close()
+        self.is_open = False
+        return
+    
+
+class DQN(nn.Module):
+    def __init__(self, input_dim=1, action_dim=4):  # grayscale image를 처리하므로 input_dim=1
+        super(DQN, self).__init__()
+
+        self.conv1 = nn.Conv2d(input_dim, 32, kernel_size=8, stride=4)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=4, stride=2)
+        self.conv3 = nn.Conv2d(64, 64, kernel_size=3, stride=1)
+
+        self.fc1 = nn.Linear(64*7*7, 512)
+        self.fc2 = nn.Linear(512, action_dim)
+
+    def forward(self,x):
+        print(f"x.shape before conv layer: {x.shape}")
+        x = F.relu(self.conv1(x))
+        x = F.relu(self.conv2(x))
+        x = F.relu(self.conv3(x))
+        print(f"x.shape after conv layer: {x.shape}")
+
+        x = x.view(x.size(0), -1)  # fc layer에 입력으로 넣기 위해서 1차원 구조로 reshape
+        print(f"x.shape for fc layer input: {x.shape}")
+
+        x = F.relu(self.fc1(x))
+        out = self.fc2(x)
+
+        return out
+        
+
+class ReplayBuffer:
+    def __init__(self, capacity=50000):
+        self.buffer = deque(maxlen=capacity)
+
+    def push(self, state, action, reward, next_state, done):
+        self.buffer.append((state, action, reward, next_state, done ))
+
+    def sample(self, batch_size):
+        batch = random.sample(self.buffer, batch_size)
+        state, action, reward, next_state, done = zip(*batch) 
+        return state, action, reward, next_state, done 
+
+    def __len__(self):
+        return len(self.buffer)
+
+
+class DQNAgent:
+    def __init__(self, learning_rate=1e-4):
+        self.learning_rate = learning_rate
+        self.action_dim = 4 # action_dim = {Go staight, Turn Left, Turn Right, Go backward}
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.policy_net = DQN(input_dim=1, action_dim=4).to(self.device)
+        self.target_net = DQN(input_dim=1, action_dim=4).to(self.device)
+        self.target_net.load_state_dict(self.policy_net.state_dict())
+
+        self.optimizer = optim.Adam(self.policy_net.parameters(), lr=self.learning_rate)
+        self.memory = ReplayBuffer()
+
+        self.gamma = 0.99
+        self.epsilon = 1.0
+        self.epsilon_min = 0.05
+        self.epsilon_decay = 0.995
+
+    def select_action(self, state):
+        # state: grayscale image
+        if random.random() < self.epsilon:
+            return random.randint(0, 3) # {0,1,2,3} 중 임의의 값 하나 생성
+        
+        with torch.no_grad():
+            q = self.policy_net(torch.FloatTensor(state).to(self.device))
+            return q.argmax().item()
+
+    def train(self, batch_size=32):
+        if len(self.memory) < batch_size:
+            return 
+        
+        states, actions, rewards, next_states, dones = self.memory.sample(batch_size)        
+
+        states = torch.FloatTensor(states).to(self.device)
+        next_states = torch.FloatTensor(next_states).to(self.device)
+        actions = torch.LongTensor(actions).to(self.device)
+        rewards = torch.FloatTensor(rewards).to(self.device)
+        dones = torch.FloatTensor(dones).to(self.device)
+
+        q_values = self.policy_net(states).gather(1, actions.unsqueeze(1)).squeeze()
+        next_q = self.target_net(next_states).max(1)[0]
+        target = rewards + self.gamma * next_q * (1 - dones)
+
+        loss = F.mse_loss(q_values, target.detach())
+        self.optimizer.zero_grad() 
+        loss.backward()
+        self.optimizer.step()
+
+        if self.epsilon > self.epsilon_min:
+            self.epsilon *= self.epsilon_decay
+
+
+def camera_get_state():
+    _, frame = camera.read()
+    frame = cv2.flip(frame, -1)  # flipCode = -1 => 이미지를 상하좌우로 반전
+    #print(f"frame.shape:{frame.shape}")
+    height, _, _ = frame.shape  # (480, 640, 3) => height: 480
+    #cv2.imshow("DQN_camera", frame)
+    #if cv2.waitKey(1) == ord('q'):
+    #    break
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # shape changed to (H, W) from (H, W, C)
+    aoi_image = gray[int(height/2):,:]  # aoi: area of interest
+    normalized = aoi_image / 255.0
+
+    # 이미지 파일로 저장
+    cv2.imwrite("%s_%05d.png" % (filepath, i), aoi_image)
+    #cv2.imwrite("%s_%05d_full.png" % (filepath, i), gray)
+
+if __name__ == "__main__":
+    W = 640
+    H = 480
+    camera = PiCamera_DQN(W, H)
+    filepath = "/home/pi/Carserverance/video_dqn/dqn"
+    i = 0
+
+    agent = DQNAgent()
+
+    # dqn 코드 테스트할 때 아두이노와의 통신에서 받은 센서 값을 대신하기 위해 아래와 같이 임시로 충돌에 대한 모의 값을 저장하여 사용함.
+    arduino_collision_data = []
+    for k in range(100):
+        value = random.randint(0,1)  # 0: 충돌 아님, 1: 충돌
+        arduino_collision_data.append(value)
+    
+    # 이동체 출발 후 5분 동안 정찰 하는 임무를 하나의 에피소드로 설정하기 위해 출발 시간 저장
+    start_time = time.time() 
+    MAX_TIME = 300 # 5분
+    
+
+    while camera.isOpened():
+        ######################################################################
+        # ##########   DQN call 해서 처리 결과를 얻는 코드가 들어갈 부분   ##########
+        ######################################################################
+        state = camera_get_state()
+
+        while time.time() - start_time < MAX_TIME:
+            action = agent.select_action(state)
+            print(f"action value to be sent to Arduino: {action}")
+            time.sleep(0.2)
+            collision = bool(arduino_collision_data[i])
+            print(f"collision: {collision}")
+            reward = -100 if collision else 0.1
+            done = collision 
+            i += 1
+            next_state = camera_get_state()
+            agent.memory.push(state, action, reward, next_state, done)
+
+            agent.train()
+
+            state = next_state
+
+            if done: 
+                break
+
+            
+
+    cv2.destroyAllWindows()
+
+
+```
