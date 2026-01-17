@@ -1,4 +1,4 @@
-# 2 단계: Raspberry Pi 5 Python 가상환경 설정
+# 2 단계: Raspberry Pi 5 Python 가상환경 설정 및 카메라 테스트
 
 
 ### 1. Python 가상환경 생성
@@ -58,6 +58,18 @@
   - 아래 그림에서 VSCode 하단 오른쪽 코너에 노란색 사각형으로 표시한 부분을 클릭하여 현재 프로젝트를 위해 생성한 가상환경 선택
 
     <img width="492" height="250" alt="image" src="https://github.com/user-attachments/assets/b5459fdb-f9d6-47e2-9f6e-1e4912f201db" />
+
+### 3. Rpi 5 Camera Test
+
+ - Camera streaming test:
+ 
+   <img width="560" height="100" alt="image" src="https://github.com/user-attachments/assets/4977b8da-d260-4015-b11f-73df9e9a64c2" />
+ 
+ - Camera still image test:
+
+   <img width="375" height="300" alt="image" src="https://github.com/user-attachments/assets/106e5666-4b29-4749-b03d-436df09fa822" />
+
+
 
 <hr>
 
