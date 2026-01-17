@@ -26,9 +26,15 @@
    <img width="375" height="300" alt="image" src="https://github.com/user-attachments/assets/106e5666-4b29-4749-b03d-436df09fa822" />
 
   - Thonny에서 Rpi 5 기본 Python 환경으로 카메라 테스트(참고2)
-    : PyQt5 모듈은 Rpi 5 기본 Python 환경에만 설치되어 있고, 현재 작업 중인 프로젝트 하위에 생성한 가상환경에는 설치되어 있지 않으므로, Rpi 5 default python 환경에서만 테스트 결과를 볼 수 있다.
+    - Thonny는 Rpi OS의 GUI 세션 안에서 실행되므로 PyQt5가 설치되어 있는 파이썬 환경을 인터프리터로 선택하고 아래 화면의 코드를 실행하면 미리보기가 잘 출력된다.
 
-    <img width="450" height="300" alt="image" src="https://github.com/user-attachments/assets/d0bb3fb2-313c-41f4-9b18-fb880960eb8a" />
+      <img width="450" height="300" alt="image" src="https://github.com/user-attachments/assets/d0bb3fb2-313c-41f4-9b18-fb880960eb8a" />
+
+    - 그러나, PyQt5가 설치된 (가상)환경이라도 VSCode에서 아래 화면에 보이는 코드를 동일하게 실행하면 미리보기 화면이 Display 장치에 출력되지 않는데, 이는 VS Code가 X11/Wayland GUI 환경을 제대로 물고 실행되지 않기 때문일 수 있다고 한다. 
+      
+  - VS Code에서 동일한 코드 실행 시에 미리보기 화면이 출력되게 하려면, 인터프리터를 Rpi 5 default python 환경으로 바꾸어서 실행해야 한다.
+    
+      <img width="353" height="150" alt="image" src="https://github.com/user-attachments/assets/62d58009-1603-41b0-a73b-0dcba403dd44" />
 
       
   - 참고1: [Raspberry Pi Camera software](https://www.raspberrypi.com/documentation/computers/camera_software.html)
