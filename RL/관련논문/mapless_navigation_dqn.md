@@ -62,11 +62,26 @@
 
 # DQN 구성
 - FCN과 dropout layer로 구성
-- 입력: 라이다의 스캔 데이터와 목표 지점까지의 거리 및 방향
+- 입력:
+  - 라이다 스캔 데이터: 12도 간격의 측정 거리
+  - 로봇과 목표 지점 사이의 각도
+  - 로봇과 목표 지점 사이의 거리
+- dropout rate: 20%
+- 입력층 및 은닉층 활성화 함수: ReLU
+- 옵티마이저: RMSprop (Stochastic Gradient Descent 방식 중 하나)  
 
   <img width="388" height="200" alt="image" src="https://github.com/user-attachments/assets/58e2f9b8-7157-4e1e-a02a-899ac67264df" />
 
 - 보상 함수
+
+  - Goal reward: 목표 지점 도달했을 때의 보상
+  - Collision reward: 장애물에 부딪혔을 때의 보상(패널티)
+  - Human collision reward: 사람과 부딪혔을 때의 보상(패널티)
+  - Driving reward: 매 시간 t에서 받는 보상으로, 목표와 로봇의 heading 방향에 따라 Heading reward 및 Distancce reward를 곱하여 계산
+    - $\theta_{goal}(t)$ : 시간 t에서 Heading과 목표지점이 이루는 각도
+    - $d_{goal}(t)$ : 로봇과 목표지점간의 거리
+    - $d_{\in}  $ : 에피소드가 시작하였을 때 모바일 로봇과 목표지점간의 거리
+
 
   <img width="475" height="180" alt="image" src="https://github.com/user-attachments/assets/6f8919dd-09c3-41e6-ba23-488e7eb7f394" />
       
@@ -74,5 +89,23 @@
       
 # 학습 시간 단축 조건 실험 결과
 
+  <img width="409" height="175" alt="image" src="https://github.com/user-attachments/assets/da7dad44-11aa-4660-9748-ec4d85b23739" />
+
   <img width="396" height="300" alt="image" src="https://github.com/user-attachments/assets/56c95ef0-b53a-4b31-897a-165e6bfd87b6" />
 
+# DQN 학습 완료 후 테스트 결과
+- Mapless Navigation의 학습에 소요된 시간: 약 20시간
+- 충돌하지 않고 목표 지점에 도착할 확률
+  - Test-1: 로봇 주행 공간에 사람이 서 있을 때 (정지 장애물)
+  - Test-2: 로봇 주행 공간에 사람이 걷고 있을 때 (이동 장애물)
+  <img width="434" height="129" alt="image" src="https://github.com/user-attachments/assets/d781a8aa-0e7b-459f-8700-22c45dac4811" />
+
+<hr>
+
+### 내 연구와의 차별점:
+
+|위 논문의 내용|나의 연구 방향|
+|:-|:-|
+|출발지점과 위치가 다른 목표 지점이 사전에 설정된 시나리오|목표 지점에 출발 지점과 같은 시나리오<b>(예) 출발한 시간으로부터 10분간 주변 정찰 후 출발지로 복귀|
+|LiDAR 센서와 카메라 사용|RGB 단안 카메라만 사용|
+|시뮬레이션 기반 연구|실제 환경 기반 연구|
