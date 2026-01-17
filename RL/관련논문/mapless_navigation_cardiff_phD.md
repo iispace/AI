@@ -63,7 +63,7 @@
 # 전통적인 모바일 로봇 내비게이션 시스템 구성 모듈:
   - A mapping and localiation module: 환경 지도 생성 후 지도 상에서의 현재 위치와 목표 지점 추정
   - A global path planner: 가능한 경로 생성
-  - A local planner: Global planner가 제안한 일련의 경우지를 따라 이동
+  - A local planner: Global planner가 제안한 일련의 경유지를 따라 이동
   ==> 결론적으로, 전통적 모바일 로봇 내비게이션 방식은 정확한 지도 생성에 크게 의존하는 방식 => 지도 기반 방식(map-based method)
 
 # 전통적 모바일 로봇 내비게이션 방식인 map-based method의 문제점:
