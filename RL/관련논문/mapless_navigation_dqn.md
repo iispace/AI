@@ -58,9 +58,6 @@
 
     <img width="483" height="250" alt="image" src="https://github.com/user-attachments/assets/2061c184-2167-4897-86b0-ac003c319a34" />
 
-    <img width="475" height="180" alt="image" src="https://github.com/user-attachments/assets/6f8919dd-09c3-41e6-ba23-488e7eb7f394" />
-
-    <img width="475" height="150" alt="image" src="https://github.com/user-attachments/assets/7d6b624d-901c-4f4f-b6b5-0e56e066f06d" />
 
 
 # DQN 구성
@@ -69,6 +66,12 @@
 
   <img width="388" height="200" alt="image" src="https://github.com/user-attachments/assets/58e2f9b8-7157-4e1e-a02a-899ac67264df" />
 
+- 보상 함수
+
+  <img width="475" height="180" alt="image" src="https://github.com/user-attachments/assets/6f8919dd-09c3-41e6-ba23-488e7eb7f394" />
+      
+  <img width="475" height="150" alt="image" src="https://github.com/user-attachments/assets/7d6b624d-901c-4f4f-b6b5-0e56e066f06d" />
+      
 # 학습 시간 단축 조건 실험 결과
 
   <img width="396" height="300" alt="image" src="https://github.com/user-attachments/assets/56c95ef0-b53a-4b31-897a-165e6bfd87b6" />
