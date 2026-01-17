@@ -31,10 +31,15 @@
 |Visual Odometry|카메라를 통해 들어오는 비디오 스트림을 이용하여 로봇의 이동 궤적을 구하는 기술<b> - Monocular Visual Odometry<b> - Stereo Visual Odometry|
 
 
-# 모바일 로봇 주행을 위한 일반적 처리 과정
-- 주행 공간의 장애물 정보를 SLAM을 통해 map(cost map) 형태로 취득하여 위치 정보 동기화
-- LiDAR 및 Odometry 기반으로 목표지점까지의 경로 생성
-- 목표 지점으로 이동
+# 모바일 로봇 주행을 위한 일반적 처리 과정 및 문제점
+- 처리 과정:
+  - 주행 공간의 장애물 정보를 SLAM을 통해 map(cost map) 형태로 취득하여 위치 정보 동기화
+  - LiDAR 및 Odometry 기반으로 목표지점까지의 경로 생성
+  - 목표 지점으로 이동
+- 문제점:
+  - 환경이 바뀔 때마다 시간과 노력이 많이 투입되는 SLAM 기반 map을 다시 생성해야 함.
+- 개선방향:
+  - map에 의존하지 않고 센서 기반으로 장애물을 회피하는 자율주행 기법이 필요=> mapless navigation 연구 필요
 
 # 실험 환경 구성
 - ROS와 Turblebot3 Machine Learning 튜토리얼 패키지 기반 에피소드 시퀸스 및 알고리즘을 수정하여 시뮬레이션 구성
