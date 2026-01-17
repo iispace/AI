@@ -15,6 +15,20 @@
     <img width="174" height="127" alt="image" src="https://github.com/user-attachments/assets/756bde61-8948-4c7e-97be-a962247ca1ca" />
     <img width="145" height="127" alt="image" src="https://github.com/user-attachments/assets/ad4396f7-10ca-45ae-8d1c-1cb7ee8060b6" />
 
+### Rpi 5 Camera Test
+
+ - Camera streaming test:
+ 
+   <img width="560" height="100" alt="image" src="https://github.com/user-attachments/assets/4977b8da-d260-4015-b11f-73df9e9a64c2" />
+ 
+ - Camera still image test:
+
+   <img width="375" height="300" alt="image" src="https://github.com/user-attachments/assets/106e5666-4b29-4749-b03d-436df09fa822" />
+
+  - 참고: [Raspberry Pi Camera software](https://www.raspberrypi.com/documentation/computers/camera_software.html)
+
+
+
 <hr>
 
 ### 코드
