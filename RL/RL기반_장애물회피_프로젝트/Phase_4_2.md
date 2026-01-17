@@ -15,6 +15,9 @@
 - 입력 데이터(이미지) 전처리 부분:
   1. 카메라로 촬영한 이미지 전체에서 관심 부분(area of interest, aoi)만 잘라내서 처리
   2. 3채널 RGB 이미지를 2채널의 Gray 이미지로 변환하여 처리
+     
+     <img width="912" height="432" alt="image" src="https://github.com/user-attachments/assets/54766f14-06e7-413b-b0cb-e2202418d5c8" />
+
 
 - 모델 구조 설계 부분:
   1. ...
