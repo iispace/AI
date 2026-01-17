@@ -17,21 +17,22 @@
 
 ### Rpi 5 Camera Test
 
- - Camera streaming test:
+ - Camera streaming test(참고1):
  
    <img width="560" height="100" alt="image" src="https://github.com/user-attachments/assets/4977b8da-d260-4015-b11f-73df9e9a64c2" />
  
- - Camera still image test:
+ - Camera still image test(참고1):
 
    <img width="375" height="300" alt="image" src="https://github.com/user-attachments/assets/106e5666-4b29-4749-b03d-436df09fa822" />
 
-  - Thonny에서 Rpi 5 기본 Python 환경으로 카메라 테스트
+  - Thonny에서 Rpi 5 기본 Python 환경으로 카메라 테스트(참고2)
     : PyQt5 모듈은 Rpi 5 기본 Python 환경에만 설치되어 있고, 현재 작업 중인 프로젝트 하위에 생성한 가상환경에는 설치되어 있지 않으므로, Rpi 5 default python 환경에서만 테스트 결과를 볼 수 있다.
 
     <img width="450" height="300" alt="image" src="https://github.com/user-attachments/assets/d0bb3fb2-313c-41f4-9b18-fb880960eb8a" />
 
       
-  - 참고: [Raspberry Pi Camera software](https://www.raspberrypi.com/documentation/computers/camera_software.html)
+  - 참고1: [Raspberry Pi Camera software](https://www.raspberrypi.com/documentation/computers/camera_software.html)
+  - 참고2: [Picamera2 Library: QtGL preview](https://pip-assets.raspberrypi.com/categories/652-raspberry-pi-camera-module-2/documents/RP-008156-DS-2-picamera2-manual.pdf?disposition=inline)
 
 
 
