@@ -26,7 +26,15 @@
 
 |용어|설명|
 |:-|:-|
+|SLAM|Simulaneous Localization and Mapping<b>차량이나 로봇의 현재 위치 및 주변환경을 동시에 탐색하는 기|
+|오도메트리(Odometry)|로봇이 바퀴의 회전이나 카메라 등의 센서 데이터를 이용하여 자신의 상대적인 위치와 방향 변화를 추정하는 기술. 주행거리계<b> - 로봇이 이동한 경로(궤적)를 파악하는 핵심 기|
+|Visual Odometry|카메라를 통해 들어오는 비디오 스트림을 이용하여 로봇의 이동 궤적을 구하는 기술<b> - Monocular Visual Odometry<b> - Stereo Visual Odometry|
 
+
+# 모바일 로봇 주행을 위한 일반적 처리 과정
+- 주행 공간의 장애물 정보를 SLAM을 통해 map(cost map) 형태로 취득하여 위치 정보 동기화
+- LiDAR 및 Odometry 기반으로 목표지점까지의 경로 생성
+- 목표 지점으로 이동
 
 # 실험 환경 구성
 - ROS와 Turblebot3 Machine Learning 튜토리얼 패키지 기반 에피소드 시퀸스 및 알고리즘을 수정하여 시뮬레이션 구성
