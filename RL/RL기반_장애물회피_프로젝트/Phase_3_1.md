@@ -28,7 +28,7 @@
   - Thonny에서 Rpi 5 기본 Python 환경으로 카메라 테스트
     : PyQt5 모듈은 Rpi 5 기본 Python 환경에만 설치되어 있고, 현재 작업 중인 프로젝트 하위에 생성한 가상환경에는 설치되어 있지 않으므로, Rpi 5 default python 환경에서만 테스트 결과를 볼 수 있다.
 
-    <img width="444" height="300" alt="image" src="https://github.com/user-attachments/assets/2f17e575-55c4-4754-96cc-966037cf14c0" />
+    <img width="450" height="300" alt="image" src="https://github.com/user-attachments/assets/d0bb3fb2-313c-41f4-9b18-fb880960eb8a" />
 
       
   - 참고: [Raspberry Pi Camera software](https://www.raspberrypi.com/documentation/computers/camera_software.html)
