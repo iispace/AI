@@ -1,4 +1,4 @@
-# 실제 환경에서의 강화학습 기반 장애물 회피 자율 주행 시스템 연구
+# 실제 환경에서의 강화학습 기반 장애물 회피 자율 주행 시스템 연구 (Mapless Navigation with monocular camera on a micro processor)
 
 ## 기존 강화학습 관련 연구의 문제점
 
