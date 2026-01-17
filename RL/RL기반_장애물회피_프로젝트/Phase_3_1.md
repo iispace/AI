@@ -36,6 +36,8 @@
     
       <img width="353" height="150" alt="image" src="https://github.com/user-attachments/assets/62d58009-1603-41b0-a73b-0dcba403dd44" />
 
+      <img width="672" height="400" alt="image" src="https://github.com/user-attachments/assets/7081f4cb-5a92-40b0-ab8d-ae13ebc9a4f4" />
+
       
   - 참고1: [Raspberry Pi Camera software](https://www.raspberrypi.com/documentation/computers/camera_software.html)
   - 참고2: [Picamera2 Library: QtGL preview](https://pip-assets.raspberrypi.com/categories/652-raspberry-pi-camera-module-2/documents/RP-008156-DS-2-picamera2-manual.pdf?disposition=inline)
