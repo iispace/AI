@@ -2,5 +2,5 @@
 |file name|paper title|source|published year|
 |:--|:--|:--|:--|
 |[1.md](https://github.com/iispace/AI/blob/main/Sementic_Segmentations/References/1.md)|Semantic segmentation network for mangrove tree species based on UAV remote sensing images|scientific reports|2024|
-|2.md|SCConv Spatial and Channel Reconstruction Convolution for Feature REdundancy|CVF|2023|
+|[2.md](https://github.com/iispace/AI/blob/main/Sementic_Segmentations/References/2.md)|SCConv Spatial and Channel Reconstruction Convolution for Feature REdundancy|CVF Conference on CVPR|2023|
 
